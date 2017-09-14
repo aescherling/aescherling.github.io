@@ -615,13 +615,17 @@ function bubbleChart() {
 
     // resize the text to fit in the box
     // https://stackoverflow.com/questions/6112660/how-to-automatically-change-the-text-size-inside-a-div
-    alert($('#itemDescription').height());
-    alert($('#itemDescription').css('font-size'));
-    //$(function() {
-    //  while( $('#itemDescription').height() + 20 > 100 ) {
-    //    $('#itemDescription').css('font-size', (parseInt($('#itemDescription').css('font-size')) - 1) + "px" );
-    //  }
-    //});
+    if (Modernizr.svgforeignobject) {
+      // supported
+    } else {
+      // not-supported
+      alert("You're experiencing browser compatibility issues. Try using a browser with SVG foreignObject support.")
+    }
+    $(function() {
+      while( $('#itemDescription').height() + 20 > 100 ) {
+        $('#itemDescription').css('font-size', (parseInt($('#itemDescription').css('font-size')) - 1) + "px" );
+      }
+    });
 
     // item name
     itemName = d3.selectAll('text').filter('.name');
