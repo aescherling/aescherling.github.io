@@ -615,11 +615,12 @@ function bubbleChart() {
 
     // resize the text to fit in the box
     // https://stackoverflow.com/questions/6112660/how-to-automatically-change-the-text-size-inside-a-div
-    if (Modernizr.svgforeignobject) {
+    if (Modernizr.svgforeignobject | warned) {
       // supported
     } else {
       // not-supported
-      alert("You're experiencing browser compatibility issues. Try using a browser with SVG foreignObject support.")
+      alert("Sorry! Your browser isn't fully compatible with this feature. Try using a browser with SVG foreignObject support.")
+      warned = true;
     }
     $(function() {
       while( $('#itemDescription').height() + 20 > 100 ) {
@@ -970,6 +971,9 @@ function setupButtons() {
 
 // Load the data and call the "display" function
 d3.csv('data/expenditures.csv', display);
+
+// has the user been warned about compatibility issues?
+var warned = false;
 
 // set up the buttons.
 setupButtons();
