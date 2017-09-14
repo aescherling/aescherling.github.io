@@ -615,6 +615,7 @@ function bubbleChart() {
 
     // resize the text to fit in the box
     // https://stackoverflow.com/questions/6112660/how-to-automatically-change-the-text-size-inside-a-div
+    // I use modernizr to check for SVG foreignObject support. https://modernizr.com
     if (Modernizr.svgforeignobject | warned) {
       // supported
     } else {
