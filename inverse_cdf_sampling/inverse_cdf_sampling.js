@@ -1,3 +1,7 @@
+// to do: dynamically update histogram scales
+// after that, allow changes in # of points, parameter, speed
+// after that, add different distributions. that'll probably take the most work.
+
 // svg properties
 var svgWidth = 500;
 var svgHeight = 500;
@@ -9,7 +13,7 @@ d3.select('#vis').append('svg')
 
 var svg = d3.select('svg');
 
-// svg outline
+// svg outline, mostly just for development purposes
 svg.append('rect')
   .attr('x', 0)
   .attr('y', 0)
@@ -32,14 +36,6 @@ var yHistMargin = {top: graphMargin.top, right: 50, bottom: graphMargin.bottom, 
     yHist = svg.append("g")
         .attr("transform", "translate(" + yHistMargin.left + "," + yHistMargin.top + ")");
 
-//yHist.append('rect')
-//  .attr('x', 0)
-//  .attr('y', 0)
-//  .attr('width', yHistWidth)
-//  .attr('height', yHistHeight)
-//  .attr('fill', 'white')
-//  .attr('stroke', 'lightgray');
-
 // histogram on the x axis
 var xHistMargin = {top: graphMargin.top + graphHeight + 50,
                    right: graphMargin.right, bottom: 30, left: graphMargin.left},
@@ -47,14 +43,6 @@ var xHistMargin = {top: graphMargin.top + graphHeight + 50,
     xHistHeight = svgHeight - xHistMargin.top - xHistMargin.bottom,
     xHist = svg.append("g")
         .attr("transform", "translate(" + xHistMargin.left + "," + xHistMargin.top + ")");
-
-//xHist.append('rect')
-//  .attr('x', 0)
-//  .attr('y', 0)
-//  .attr('width', xHistWidth)
-//  .attr('height', xHistHeight)
-//  .attr('fill', 'white')
-//  .attr('stroke', 'lightgray');
 
 // CDF of the exponential distribution
 // later add other distributions? Let user choose parameters?
@@ -164,6 +152,8 @@ calcHist = function (x, low, high, bins) {
 bins = 10
 xHistArray = [];
 yHistArray = [];
+xHistData = [];
+yHistData = [];
 index = []
 for (i in x) {
   xTmp = x.slice(0,(+i +1));
@@ -172,14 +162,17 @@ for (i in x) {
   xHistTmp = calcHist(xTmp, 0, graphMax, bins);
   yHistTmp = calcHist(yTmp, 0, 1, bins);
 
+  xHistArray.push(xHistTmp);
+  yHistArray.push(yHistTmp);
+
   xMax = d3.max(xHistTmp);
   yMax = d3.max(yHistTmp);
 
   xHistScale = d3.scaleLinear().domain([0, xMax]).range([0, xHistHeight]);
   yHistScale = d3.scaleLinear().domain([0, yMax]).range([0, yHistWidth]);
 
-  xHistArray.push(xHistTmp.map(xHistScale));
-  yHistArray.push(yHistTmp.map(yHistScale));
+  xHistData.push(xHistTmp.map(xHistScale));
+  yHistData.push(yHistTmp.map(yHistScale));
 }
 
 // plot each point on the y axis, but leave hidden
@@ -195,7 +188,7 @@ graph.selectAll(".yDot")
 // draw y axis histogram, but keep hidden.
 yHistScaleY = d3.scaleLinear().domain([0, bins]).range([0, yHistHeight]);
 yHist.selectAll('.yBar')
-  .data(yHistArray[0])
+  .data(yHistData[0])
   .enter()
   .append('rect')
   .attr('class', 'yBar')
@@ -206,7 +199,7 @@ yHist.selectAll('.yBar')
   .attr('fill', 'steelblue')
   .attr('stroke', d3.rgb('steelblue').darker());
 
-// draw axes
+// draw axes of y axis histogram
 scale = d3.scaleLinear().domain([0,1]).range([yHistWidth, 0]);
 yHist.append('g')
   .attr('class', 'axis xAxis')
@@ -222,7 +215,7 @@ yHist.append('g')
 // draw x axis histogram, but keep hidden.
 xHistScaleX = d3.scaleLinear().domain([0, bins]).range([0, xHistWidth]);
 xHist.selectAll('.xBar')
-  .data(xHistArray[0])
+  .data(xHistData[0])
   .enter()
   .append('rect')
   .attr('class', 'xBar')
@@ -233,7 +226,7 @@ xHist.selectAll('.xBar')
   .attr('fill', 'steelblue')
   .attr('stroke', d3.rgb('steelblue').darker());
 
-// draw axes
+// draw axes of x axis histogram
 scale = d3.scaleLinear().domain([0,1]).range([xHistHeight, 0]);
 xHist.append('g')
   .attr('class', 'axis yAxis')
@@ -294,7 +287,7 @@ graph.selectAll('.yDot')
 // update y axis histogram
 graph.selectAll('.yDot')
   .each(function (d,i) {
-    myData = yHistArray[i];
+    myData = yHistData[i];
 
     d3.selectAll('.yBar')
       .transition()
@@ -302,27 +295,31 @@ graph.selectAll('.yDot')
       .attr('width', function (dd, ii) {return myData[ii]})
       .attr('x', function (dd, ii) {return yHistWidth - myData[ii]});
 
-    // to have the axis automatically update I'll have to keep a separate
-    // version of yHistArray that has the unscaled histogram counts.
-    // maybe rename yHistArray as yHistData and then let yHistArray keep
-    // the counts.
-    //scale = d3.scaleLinear().domain([0,1]).range([yHistWidth, 0]);
-    //yHist.append('g')
-    //  .attr('class', 'axis xAxis')
-    //  .attr('transform', 'translate(0,' + graphHeight + ')')
-    //  .call(d3.axisBottom(scale).ticks(5));      
+    yMax = d3.max(yHistArray[i]);
+    scale = d3.scaleLinear().domain([0,yMax]).range([yHistWidth, 0]);
+    yHist.selectAll('g').filter('.xAxis')
+      .transition()
+      .delay(tt * i)
+      .call(d3.axisBottom(scale).ticks(5));
   })
 
 // update x axis histogram
 graph.selectAll('.xDot')
   .each(function (d,i) {
-    myData = xHistArray[i];
+    myData = xHistData[i];
 
     d3.selectAll('.xBar')
       .transition()
       .delay(tt * i)
       .attr('height', function (dd, ii) {return myData[ii]})
-      .attr('y', function (dd, ii) {return xHistHeight - myData[ii]});      
+      .attr('y', function (dd, ii) {return xHistHeight - myData[ii]});
+
+    xMax = d3.max(xHistArray[i]);
+    scale = d3.scaleLinear().domain([0,xMax]).range([xHistHeight, 0]);
+    xHist.selectAll('g').filter('.yAxis')
+      .transition()
+      .delay(tt * i)
+      .call(d3.axisLeft(scale).ticks(5));    
   })
 
 // make horizontal line visible
