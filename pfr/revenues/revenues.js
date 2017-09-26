@@ -966,7 +966,7 @@ function disableButtons() {
 }
 
 // Load the data.
-d3.csv('data/receipts.csv', display);
+d3.csv('data/revenues.csv', display);
 
 // has the user been warned about compatibility issues?
 var warned = false;
