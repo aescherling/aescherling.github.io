@@ -12,6 +12,24 @@ a, a:visited, a:active {
   margin: auto;
 }
 
+.toolbar_label {
+   white-space:nowrap;
+}
+
+.btn {
+  padding: 5px 5px 5px 5px;
+}
+
+.btn-group {
+  padding: 0px 0px 0px 10px;
+  margin-top: 5px;
+}
+
+.btn-secondary:active, .btn-secondary.active, .btn-secondary:hover {
+    border: 1px solid rgba(0, 153, 204, 1);
+    background: rgba(0, 153, 204, 0.3);
+}
+
 .uBar {
   fill: steelblue;
 }
