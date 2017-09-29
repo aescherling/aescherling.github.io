@@ -52,7 +52,7 @@ function floatingTooltip(tooltipId, width, height) {
    */
   function updatePosition(event) {
     var xOffset = -100;
-    var yOffset = -140;
+    var yOffset = -160;
 
     var ttw = tt.style('width');
     var tth = tt.style('height');

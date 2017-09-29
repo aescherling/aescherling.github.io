@@ -1,8 +1,10 @@
 // inspiration from https://bl.ocks.org/mbostock/3885304
 
-// function to call on the data
+// function to run on the data
 plotData = function(error, data, dataType) {
   if (error) throw error;
+
+  /* Initial setup. Then draw axes using percentage scale, fiscal years, draw bars with height 0 */
 
   // Constants for sizing
   var w = window,
@@ -23,13 +25,13 @@ plotData = function(error, data, dataType) {
   d3.selectAll('#heading').style('font-size', heading_size);
   d3.selectAll('.toolbar_label').attr('style', "padding:0px 0px 0px 10px; font-weight: bold; font-size: " + label_size);
   d3.selectAll('.btn-group').selectAll('.btn').attr('style', "font-size: " + entry_size);
-
+  
   var svg = d3.select("#vis")
     .append("svg")
     .attr('height', height)
     .attr('width', width);
 
-  var graphMargin = {top: height * 0.1, right: width * 0.2, bottom: 20, left: width * 0.05},
+  var graphMargin = {top: 40, right: width * 0.4, bottom: 20, left: 80},
     graphWidth = width - graphMargin.left - graphMargin.right,
     graphHeight = height - graphMargin.top - graphMargin.bottom;
 
@@ -39,10 +41,10 @@ plotData = function(error, data, dataType) {
   var axisTextSize = d3.min([d3.max([8, (graphHeight / 20)]), 15]) + "px"
 
   var graph = svg.append("g")
-      .attr("transform", "translate(" + graphMargin.left + "," + graphMargin.top + ")");
+    .attr("transform", "translate(" + graphMargin.left + "," + graphMargin.top + ")");
 
   x.domain(data.map(function(d) { return d.year; }));
-  y.domain([0, 0.10]);
+  y.domain([0, 0.12]);
 
   // draw x axis
   graph.append("g")
@@ -55,7 +57,7 @@ plotData = function(error, data, dataType) {
   graph.append("g")
       .style('font-size', axisTextSize)
       .attr("class", "axis axis--y")
-      .call(d3.axisLeft(y).ticks(10, "%"))
+      .call(d3.axisLeft(y).ticks(6, "%"))
       .append("text")
       .classed('yAxisText', true)
       .attr('x', 10)
@@ -64,22 +66,73 @@ plotData = function(error, data, dataType) {
       .attr("fill", "#000")
       .text("");
 
-  /* draw bars */
+  /* draw bars with height 0 */
 
-  // year-beginning reserves as % of budgeted general fund receipts
-  graph.selectAll('.bar')
+  // total funds in the background. draw the combined height; only (total - reserve) = BSF will show up.
+  graph.selectAll('tBar')
     .data(data)
     .enter().append('rect')
-    .attr('class', 'bar')
+    .attr('class', 'bar tBar')
     .attr('x', function(d) {return x(d.year)})
     .attr('y', graphHeight)
     .attr('width', x.bandwidth())
     .attr('height', 0)
+    .attr('fill', 'skyblue')
     .on('mouseenter', showFloatingTooltip)
     .on('mouseleave', function() {
       graph.select('.outline').remove();
       floating_tooltip.hideTooltip();
     });
+
+  // bar for reserve fund
+  graph.selectAll(".rBar")
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar rBar")
+      .attr("x", function(d) { return x(d.year); })
+      .attr("y", graphHeight)
+      .attr("width", x.bandwidth())
+      .attr("height", 0)
+      .attr('fill', 'steelblue')
+      .on('mouseenter', showFloatingTooltip)
+      .on('mouseleave', function() {
+        graph.select('.outline').remove();
+        floating_tooltip.hideTooltip();
+      });
+
+  // draw legend
+  legend = graph.append('g');
+  legendX = width * 0.6;
+  legendY = graphHeight * 0.25
+  legendSize = 0.8 * x.bandwidth();
+
+  // voter-approved debt
+  legend.append('rect')
+    .attr('x', legendX)
+    .attr('y', legendY + legendSize)
+    .attr('width', legendSize)
+    .attr('height', legendSize)
+    .attr('fill', 'skyblue');
+
+  legend.append('text')
+    .attr('x', legendX + 1.5 * legendSize)
+    .attr('y', legendY + 1.6 * legendSize)
+    .attr('font-size', axisTextSize)
+    .text('Budget Stabilization Fund');
+
+  // non-voter-approved debt
+  legend.append('rect')
+    .attr('x', legendX)
+    .attr('y', legendY + 2.5 * legendSize)
+    .attr('width', legendSize)
+    .attr('height', legendSize)
+    .attr('fill', 'steelblue');
+
+  legend.append('text')
+    .attr('x', legendX + 1.5 * legendSize)
+    .attr('y', legendY + 3.1 * legendSize)
+    .attr('font-size', axisTextSize)
+    .text('Reserve Fund');
 
   /* draw reserve fund policy line */
   var pLine = d3.line()
@@ -101,20 +154,30 @@ plotData = function(error, data, dataType) {
     .attr('font-size', axisTextSize)
     .text('5% Reserve Fund policy');
 
+
+  /* functions for drawing/toggling bars */
   function drawPercent() {
-    // set scale
-    var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0,0.10]);
+    // change y axis (immediate, no transition)
+    var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 0.12]);
+    d3.selectAll('.axis--y')
+        .call(d3.axisLeft(y).ticks(6, "%"));
 
-    // change the axis
-    d3.selectAll('.axis--y').call(d3.axisLeft(y).ticks(10, "%"));
-    d3.selectAll('.yAxisText').text('');
+    d3.selectAll('.yAxisText')
+        .text('');
 
-    // draw bars
-    d3.selectAll('.bar')
+    // transition total funds bars
+    graph.selectAll('.tBar')
       .transition()
       .duration(500)
-      .attr('y', function(d) {return y(d.reserve_pct)})
-      .attr('height', function(d) {return graphHeight - y(d.reserve_pct); });
+      .attr('y', function(d) {return y(d.total_pct)})
+      .attr('height', function(d) {return graphHeight - y(d.total_pct); });
+
+    // transition reserve fund bars
+    graph.selectAll(".rBar")
+      .transition()
+      .duration(500)
+      .attr("y", function(d) { return y(d.reserve_pct); })
+      .attr("height", function(d) { return graphHeight - y(d.reserve_pct); });
 
     // draw line
     var pLine = d3.line()
@@ -130,28 +193,35 @@ plotData = function(error, data, dataType) {
       .transition()
       .duration(500)
       .attr('y', y(0.052))
-
-  };
+  }
 
   function drawValues() {
-    // set scale
-    var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0,500]);
+    // change y axis (immmediate, no transition)
+    var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 600]);
+    d3.selectAll('.axis--y')
+        .call(d3.axisLeft(y).ticks(6));
 
-    // change the axis
-    d3.selectAll('.axis--y').call(d3.axisLeft(y).ticks(5));
-    d3.selectAll('.yAxisText').text('$ (Millions)');
+    d3.selectAll('.yAxisText')
+        .text('$ (Millions)');
 
-    // draw bars
-    d3.selectAll('.bar')
+    // transition total funds bars
+    graph.selectAll('.tBar')
       .transition()
       .duration(500)
-      .attr('y', function(d) {return y(d.reserves / 1e6)})
-      .attr('height', function(d) {return graphHeight - y(d.reserves / 1e6); });
+      .attr('y', function(d) {return y(d.begin_total / 1e6)})
+      .attr('height', function(d) {return graphHeight - y(d.begin_total / 1e6); });
+
+    // transition reserve fund bars
+    graph.selectAll(".rBar")
+      .transition()
+      .duration(500)
+      .attr("y", function(d) { return y(d.begin_reserve / 1e6); })
+      .attr("height", function(d) { return graphHeight - y(d.begin_reserve / 1e6); });
 
     // draw line
     var pLine = d3.line()
       .x(function(d) { return x(d.year) + (0.5 * x.bandwidth()); })
-      .y(function(d) { return y(0.05 * d.general / 1e6); });
+      .y(function(d) { return y(0.05 * d.budget / 1e6); });
     d3.selectAll('.pLine')
       .transition()
       .duration(500)
@@ -162,13 +232,13 @@ plotData = function(error, data, dataType) {
       .transition()
       .duration(500)
       .attr('y', y(240))
-  };
+  }
 
   // default to drawing percentages
   drawPercent();
 
   /* tooltip for displaying data on each item */
-  var floating_tooltip = floatingTooltip('floatingTooltip', "350px");
+  var floating_tooltip = floatingTooltip('floatingTooltip', "375px");
 
   function showFloatingTooltip(d) {
     // get the active view
@@ -176,11 +246,11 @@ plotData = function(error, data, dataType) {
 
     // set the height
     if (view=='percentages') {
-      var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 0.10]);
-      var h = y(d.reserve_pct);
+      var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 0.12]);
+      var h = y(d.total_pct);
     } else if (view=='values') {
-      var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 500]);
-      var h = y(d.reserves / 1e6);
+      var y = d3.scaleLinear().rangeRound([graphHeight, 0]).domain([0, 600]);
+      var h = y(d.begin_total / 1e6);
     }
 
     // outline the bar for that year
@@ -195,9 +265,11 @@ plotData = function(error, data, dataType) {
       .attr('stroke-width', 2);
 
     var content = '<span class="heading"><p style="text-align: center">Fiscal Year ' + d.year + '</p></span>' +
-                  '<table><tr><td>Beginning of year reserves</td><td style="text-align: center">' + formatAmount(d.reserves) + '</td></tr>' +
-                  '<tr><td>Budgeted General Fund receipts</td><td style="text-align: center">' + formatAmount(d.general) + '</td></tr></table>';
-
+                  '<table><tr><td style="font-style: italic">Beginning of year funds:</td><td style="text-align: center">Value</td><td style="text-align: center">Percent</td></</tr>' + 
+                  '<tr><td style="padding: 0px 10px 0px 20px">Budget Stabilization Fund</td><td style="text-align: center">' + formatAmount(d.bsf) + '</td><td style="text-align: center">' + formatPercent(100 * d.bsf_pct) + '</td></tr>' +
+                  '<tr><td style="padding: 0px 10px 0px 20px">Reserve Fund</td><td style="text-align: center">' + formatAmount(d.reserve) + '</td><td style="text-align: center">' + formatPercent(100 * d.reserve_pct) + '</td></tr>' + 
+                  '<tr><td style="padding: 0px 10px 0px 20px">Total</td><td style="text-align: center">' + formatAmount(d.total) + '</td><td style="text-align: center">' + formatPercent(100 * d.total_pct) + '</td></tr>' + 
+                  '<tr><td style="font-style: italic">General fund receipts</td><td style="text-align: center; font-style:italic">' + formatAmount(d.budget) + '</td><td style="text-align: center;font-style:italic">100%</td></table>';
     // display tooltip
     floating_tooltip.revealTooltip(content, d3.event);
   }
@@ -219,13 +291,18 @@ plotData = function(error, data, dataType) {
         }
       });
 
+
 }
 
 d3.csv("reserves.csv", function(d) {
   d.year = +d.fiscal_year;
+  d.bsf = +d.begin_bsf;
+  d.reserve = +d.begin_reserve;
+  d.total = +d.begin_total;
+  d.budget = +d.budget_general;
+  d.bsf_pct = +d.bsf_pct;
   d.reserve_pct = +d.reserve_pct;
-  d.reserves = +d.begin_reserves;
-  d.general = +d.budget_general;
+  d.total_pct = +d.total_pct;
   return d;
 }, plotData);
 

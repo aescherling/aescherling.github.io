@@ -1,9 +1,9 @@
-body {
-  padding-top: 20px;
-}
-
 a, a:visited, a:active {
   color: #444;
+}
+
+body {
+  padding-top: 20px;
 }
 
 .container {
@@ -30,8 +30,16 @@ a, a:visited, a:active {
     background: rgba(0, 153, 204, 0.3);
 }
 
-.bar {
+.bsfBar {
   fill: steelblue;
+}
+
+.tBar {
+  fill: skyblue;
+}
+
+.oBar:hover {
+  stroke: black;
 }
 
 .axis--x path {
