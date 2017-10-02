@@ -512,6 +512,12 @@ function bubbleChart() {
     // change outline to indicate hover state.
     d3.select(this).attr('stroke', 'black');
 
+    // x and y positions for the tooltip
+    // based on circle's coordinates and radius
+    cx = +d3.select(this).attr('cx');
+    cy = +d3.select(this).attr('cy');
+    r = +d3.select(this).attr('r');
+
     // select current fiscal year for generating content
     currentYear = d3.select('#year_toolbar').selectAll('.btn').filter('.active').attr('id');
 
@@ -551,7 +557,7 @@ function bubbleChart() {
     // (tooltip is de-activated when detail chart is being shown)
     tooltipActive = d3.select('#floatingTooltip').classed('active');
     if (tooltipActive) {
-      floating_tooltip.revealTooltip(content, d3.event);
+      floating_tooltip.revealTooltip(content, cx, cy, r);
     }
   }
 
