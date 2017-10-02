@@ -46,10 +46,10 @@ function bubbleChart() {
   d3.select('#floatingTooltip').classed('active', true);
 
   // Location to move bubbles towards
-  var center = { x: width * 0.35, y: height * 0.5 };
+  var center = { x: width * 0.35, y: height * 0.47 };
   var categoryCenters = {
-    "Budgetary department": { x: width * 0.25, y: height * 0.51 },
-    "Non-departmental": { x: width * 0.45, y: height * 0.51 }
+    "Budgetary department": { x: width * 0.25, y: height * 0.48 },
+    "Non-departmental": { x: width * 0.45, y: height * 0.48 }
   };
 
   // X locations of the category titles.
@@ -493,7 +493,7 @@ function bubbleChart() {
       .classed('category', true)
       .classed('bubble', true)
       .attr('x', function (d) { return categoryTitleX[d]; })
-      .attr('y', height * 0.15)
+      .attr('y', height * 0.13)
       .attr('text-anchor', 'middle')
       .attr('style', "font-size: " + label_size)
       .text(function (d) { return d; });
