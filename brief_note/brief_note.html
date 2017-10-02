@@ -1,0 +1,42 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/inverse_cdf_sampling.css">
+<script src="lib/d3.min.js"></script>
+<!--
+<script type="text/javascript" async src="path-to-MathJax/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+-->
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<title>A brief note about statistics</title>
+</head>
+<body>
+
+<div class="container">
+	<div style="height:50px"></div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8"><h2>A brief note about statistics</h2></div>
+	</div>
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">
+			<div style="height:10px"></div>
+			<p>To make a gross generalization, statistics is the art of making generalizations less gross. In other words, statistics tries to make generalizations about data as precise as possible.</p>
+			<h4>Mean and variance</h4>
+			<p>Suppose we want to make some generalization about the height of the people in a room. Let's say that the measured heights (in inches) are \(x=\{x_1, x_2, x_3, x_4, x_5\}=\{66, 70, 62, 64, 69\}\). Now what?</p>
+			<p>If we're trying to pick a number that represents the typical height of a person in the room (which may or may not be our goal) we want to calculate some sort of average. How do we select the best number? We need some sort of criteria.</p>
+			<p>There's no perfect approach here. Every criteria we could use will have advantages and disadvantages. That said, the most common such criteria in the field of statistics is the sum of squared errors. If we estimate the "typical" height as 40 inches (?!) then the sum of squared errors (SSE) will be \(26^2 + 30^2 + 22^2 + 24^2 + 29^2 = 3477\). If instead we use 65 inches, we get \(1^2 + 5^2 + 3^2 + 1^2 + 4^2 = 52\). Much better. After playing around with this long enough, we'll likely settle on 66.2 inches, which gives an SSE of 44.8.</p>
+			<p>Guess what else is special about the number 66.2? Not only does it minimize our SSE. It's also the mean of our data set. This is not a coincidence. The mean will always minimize the SSE. And so the statistician's favorite criteria (SSE) matches the statistician's favorite average (the mean).</p>
+			<p>Having established a "typical" height for our sample of 5 people, we might also want to establish a measure for how accurate this estimate is. Once again we return to the SSE. To generalize to circumstances with different numbers of data points, we divide by our sample size. The result is \(\frac{\text{SSE}}{\text{sample size}}=\frac{44.8}{5}=8.96\). This number is called the variance (in this case, the population variance, as opposed to the sample variance).</p>
+			<h4>Linear regression</h4>
+			<h4>Singular Value Decomposition</h4>
+			
+		</div>
+	</div>
+
+</body>
+</html>
