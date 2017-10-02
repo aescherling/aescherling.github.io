@@ -25,59 +25,36 @@ function floatingTooltip(tooltipId, width) {
 
   /*
    * Display tooltip with provided content.
-   *
    * content is expected to be HTML string.
-   *
-   * event is d3.event for positioning.
    */
-  function revealTooltip(content, event, cx, cy) {
+  function revealTooltip(content, cx, cy, r) {
     tt.style('opacity', 1.0)
       .html(content);
 
-    updatePosition(event, cx, cy);
+    updatePosition(cx, cy, r);
   }
 
-  /*
-   * Hide the tooltip div.
-   */
+  /* Hide the tooltip div. */
   function hideTooltip() {
     tt.style('opacity', 0.0);
   }
 
-  /*
-   * Figure out where to place the tooltip
-   * based on d3 mouse event.
-   */
-  function updatePosition(event, cx, cy) {
-    var xOffset = 20;
-    var yOffset = 10;
+  /* Place the tooltip based on circle's position */
+  function updatePosition(cx, cy, r) {
+ 
+    // get position of SVG
+    vis = document.getElementById('vis');
+    visX = vis.getBoundingClientRect().x;
+    visY = vis.getBoundingClientRect().y;
 
+    // get width and height of tooltip
     var ttw = tt.style('width');
     var tth = tt.style('height');
+    ttw = +ttw.substring(0, ttw.length - 2);
+    tth = +tth.substring(0, tth.length - 2);
 
-    var wscrY = window.scrollY;
-    var wscrX = window.scrollX;
-
-    var curX = (document.all) ? event.clientX + wscrX : event.pageX;
-    var curY = (document.all) ? event.clientY + wscrY : event.pageY;
-    var ttleft = ((curX - wscrX + xOffset * 2 + ttw) > window.innerWidth) ?
-                 curX - ttw - xOffset * 2 : curX + xOffset;
-
-    if (ttleft < wscrX + xOffset) {
-      ttleft = wscrX + xOffset;
-    }
-
-    var tttop = ((curY - wscrY + yOffset * 2 + tth) > window.innerHeight) ?
-                curY - tth - yOffset * 2 : curY + yOffset;
-
-    if (tttop < wscrY + yOffset) {
-      tttop = curY + yOffset;
-    }
-
-    // test: instead place based on circle's position
-    tttop = cy;
-    ttleft = cx + 15;
-    //
+    tttop = visY + cy - r - tth - 10;
+    ttleft = visX + cx - (ttw / 2);
 
     tt.style({ top: tttop + 'px', left: ttleft + 'px' });
   }
