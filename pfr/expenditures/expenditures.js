@@ -14,7 +14,9 @@ function bubbleChart() {
       y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
   // maintain a ratio of 9 width to 5 height, but scale to window. Max width of 1200.
-  var width = d3.min([1200, y * 1.2, x * 0.75]),
+  //var width = d3.min([1200, y * 1.2, x * 0.75]),
+  //    height = width * 5 / 9;
+  var width = d3.min([1200, y * 1.15, x * 0.71]),
       height = width * 5 / 9;
 
   // scale the toolbars
@@ -46,10 +48,10 @@ function bubbleChart() {
   d3.select('#floatingTooltip').classed('active', true);
 
   // Location to move bubbles towards
-  var center = { x: width * 0.35, y: height * 0.47 };
+  var center = { x: width * 0.35, y: height * 0.50 };
   var categoryCenters = {
-    "Budgetary department": { x: width * 0.25, y: height * 0.48 },
-    "Non-departmental": { x: width * 0.45, y: height * 0.48 }
+    "Budgetary department": { x: width * 0.25, y: height * 0.51 },
+    "Non-departmental": { x: width * 0.45, y: height * 0.51 }
   };
 
   // X locations of the category titles.
@@ -493,7 +495,7 @@ function bubbleChart() {
       .classed('category', true)
       .classed('bubble', true)
       .attr('x', function (d) { return categoryTitleX[d]; })
-      .attr('y', height * 0.13)
+      .attr('y', height * 0.15)
       .attr('text-anchor', 'middle')
       .attr('style', "font-size: " + label_size)
       .text(function (d) { return d; });
@@ -533,17 +535,17 @@ function bubbleChart() {
     pct_growth_tmp = Math.ceil(100 * 100 * (expenditures[index] - expenditures[index+1]) / expenditures[index+1])/100;
 
     var content = '<span class="name">' + d.name + '</span>' +
-                  '<span class="heading"><p style="text-align: center">Fiscal Year ' + fyText + '</p></span>' +
-                  '<table><tr><td style="font-style: italic">Expenditures:</td></tr>' + 
-                  '<tr><td style="padding: 0px 10px 0px 20px">Salaries</td><td style="text-align: center">' + formatAmount(salaries_tmp) + '</td></tr>' +
-                  '<tr><td style="padding: 0px 10px 0px 20px">Other</td><td style="text-align: center">' + formatAmount(others_tmp) + '</td></tr>' +
-                  '<tr><td style="padding: 0px 10px 0px 20px">Total</td><td style="text-align: center">' + formatAmount(expenditures_tmp) + '</td></tr>' +
-                  '<tr><td style="padding: 0px 10px 0px 20px">Annual growth</td><td style="text-align: center">' + formatPercent(pct_growth_tmp) + '</td></tr>' + 
+                  '<table><tr><td colspan="2" style="text-align:center; text-decoration: underline">Fiscal Year ' + fyText + '</td></tr>' + 
+                  '<tr height=5px></tr>' +
+                  '<tr><td>Salaries</td><td style="text-align: center">' + formatAmount(salaries_tmp) + '</td></tr>' +
+                  '<tr><td>Other</td><td style="text-align: center">' + formatAmount(others_tmp) + '</td></tr>' +
+                  '<tr><td>Total</td><td style="text-align: center">' + formatAmount(expenditures_tmp) + '</td></tr>' +
+                  '<tr><td>Annual growth</td><td style="text-align: center">' + formatPercent(pct_growth_tmp) + '</td></tr>' + 
                   '<tr height=5px></tr>' + 
                   '<tr><td>Budget</td><td style="text-align: center">' + formatAmount(budget_tmp) + '</td></tr>' +
                   '<tr><td>Percent of total budget</td><td style="text-align: center">' + formatPercent(percents[index]) + '</td></tr></table>' + 
                   '<div style="height: 5px"></div>' + 
-                  '<p style="text-align: center">(Click bubble for more info)</p>';
+                  '<p style="text-align: center; margin: 0px 0px 0px 0px">(Click bubble for more info)</p>';
 
     // check that the tooltip is active before displaying it
     // (tooltip is de-activated when detail chart is being shown)

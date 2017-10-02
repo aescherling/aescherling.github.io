@@ -13,8 +13,10 @@ function bubbleChart() {
       x = w.innerWidth || e.clientWidth || g.clientWidth,
       y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-  // maintain a ratio of 9 width to 5 height, but scale to window. Max width of 900.
-  var width = d3.min([1000, y * 1.2, x * 0.75]),
+  // maintain a ratio of 9 width to 5 height, but scale to window. Max width of 1200.
+  //var width = d3.min([1000, y * 1.2, x * 0.75]),
+  //    height = width * 5 / 9;
+  var width = d3.min([1200, y * 1.15, x * 0.71]),
       height = width * 5 / 9;
 
   // scale the toolbars
@@ -70,7 +72,7 @@ function bubbleChart() {
   // Note that the scale is based on the svg height.
   var radiusScale = d3.scale.pow()
     .exponent(0.5)
-    .range([3, height/7]);
+    .range([3, height/7.5]);
 
   // Default to coloring by category (general funds or special funds)
   var defaultColor = d3.scale.ordinal()
@@ -530,6 +532,10 @@ function bubbleChart() {
     // change outline to indicate hover state.
     d3.select(this).attr('stroke', 'black');
 
+    // get circle's coordinates
+    cx = +d3.select(this).attr('cx');
+    cy = +d3.select(this).attr('cy');
+
     // select current fiscal year for generating content
     currentYear = d3.select('#year_toolbar').selectAll('.btn').filter('.active').attr('id');
 
@@ -550,20 +556,21 @@ function bubbleChart() {
     pct_growth_tmp = Math.ceil(100 * 100 * (receipts[index] - receipts[index+1]) / receipts[index+1])/100;
 
     var content = '<span class="name">' + d.name + '</span>' +
-                  '<span class="heading"><p style="text-align: center">Fiscal Year ' + fyText + '</p></span>' +
-                  '<table><tr><td>Receipts</td><td>' + formatAmount(receipts_tmp) + '</td></tr>' +
+                  '<table><tr><td colspan="2" style="text-align:center; text-decoration: underline">Fiscal Year ' + fyText + '</td></tr>' + 
+                  '<tr height=5px></tr>' + 
+                  '<tr><td>Receipts</td><td>' + formatAmount(receipts_tmp) + '</td></tr>' +
                   '<tr><td>Budgeted</td><td>' + formatAmount(budget_tmp) + '</td></tr>' +
                   '<tr><td>Percent of total receipts</td><td style="text-align: center">' + formatPercent(percents[index]) + '</td></tr>' + 
                   '<tr><td>Percent of budgeted amt.</td><td style="text-align: center">' + formatPercent(pct_budget_tmp) + '</td></tr>' + 
                   '<tr><td>Annual growth</td><td style="text-align: center">' + formatPercent(pct_growth_tmp) + '</td></tr></table>' + 
                   '<div style="height: 5px"></div>' + 
-                  '<p style="text-align: center">(Click bubble for more info)</p>';
+                  '<p style="text-align: center; margin: 0px 0px 0px 0px">(Click bubble for more info)</p>';
 
     // check that the tooltip is active before displaying it
     // (tooltip is de-activated when detail chart is being shown)
     tooltipActive = d3.select('#floatingTooltip').classed('active');
     if (tooltipActive) {
-      floating_tooltip.revealTooltip(content, d3.event);
+      floating_tooltip.revealTooltip(content, d3.event, cx, cy);
     }
   }
 
