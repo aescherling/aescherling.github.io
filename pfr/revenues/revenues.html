@@ -10,10 +10,16 @@
 </head>
 <body>
   <div class="container">
-    <h1 id="heading">Revenues: Budgeted and Actual</h1>
-    <div style="height:10px"></div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col">
+        <h1 id="heading">Revenues: Budgeted and Actual</h1>
+        <div style="height:10px"></div>
+      </div>
+    </div>
 
     <div class="row">
+      <div class="col col-md-1"></div>
       <div class="col">
       <span class="toolbar_label">Fiscal Year:
       <span id="year_toolbar" class="btn-group" data-toggle="buttons">
@@ -32,6 +38,7 @@
     </div>
 
     <div class="row">
+      <div class="col col-md-1"></div>
       <div class="col">
         <span  class="toolbar_label">Group by:
         <span id="split_toolbar" class="btn-group" data-toggle="buttons">
@@ -49,12 +56,18 @@
     </div>
 
     <div class="row">
+      <div class="col col-md-1"></div>
       <div class="col">
         <input id="searchbar" type="text" class="typeahead tt-query notClicked" placeholder="Search for an item (hit tab to autocomplete)">
       </div>
     </div>
 
-    <div id="vis"></div>
+    <div class="row">
+      <div class="col col-md-1"></div>
+      <div class="col">
+        <div id="vis"></div>
+      </div>
+    </div>
     <div class="footer">
       <p>Animated bubble chart inspired by previous work by the <a href="http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html">New York Times</a>. Code derived from the <a href="http://vallandingham.me/bubble_charts_in_js.html">tutorial by Jim Vallandingham</a>.</p>
 <p>This project was built using a number of open source tools, including <a href="https://d3js.org">D3.js</a>, <a href="https://jquery.com">jQuery</a>, <a href="http://getbootstrap.com">Bootstrap</a>, <a href="https://twitter.github.io/typeahead.js/">typeahead.js</a>, and <a href="https://modernizr.com">modernizr</a>.</p>
