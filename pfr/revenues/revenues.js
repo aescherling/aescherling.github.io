@@ -48,10 +48,10 @@ function bubbleChart() {
   d3.select('#floatingTooltip').classed('active', true);
 
   // Location to move bubbles towards
-  var center = { x: width * 0.35, y: height * 0.5};
+  var center = { x: width * 0.4, y: height * 0.5};
   var categoryCenters = {
-    "General Funds": { x: width * 0.25, y: height * 0.52 },
-    "Special Funds": { x: width * 0.45, y: height * 0.52 }
+    "General Funds": { x: width * 0.3, y: height * 0.52 },
+    "Special Funds": { x: width * 0.5, y: height * 0.52 }
   };
 
   // X locations of the category titles.
