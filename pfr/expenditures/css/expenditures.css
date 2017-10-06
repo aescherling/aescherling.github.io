@@ -27,7 +27,6 @@ a, a:visited, a:active {
   margin-top: 5px;
 }
 
-
 .btn-secondary:active, .btn-secondary.active, .btn-secondary:hover {
     border: 1px solid rgba(0, 153, 204, 1);
     background: rgba(0, 153, 204, 0.3);
