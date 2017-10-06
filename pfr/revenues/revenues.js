@@ -56,8 +56,8 @@ function bubbleChart() {
 
   // X locations of the category titles.
   var categoryTitleX = {
-    "General funds": width * 0.15,
-    "Special funds": width * 0.53
+    "General funds": width * 0.2,
+    "Special funds": width * 0.58
   };
 
   // Create the force layout
@@ -312,7 +312,7 @@ function bubbleChart() {
       .attr('r', function (d) { return d.radius; });
 
     // Add a legend
-    makeLegend(width * 0.7, center.y, width / 22, ['#7aa25c', '#509CE7'], ['General Funds', 'Special Funds']);
+    makeLegend(width * 0.75, center.y, width / 22, ['#7aa25c', '#509CE7'], ['General Funds', 'Special Funds']);
 
     /*
     Content for the detailed view.
@@ -840,19 +840,19 @@ function bubbleChart() {
     if (colorScheme === 'category') {
       colorCategories();
       d3.selectAll('.legend').remove();
-      makeLegend(width * 0.7, center.y, width / 22, ['#7aa25c', '#509CE7'], ['General Funds', 'Special Funds']);
+      makeLegend(width * 0.75, center.y, width / 22, ['#7aa25c', '#509CE7'], ['General Funds', 'Special Funds']);
     } else if (colorScheme === 'budget') {
       colorBudget();
       d3.selectAll('.legend').remove();
 
-      makeLegend2(width * 0.7, center.y, width / 30, 
+      makeLegend2(width * 0.75, center.y, width / 30, 
         [percentColor(100), percentColor(50), percentColor(25), percentColor(12.5), percentColor(0), 
         percentColor(-12.5), percentColor(-25), percentColor(-50), percentColor(-100), '#000000'],
         ['200% +', '150%', '125%', '112.5%', '100%', '87.5%', '75%', '50%', '0%', 'Undefined']);
     } else if (colorScheme === 'growth') {
       colorGrowth();
       d3.selectAll('.legend').remove();
-      makeLegend2(width * 0.7, center.y, width / 30, 
+      makeLegend2(width * 0.75, center.y, width / 30, 
         [percentColor(100), percentColor(50), percentColor(25), percentColor(12.5), percentColor(0), 
         percentColor(-12.5), percentColor(-25), percentColor(-50), percentColor(-100), '#000000'], 
         ['100% +', '50%', '25%', '12.5%', '0%', '-12.5%', '-25%', '-50%', '-100%', 'Undefined']);
