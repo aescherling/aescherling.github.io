@@ -48,16 +48,16 @@ function bubbleChart() {
   d3.select('#floatingTooltip').classed('active', true);
 
   // Location to move bubbles towards
-  var center = { x: width * 0.35, y: height * 0.50 };
+  var center = { x: width * 0.4, y: height * 0.50 };
   var categoryCenters = {
-    "Budgetary department": { x: width * 0.25, y: height * 0.51 },
-    "Non-departmental": { x: width * 0.45, y: height * 0.51 }
+    "Budgetary department": { x: width * 0.3, y: height * 0.51 },
+    "Non-departmental": { x: width * 0.5, y: height * 0.51 }
   };
 
   // X locations of the category titles.
   var categoryTitleX = {
-    "Budgetary department": width * 0.15,
-    "Non-departmental": width * 0.5
+    "Budgetary department": width * 0.2,
+    "Non-departmental": width * 0.55
   };
 
   // Create the force layout
@@ -327,7 +327,7 @@ function bubbleChart() {
       .attr('r', function (d) { return d.radius; });
 
     // Add a legend
-    makeLegend(width * 0.7, center.y, width / 24, ['#7aa25c', '#509CE7'], ['Budgetary department', 'Non-departmental']);
+    makeLegend(width * 0.75, center.y, width / 24, ['#7aa25c', '#509CE7'], ['Budgetary department', 'Non-departmental']);
 
     /*
     Content for the detailed view.
@@ -844,11 +844,11 @@ function bubbleChart() {
     if (colorScheme === 'category') {
       colorCategories();
       d3.selectAll('.legend').remove();
-      makeLegend(width * 0.7, center.y, width / 25, ['#7aa25c', '#509CE7'], ['Budgetary department','Non-departmental']);
+      makeLegend(width * 0.75, center.y, width / 25, ['#7aa25c', '#509CE7'], ['Budgetary department','Non-departmental']);
     } else if (colorScheme === 'growth') {
       colorGrowth();
       d3.selectAll('.legend').remove();
-      makeLegend2(width * 0.7, center.y, width / 30, 
+      makeLegend2(width * 0.75, center.y, width / 30, 
         [growthColor(100), growthColor(50), growthColor(25), growthColor(12.5), growthColor(0), 
         growthColor(-12.5), growthColor(-25), growthColor(-50), growthColor(-100), '#000000'], 
         ['100% +', '50%', '25%', '12.5%', '0%', '-12.5%', '-25%', '-50%', '-100%', 'Undefined']);
