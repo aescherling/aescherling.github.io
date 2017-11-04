@@ -42,7 +42,7 @@ map_svg = d3.select('#map_div')
 //  .attr('fill', 'none');
 
 // tooltip for displaying data on each district
-var floating_tooltip = floatingTooltip('floatingTooltip', "250px");
+//var floating_tooltip = floatingTooltip('floatingTooltip', "250px");
 
 // make a group for holding map elements
 var mapLayer = map_svg.append('g')
