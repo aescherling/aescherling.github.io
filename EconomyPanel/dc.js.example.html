@@ -21,11 +21,6 @@ source: http://dc-js.github.io/dc.js/vc/index.html
         This is a dc.js example showing how GeoJson Polygon can be associated with crossfilter dimension and group using a choropleth chart. Hopefully I can get it working with the Beacon data set.
     </p>
 
-    <p>
-        Public data source
-        <a href="http://buzzdata.com/azad2002/the-united-states-of-venture-capital-2011#!/data" target="_blank">BuzzData.com</a>.
-    </p>
-
     <div id="us-chart">
         <strong>VC Distribution by States (color: total amount raised)</strong>
         <a class="reset" href="javascript:usChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
@@ -34,45 +29,18 @@ source: http://dc-js.github.io/dc.js/vc/index.html
         <div class="clearfix"></div>
     </div>
 
+    <!-- not sure what this is... -->
     <div class="clearfix"></div>
-
-    <div id="industry-chart">
-        <strong>By Industries</strong> (y: number of deals, x: total amount raised in millions, radius: amount raised)
-        <a class="reset" href="javascript:industryChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-
-        <div class="clearfix"></div>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <div id="round-chart">
-        <strong>By Rounds</strong> (y: number of deals, x: total amount raised in millions, radius: amount raised)
-        <a class="reset" href="javascript:roundChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
-
-        <div class="clearfix"></div>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <div>
-        <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
-    </div>
 
 </div>
 
-<a href="https://github.com/dc-js/dc.js"><img style="position: absolute; top: 0; right: 0; border: 0;"
-                                                  src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-                                                  alt="Fork me on GitHub"></a>
-
-<script type="text/javascript" src="../js/d3.js"></script>
-<script type="text/javascript" src="../js/crossfilter.js"></script>
-<script type="text/javascript" src="../js/dc.js"></script>
+<script type="text/javascript" src="../js/d3_v4.js"></script>
+<script type="text/javascript" src="../js/crossfilter.min.js"></script>
+<script type="text/javascript" src="../lib/dc.min.js"></script>
 <script type="text/javascript">
     var numberFormat = d3.format(".2f");
 
     var usChart = dc.geoChoroplethChart("#us-chart");
-    var industryChart = dc.bubbleChart("#industry-chart");
-    var roundChart = dc.bubbleChart("#round-chart");
 
     d3.csv("vc.csv", function (csv) {
         var data = crossfilter(csv);
@@ -142,86 +110,6 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                     .title(function (d) {
                         return "State: " + d.key + "\nTotal Amount Raised: " + numberFormat(d.value ? d.value : 0) + "M";
                     });
-
-            industryChart.width(990)
-                    .height(200)
-                    .margins({top: 10, right: 50, bottom: 30, left: 60})
-                    .dimension(industries)
-                    .group(statsByIndustries)
-                    .colors(d3.scale.category10())
-                    .keyAccessor(function (p) {
-                        return p.value.amountRaised;
-                    })
-                    .valueAccessor(function (p) {
-                        return p.value.deals;
-                    })
-                    .radiusValueAccessor(function (p) {
-                        return p.value.amountRaised;
-                    })
-                    .x(d3.scale.linear().domain([0, 5000]))
-                    .r(d3.scale.linear().domain([0, 4000]))
-                    .minRadiusWithLabel(15)
-                    .elasticY(true)
-                    .yAxisPadding(100)
-                    .elasticX(true)
-                    .xAxisPadding(200)
-                    .maxBubbleRelativeSize(0.07)
-                    .renderHorizontalGridLines(true)
-                    .renderVerticalGridLines(true)
-                    .renderLabel(true)
-                    .renderTitle(true)
-                    .title(function (p) {
-                        return p.key
-                                + "\n"
-                                + "Amount Raised: " + numberFormat(p.value.amountRaised) + "M\n"
-                                + "Number of Deals: " + numberFormat(p.value.deals);
-                    });
-            industryChart.yAxis().tickFormat(function (s) {
-                return s + " deals";
-            });
-            industryChart.xAxis().tickFormat(function (s) {
-                return s + "M";
-            });
-
-            roundChart.width(990)
-                    .height(200)
-                    .margins({top: 10, right: 50, bottom: 30, left: 60})
-                    .dimension(rounds)
-                    .group(statsByRounds)
-                    .colors(d3.scale.category10())
-                    .keyAccessor(function (p) {
-                        return p.value.amountRaised;
-                    })
-                    .valueAccessor(function (p) {
-                        return p.value.deals;
-                    })
-                    .radiusValueAccessor(function (p) {
-                        return p.value.amountRaised;
-                    })
-                    .x(d3.scale.linear().domain([0, 5000]))
-                    .r(d3.scale.linear().domain([0, 9000]))
-                    .minRadiusWithLabel(15)
-                    .elasticY(true)
-                    .yAxisPadding(150)
-                    .elasticX(true)
-                    .xAxisPadding(300)
-                    .maxBubbleRelativeSize(0.07)
-                    .renderHorizontalGridLines(true)
-                    .renderVerticalGridLines(true)
-                    .renderLabel(true)
-                    .renderTitle(true)
-                    .title(function (p) {
-                        return p.key
-                                + "\n"
-                                + "Amount Raised: " + numberFormat(p.value.amountRaised) + "M\n"
-                                + "Number of Deals: " + numberFormat(p.value.deals);
-                    });
-            roundChart.yAxis().tickFormat(function (s) {
-                return s + " deals";
-            });
-            roundChart.xAxis().tickFormat(function (s) {
-                return s + "M";
-            });
 
             dc.renderAll();
         });
