@@ -92,7 +92,7 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                 }
         );
 
-        d3.json("../geo/us-states.json", function (statesJson) {
+        d3.json("../geodata/council_districts.geojson", function (geodata) {
             usChart.width(990)
                     .height(500)
                     .dimension(states)
@@ -100,7 +100,7 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                     .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]))
                     .colorDomain([0, 200])
                     .colorCalculator(function (d) { return d ? usChart.colors()(d) : '#ccc'; })
-                    .overlayGeoJson(statesJson.features, "state", function (d) {
+                    .overlayGeoJson(geodata.features, "state", function (d) {
                         return d.properties.name;
                     })
                 .valueAccessor(function(kv) {
@@ -116,20 +116,7 @@ source: http://dc-js.github.io/dc.js/vc/index.html
     });
 </script>
 
-<script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-33628816-1']);
-    _gaq.push(['_trackPageview']);
 
-    (function () {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript';
-        ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-    })();
-</script>
 </body>
 </html>
 
