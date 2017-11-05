@@ -21,9 +21,9 @@ source: http://dc-js.github.io/dc.js/vc/index.html
         This is a dc.js example showing how GeoJson Polygon can be associated with crossfilter dimension and group using a choropleth chart. Hopefully I can get it working with the Beacon data set.
     </p>
 
-    <div id="us-chart">
+    <div id="la-chart">
         <strong>VC Distribution by States (color: total amount raised)</strong>
-        <a class="reset" href="javascript:usChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+        <a class="reset" href="javascript:laChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
         <span class="reset" style="display: none;"> | Current filter: <span class="filter"></span></span>
 
         <div class="clearfix"></div>
@@ -40,9 +40,9 @@ source: http://dc-js.github.io/dc.js/vc/index.html
 <script type="text/javascript">
     var numberFormat = d3.format(".2f");
 
-    var usChart = dc.geoChoroplethChart("#us-chart");
+    var laChart = dc.geoChoroplethChart("#la-chart");
 
-    d3.csv("vc.csv", function (csv) {
+    d3.csv("data/vc.csv", function (csv) {
         var data = crossfilter(csv);
 
         var states = data.dimension(function (d) {
@@ -92,14 +92,14 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                 }
         );
 
-        d3.json("../geodata/council_districts.geojson", function (geodata) {
-            usChart.width(990)
+        d3.json("geodata/us-states.json", function (geodata) {
+            laChart.width(990)
                     .height(500)
                     .dimension(states)
                     .group(stateRaisedSum)
                     .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]))
                     .colorDomain([0, 200])
-                    .colorCalculator(function (d) { return d ? usChart.colors()(d) : '#ccc'; })
+                    .colorCalculator(function (d) { return d ? laChart.colors()(d) : '#ccc'; })
                     .overlayGeoJson(geodata.features, "state", function (d) {
                         return d.properties.name;
                     })
