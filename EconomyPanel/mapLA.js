@@ -18,20 +18,6 @@ map_svg = d3.select('#map_div')
 	.attr('width', map_svg_width)
 	.attr('height', map_svg_height);
 
-
-//d3.selectAll("svg").append("svg:image")
-//      .attr("xlink:href", "http://www.e-pint.com/epint.jpg")
-//      .attr("width", 150)
-//      .attr("height", 200);
-
-// https://api.mapbox.com/v4/mapbox.light/-118.35,34.02,10/600x450.png?access_token=pk.eyJ1IjoiYWVzY2hlcmxpbmciLCJhIjoiY2o4cTRsdXdhMGVvbzJ4b3gwb3lmMDR6bCJ9.BpnZvVcHTuDFiTo9ngzQiw
-// https://api.mapbox.com/styles/v1/mapbox/light-v9/static/-118.35,34.02,9.5,0,0/600x600?access_token=pk.eyJ1IjoiYWVzY2hlcmxpbmciLCJhIjoiY2o4cTRsdXdhMGVvbzJ4b3gwb3lmMDR6bCJ9.BpnZvVcHTuDFiTo9ngzQiw
-//d3.select("#map_div").select('svg')
-//  .append("svg:image")
-//  .attr("xlink:href", "https://api.mapbox.com/styles/v1/mapbox/light-v9/static/" + map_long + "," + map_lat + "," + map_zoom + ",0,0/300x450?access_token=pk.eyJ1IjoiYWVzY2hlcmxpbmciLCJhIjoiY2o4cTRsdXdhMGVvbzJ4b3gwb3lmMDR6bCJ9.BpnZvVcHTuDFiTo9ngzQiw")
-//  .attr("width", map_svg_width)
-//  .attr("height", map_svg_height);
-
 // draw the box around the SVG
 //bb = map_svg.append('rect')
 //  .attr('x', 0)
@@ -61,73 +47,66 @@ var path = d3.geoPath()
 // wait until all the data is loaded before proceeding
 queue()
   .defer(d3.json, 'geodata/council_districts.geojson')
-  .defer(d3.csv, 'data/2017.04_Population2015.csv')
+  .defer(d3.csv, 'data/2017.10_city_data.csv')
   .await(map_ready)
 
 function map_ready(error, geodata, econdata) {
   if (error) throw error;
 
-  // mapbox stuff
-  //mapboxgl.accessToken = 'pk.eyJ1IjoiYWVzY2hlcmxpbmciLCJhIjoiY2o4cTRsdXdhMGVvbzJ4b3gwb3lmMDR6bCJ9.BpnZvVcHTuDFiTo9ngzQiw';
-  //var map = new mapboxgl.Map({
-  //container: 'map',
-  //style: 'mapbox://styles/mapbox/light-v9',
-  //center: [-118.2, 34],
-  //zoom: 8
-  //}).resize();
-  //
+  var geofeatures = geodata.features;
 
-  var features = geodata.features;
+  var data = crossfilter(econdata);
+  var locality = data.dimension(function (d) {
+    return d["locality"];
+  });
 
-  //var popByDistrict = {};
-  //econdata.forEach(function(d) { popByDistrict[+d.council_district] = +d.value; });
+  var indicator = data.dimension(function (d) {
+    return d["indicator"];
+  });
 
-  var popByDistrict = {};
-  econdata.forEach(function(d) { popByDistrict[+d.council_district] = +d.density; });
+  var sub_indicator = data.dimension(function (d) {
+    return d["sub_indicator"];
+  });
 
-  //var color = d3.scaleLinear()
-  //  //.domain([d3.min(Object.values(popByDistrict)), d3.max(Object.values(popByDistrict))])
-  //  .domain([200000, 300000])
-  //  .range(['white', 'steelblue']);
+  var year = data.dimension(function (d) {
+    return d["calendar_year"];
+  });
+
+  year.filter("2015");
+  indicator.filter("EMPLOYED WORKERS BY OCCUPATION");
+  sub_indicator.filter("SERVICE");
+
+  var values = locality.group().reduceSum(function (d) {
+    return +d["value"];
+  });
+
+  var valueArray = values.all();
+  var kk = [];
+  var valuesByDistrict = [];
+  valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
 
   var color = d3.scalePow()
     .exponent(0.5)
-    .domain([0, 20000])
+    .domain([0, d3.max(Object.values(valuesByDistrict))])
     .range(['white', 'steelblue']);
 
   getColor = function (d) {
-    myColor = color(popByDistrict[d.properties.Council_District]);
+    myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
     return myColor;
   }
 
-  // Draw each district as a path
-  //var container = map.getCanvasContainer();
-  //var svg = d3.select(container).append("svg").attr('id', 'mapbox_svg');
-  //svg.selectAll('path')
-  //  .data(features)
-  //  .enter().append('path')
-  //  .attr('d', path)
-  //  .attr('id', function (d) {return "District" + d.properties.Council_District;})
-  //  .classed('district', true)
-  //  .attr('vector-effect', 'non-scaling-stroke')
-  //  .style('fill', function (d) {return color(popByDistrict[d.properties.Council_District]);})
-  //  .style('stroke', 'white')
-  //  .on('click', mouseclick)
-  //  .on('mouseover', mouseover)
-  //  .on('mouseout', mouseout);
-
   mapLayer.selectAll('path')
-      .data(features)
+      .data(geofeatures)
       .enter().append('path')
       .attr('d', path)
-      .attr('id', function (d) {return "District" + d.properties.Council_District;})
-      .attr('label', function (d) {return "Council District " + d.properties.Council_District;})
+      .attr('id', function (d) {return d.properties.Council_District.replace(/\s/g, '');})
+      .attr('label', function (d) {return d.properties.Council_District;})
       .attr('councilmember', function (d) {return d.properties.Councilmember;})
       .classed('selected', false)
       .classed('frozen', false)
       .classed('district', true)
       .attr('vector-effect', 'non-scaling-stroke')
-      .style('fill', function (d) {return color(popByDistrict[d.properties.Council_District]);})
+      .style('fill', getColor)
       .style('stroke', 'white')
       .style('cursor', 'pointer')
       .on('click', mouseclick)
@@ -179,11 +158,115 @@ function map_ready(error, geodata, econdata) {
   //       color(2.5e5), color(2.4e5), color(2.3e5), color(2.2e5), color(2.1e5)], 
   //      ['300,000', '290,000', '280,000', '270,000', '260,000', '250,000', '240,000', '230,000', '220,000', '210,000']);
 
-  makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
-        [color(2e4), color(1e4), color(0.5e4), color(0.25e4), color(0.125e4), color(0.0625e4)],
-        ['20,000', '10,000','5,000','2,500', '1,250', '625']);
+  //makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
+  //      [color(2e4), color(1e4), color(0.5e4), color(0.25e4), color(0.125e4), color(0.0625e4)],
+  //      ['20,000', '10,000','5,000','2,500', '1,250', '625']);
 
 }
+
+
+
+// // wait until all the data is loaded before proceeding
+// queue()
+//   .defer(d3.json, 'geodata/council_districts.geojson')
+//   .defer(d3.csv, 'data/2017.04_Population2015.csv')
+//   .await(map_ready)
+
+// function map_ready(error, geodata, econdata) {
+//   if (error) throw error;
+
+//   var features = geodata.features;
+
+
+//   var popByDistrict = {};
+//   econdata.forEach(function(d) { popByDistrict[+d.locality.replace(/\D/g, '')] = +d.density; });
+
+//   //var color = d3.scaleLinear()
+//   //  //.domain([d3.min(Object.values(popByDistrict)), d3.max(Object.values(popByDistrict))])
+//   //  .domain([200000, 300000])
+//   //  .range(['white', 'steelblue']);
+
+//   var color = d3.scalePow()
+//     .exponent(0.5)
+//     .domain([0, 20000])
+//     .range(['white', 'steelblue']);
+
+//   getColor = function (d) {
+//     myColor = color(popByDistrict[d.properties.Council_District.replace(/\D/g, '')]);
+//     return myColor;
+//   }
+
+//   mapLayer.selectAll('path')
+//       .data(features)
+//       .enter().append('path')
+//       .attr('d', path)
+//       .attr('id', function (d) {return d.properties.Council_District.replace(/\s/g, '');})
+//       .attr('label', function (d) {return d.properties.Council_District;})
+//       .attr('councilmember', function (d) {return d.properties.Councilmember;})
+//       .classed('selected', false)
+//       .classed('frozen', false)
+//       .classed('district', true)
+//       .attr('vector-effect', 'non-scaling-stroke')
+//       .style('fill', function (d) {return color(popByDistrict[d.properties.Council_District.replace(/\D/g, '')]);})
+//       .style('stroke', 'white')
+//       .style('cursor', 'pointer')
+//       .on('click', mouseclick)
+//       .on('mouseover', mouseover)
+//       .on('mouseout', mouseout)
+//       .attr('opacity', 0.8);
+
+//   // function for making legends
+//   function makeLegend(x, y, size, colors, labels) {
+//     // make the legend object
+//     legend = map_svg.append('g')
+//       .classed('legend', true);
+
+//     // # of items in the legend
+//     var n = colors.length;
+
+//     var yTmp = y - (n * size * 0.5);
+
+//     // legend title
+//     legend.append('text')
+//       .attr('x', x)
+//       .attr('y', yTmp - size)
+//       .text('Population per');
+//     legend.append('text')
+//       .attr('x', x)
+//       .attr('y', yTmp - size * 0.4)
+//       .text('sq. mile');
+
+//     // loop to place the items
+//     for (var i=0; i<n; i++){
+//       legend.append('rect')
+//         .attr('x', x)
+//         .attr('y', yTmp + size * i)
+//         .attr('width', size)
+//         .attr('height', size)
+//         .attr('fill', d3.rgb(colors[i]))
+//         .attr('stroke', d3.rgb(colors[i]));
+//       legend.append('text')
+//         .attr('x', x + 1.5 * size)
+//         .attr('y', 4 + size/2 + yTmp + size * i)
+//         .attr('text-anchor', 'center')
+//         .attr('style', "font-size: " + d3.min([d3.max([10, (size / 2)]), 16]) + "px")
+//         .text(labels[i]);
+//     }
+//   }
+
+//   //makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
+//   //      [color(3e5), color(2.9e5), color(2.8e5), color(2.7e5), color(2.6e5),
+//   //       color(2.5e5), color(2.4e5), color(2.3e5), color(2.2e5), color(2.1e5)], 
+//   //      ['300,000', '290,000', '280,000', '270,000', '260,000', '250,000', '240,000', '230,000', '220,000', '210,000']);
+
+//   makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
+//         [color(2e4), color(1e4), color(0.5e4), color(0.25e4), color(0.125e4), color(0.0625e4)],
+//         ['20,000', '10,000','5,000','2,500', '1,250', '625']);
+
+// }
+
+
+
 
 // label council districts
 cd_label = map_svg.append('text')
