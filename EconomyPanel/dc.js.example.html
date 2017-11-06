@@ -66,12 +66,18 @@ source: http://dc-js.github.io/dc.js/vc/index.html
         indicator.filter("POPULATION");
 
         var population = locality.group().reduceSum(function (d) {
-            return d["value"];
+            return +d["value"];
         });
 
         d3.json("geodata/council_districts.geojson", function (geodata) {
+            var projection = d3.geo.mercator()
+                .scale((512) * 0.5 / Math.PI * Math.pow(2, 8.5))
+                .center([-118.25, 34.02])
+                .translate([990 / 2, 500 / 2]);
+
             laChart.width(990)
                     .height(500)
+                    .projection(projection)
                     .dimension(locality)
                     .group(population)
                     .colors(d3.scale.quantize().range(["#E2F2FF", "#C4E4FF", "#9ED2FF", "#81C5FF", "#6BBAFF", "#51AEFF", "#36A2FF", "#1E96FF", "#0089FF", "#0061B5"]))
@@ -85,7 +91,7 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                         return kv.value;
                     })
                     .title(function (d) {
-                        return "Council District: " + d.key + "\nPopulation: " + numberFormat(d.value ? d.value : 0);
+                        return d.key + "\nPopulation: " + numberFormat(d.value ? d.value : 0);
                     });
 
             dc.renderAll();
@@ -108,45 +114,45 @@ source: http://dc-js.github.io/dc.js/vc/index.html
             return d["Raised"];
         });
 
-        var industries = data.dimension(function (d) {
-            return d["Industry Group"];
-        });
-        var statsByIndustries = industries.group().reduce(
-                function (p, v) {
-                    p.amountRaised += +v["Raised"];
-                    p.deals += +v["Deals"];
-                    return p;
-                },
-                function (p, v) {
-                    p.amountRaised -= +v["Raised"];
-                    if (p.amountRaised < 0.001) p.amountRaised = 0; // do some clean up
-                    p.deals -= +v["Deals"];
-                    return p;
-                },
-                function () {
-                    return {amountRaised: 0, deals: 0}
-                }
-        );
+        // var industries = data.dimension(function (d) {
+        //     return d["Industry Group"];
+        // });
+        // var statsByIndustries = industries.group().reduce(
+        //         function (p, v) {
+        //             p.amountRaised += +v["Raised"];
+        //             p.deals += +v["Deals"];
+        //             return p;
+        //         },
+        //         function (p, v) {
+        //             p.amountRaised -= +v["Raised"];
+        //             if (p.amountRaised < 0.001) p.amountRaised = 0; // do some clean up
+        //             p.deals -= +v["Deals"];
+        //             return p;
+        //         },
+        //         function () {
+        //             return {amountRaised: 0, deals: 0}
+        //         }
+        // );
 
-        var rounds = data.dimension(function (d) {
-            return d["RoundClassDescr"];
-        });
-        var statsByRounds = rounds.group().reduce(
-                function (p, v) {
-                    p.amountRaised += +v["Raised"];
-                    p.deals += +v["Deals"];
-                    return p;
-                },
-                function (p, v) {
-                    p.amountRaised -= +v["Raised"];
-                    if (p.amountRaised < 0.001) p.amountRaised = 0; // do some clean up
-                    p.deals -= +v["Deals"];
-                    return p;
-                },
-                function () {
-                    return {amountRaised: 0, deals: 0}
-                }
-        );
+        // var rounds = data.dimension(function (d) {
+        //     return d["RoundClassDescr"];
+        // });
+        // var statsByRounds = rounds.group().reduce(
+        //         function (p, v) {
+        //             p.amountRaised += +v["Raised"];
+        //             p.deals += +v["Deals"];
+        //             return p;
+        //         },
+        //         function (p, v) {
+        //             p.amountRaised -= +v["Raised"];
+        //             if (p.amountRaised < 0.001) p.amountRaised = 0; // do some clean up
+        //             p.deals -= +v["Deals"];
+        //             return p;
+        //         },
+        //         function () {
+        //             return {amountRaised: 0, deals: 0}
+        //         }
+        // );
 
         d3.json("geodata/us-states.json", function (geodata) {
             laChart.width(990)
@@ -159,10 +165,10 @@ source: http://dc-js.github.io/dc.js/vc/index.html
                     .overlayGeoJson(geodata.features, "state", function (d) {
                         return d.properties.name;
                     })
-                .valueAccessor(function(kv) {
-                    console.log(kv);
-                    return kv.value;
-                })
+                    .valueAccessor(function(kv) {
+                        console.log(kv);
+                        return kv.value;
+                    })
                     .title(function (d) {
                         return "State: " + d.key + "\nTotal Amount Raised: " + numberFormat(d.value ? d.value : 0) + "M";
                     });

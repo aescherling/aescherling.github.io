@@ -31,18 +31,18 @@ df$council_district[df$council_district=="CITY TOTAL"] <- "City of Los Angeles"
 
 # now relabel each council district
 # go from council_district=1 --> council_district="Council District 1"
-# df$council_district <- sapply(df$council_district, function(cd) {
-# 	if (nchar(cd)<3) {
-# 		out <- paste0("Council District ", cd)
-# 	} else {
-# 		out <- cd
-# 	}
-# 	return(out)
-# })
+df$council_district <- sapply(df$council_district, function(cd) {
+	if (nchar(cd)<3) {
+		out <- paste0("Council District ", cd)
+	} else {
+		out <- cd
+	}
+	return(out)
+})
 
 # the "locality" variable as it is now is no longer of interest
 # replace the "locality" column with the "council_district" column, then delete the latter
 df$locality <- df$council_district
 df <- df[,-which(colnames(df)=="council_district")]
 
-write.csv(df, '2017.10_city_data.csv')
+write.csv(df, '2017.10_city_data.csv', row.names=F)
