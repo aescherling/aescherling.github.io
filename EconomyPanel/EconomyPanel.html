@@ -49,27 +49,37 @@
 
 
     <div class="row">
-      <div class="form-group" style="display:inline-block;">
+      <div id="categoryDiv" class="form-group" style="display:inline-block;">
         <label for="selectCategory" style="font-weight:bold">Category</label>
         <select class="form-control" id="selectCategory" onchange="alert('hello');">
           <option>-</option>
         </select>
       </div>
 
-      <div style="width:20px"></div>
-
-      <div class="form-group" style="display:inline-block;">
+      <div id="indicatorDiv" class="form-group" style="display:inline-block;">
         <label for="selectIndicator" style="font-weight:bold">Indicator</label>
         <select class="form-control" id="selectIndicator">
           <option>-</option>
         </select>
       </div>
 
-      <div style="width:20px"></div>
+      <div id="genderDiv" class="form-group" style="display:none;">
+        <label for="selectGender" style="font-weight:bold">Gender</label>
+        <select class="form-control" id="selectGender">
+          <option>-</option>
+        </select>
+      </div>
 
-      <div class="form-group" style="display:inline-block;">
+      <div id="subindicatorDiv" class="form-group" style="display:none;">
         <label for="selectSubindicator" style="font-weight:bold">Sub-indicator</label>
         <select class="form-control" id="selectSubindicator">
+          <option>-</option>
+        </select>
+      </div>
+
+      <div id="periodDiv" class="form-group" style="display:none;">
+        <label for="selectPeriod" style="font-weight:bold">Time period</label>
+        <select class="form-control" id="selectPeriod">
           <option>-</option>
         </select>
       </div>

@@ -86,32 +86,6 @@ function map_ready(error, geodata, econdata) {
 
 
   // initial settings for the map //
-  year.filter("2015");
-  indicator.filter("EMPLOYED WORKERS BY OCCUPATION");
-  subindicator.filter("SERVICE");
-
-  var values = locality.group().reduceSum(function (d) {
-    return +d["value"];
-  });
-  var valueArray = values.all();
-  var kk = [];
-  var valuesByDistrict = [];
-  valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
-
-  year.filterAll();
-  indicator.filterAll();
-  subindicator.filterAll();
-
-  var color = d3.scalePow()
-    .exponent(0.5)
-    .domain([0, d3.max(Object.values(valuesByDistrict))])
-    .range(['white', 'steelblue']);
-
-  getColor = function (d) {
-    myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
-    return myColor;
-  }
-
   mapLayer.selectAll('path')
       .data(geofeatures)
       .enter().append('path')
@@ -123,7 +97,7 @@ function map_ready(error, geodata, econdata) {
       .classed('frozen', false)
       .classed('district', true)
       .attr('vector-effect', 'non-scaling-stroke')
-      .style('fill', getColor)
+      .style('fill', 'white')
       .style('stroke', 'gray')
       .style('cursor', 'pointer')
       .on('click', mouseclick)
@@ -163,6 +137,10 @@ function map_ready(error, geodata, econdata) {
     } else {
       category.filter(cat);
     }
+
+    // remove all indicator and subindicator filters
+    indicator.filterAll();
+    subindicator.filterAll();
 
     // pick out all indicators with more than one observation using the current filters
     indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -210,8 +188,10 @@ function map_ready(error, geodata, econdata) {
     addOptions('#selectSubindicator', subindicators);
 
 
-    // if there is less than one subindicator, update the map. otherwise, make each district white
+    // if there is less than one subindicator, update the map.
+    // otherwise, make each district white and open the subindicator selector
     if (subindicators.length < 2) {
+      
       // for now, use 2015 data
       year.filter("2015");
       var values = locality.group().reduceSum(function (d) {
@@ -237,6 +217,8 @@ function map_ready(error, geodata, econdata) {
 
       year.filterAll();
     } else {
+      d3.select('#subindicatorDiv').attr('style','display:inline-block');
+
       mapLayer.selectAll('path')
         .style('fill', 'white');
     }
