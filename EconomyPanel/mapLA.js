@@ -44,6 +44,9 @@ var projection = d3.geoMercator()
 var path = d3.geoPath()
   .projection(projection);
 
+// create a global version of the crossfilter, just for debugging purposes
+//var cf;
+
 // wait until all the data is loaded before proceeding
 queue()
   .defer(d3.json, 'geodata/council_districts.geojson')
@@ -53,18 +56,24 @@ queue()
 function map_ready(error, geodata, econdata) {
   if (error) throw error;
 
+  // geodata //
   var geofeatures = geodata.features;
 
-  var data = crossfilter(econdata);
+  // set up crossfilter on the econdata //
+  var data = crossfilter(econdata); //cf=data;
   var locality = data.dimension(function (d) {
     return d["locality"];
   });
+
+  var category = data.dimension(function(d) {
+    return d["category"];
+  })
 
   var indicator = data.dimension(function (d) {
     return d["indicator"];
   });
 
-  var sub_indicator = data.dimension(function (d) {
+  var subindicator = data.dimension(function (d) {
     return d["sub_indicator"];
   });
 
@@ -72,18 +81,26 @@ function map_ready(error, geodata, econdata) {
     return d["calendar_year"];
   });
 
+
+
+
+
+  // initial settings for the map //
   year.filter("2015");
   indicator.filter("EMPLOYED WORKERS BY OCCUPATION");
-  sub_indicator.filter("SERVICE");
+  subindicator.filter("SERVICE");
 
   var values = locality.group().reduceSum(function (d) {
     return +d["value"];
   });
-
   var valueArray = values.all();
   var kk = [];
   var valuesByDistrict = [];
   valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
+
+  year.filterAll();
+  indicator.filterAll();
+  subindicator.filterAll();
 
   var color = d3.scalePow()
     .exponent(0.5)
@@ -107,12 +124,168 @@ function map_ready(error, geodata, econdata) {
       .classed('district', true)
       .attr('vector-effect', 'non-scaling-stroke')
       .style('fill', getColor)
-      .style('stroke', 'white')
+      .style('stroke', 'gray')
       .style('cursor', 'pointer')
       .on('click', mouseclick)
       .on('mouseover', mouseover)
       .on('mouseout', mouseout)
       .attr('opacity', 0.8);
+
+
+
+
+
+  // set up variable selectors //
+  // NOTE: I HAVE TO SET UP A TIME PERIOD SELECTOR AS WELL
+  // reference: https://stackoverflow.com/questions/1801499/how-to-change-options-of-select-with-jquery
+  // helper functions
+  removeOptions = function(selectId) {
+    $(selectId + ' option:gt(0)').remove();
+  }
+
+  addOptions = function(selectId, options) {
+    for (i=0; i<options.length; i++) {
+      option = $('<option></option>').attr("value", options[i]).text(options[i].toLowerCase());
+      $(selectId).append(option);
+    }
+  }
+
+
+
+  // functionality for category selection //
+  categories = category.group().all().map(function (d) {return d.key});
+  addOptions('#selectCategory', categories);
+
+  selectCategory = function(cat) {
+    // If they choose "-", remove the filter; otherwise filter using given category
+    if (cat=="-") {
+      category.filterAll();
+    } else {
+      category.filter(cat);
+    }
+
+    // pick out all indicators with more than one observation using the current filters
+    indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    indicators = indicatorCounts.map(function (d) {return d.key});
+
+    // pick out all subindicators with more than one observation using the current filters
+    subindicatorCounts = subindicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    subindicators = subindicatorCounts.map(function (d) {return d.key});
+
+    // change the options of the other selectors
+    removeOptions('#selectIndicator');
+    addOptions('#selectIndicator', indicators);
+    removeOptions('#selectSubindicator');
+    addOptions('#selectSubindicator', subindicators);
+  }
+
+  $('#selectCategory').attr('onchange', "selectCategory(this.value);")
+
+
+
+  // functionality for indicator selection // 
+  indicators = indicator.group().all().map(function (d) {return d.key});
+  addOptions('#selectIndicator', indicators);
+
+  selectIndicator = function(ind) {
+    // If they choose "-", remove the filter; otherwise filter using given indicator
+    if (ind=="-") {
+      indicator.filterAll();
+    } else {
+      indicator.filter(ind);
+    }
+
+    // pick out all categories with more than one observation using the current filters
+    // categoryCounts = category.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    // categories = categoryCounts.map(function (d) {return d.key});
+
+    // pick out all subindicators with more than one observation using the current filters
+    subindicatorCounts = subindicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    subindicators = subindicatorCounts.map(function (d) {return d.key});
+
+    // change the options of the other selectors
+    // removeOptions('#selectCategory');
+    // addOptions('#selectCategory', categories);
+    removeOptions('#selectSubindicator');
+    addOptions('#selectSubindicator', subindicators);
+
+
+    // if there is less than one subindicator, update the map. otherwise, make each district white
+    if (subindicators.length < 2) {
+      // for now, use 2015 data
+      year.filter("2015");
+      var values = locality.group().reduceSum(function (d) {
+        return +d["value"];
+      });
+      var valueArray = values.all();
+      var kk = [];
+      var valuesByDistrict = [];
+      valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
+
+      var color = d3.scalePow()
+        .exponent(0.5)
+        .domain([0, d3.max(Object.values(valuesByDistrict))])
+        .range(['white', 'steelblue']);
+
+      getColor = function (d) {
+        myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
+        return myColor;
+      }
+
+      mapLayer.selectAll('path')
+        .style('fill', getColor);
+
+      year.filterAll();
+    } else {
+      mapLayer.selectAll('path')
+        .style('fill', 'white');
+    }
+
+  }
+
+  $('#selectIndicator').attr('onchange', "selectIndicator(this.value);")
+
+
+  // functionality for subindicator selection //
+    selectSubindicator = function(sub) {
+    // If they choose "-", simply remove the filter and make the map white.
+    // Otherwise filter using given subindicator and plot
+    if (sub=="-") {
+      subindicator.filterAll();
+      mapLayer.selectAll('path')
+        .style('fill', 'white');
+    } else {
+      subindicator.filter(sub);
+      // for now, use 2015 data
+      year.filter("2015");
+      var values = locality.group().reduceSum(function (d) {
+        return +d["value"];
+      });
+      var valueArray = values.all();
+      var kk = [];
+      var valuesByDistrict = [];
+      valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
+
+      var color = d3.scalePow()
+        .exponent(0.5)
+        .domain([0, d3.max(Object.values(valuesByDistrict))])
+        .range(['white', 'steelblue']);
+
+      getColor = function (d) {
+        myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
+        return myColor;
+      }
+
+      mapLayer.selectAll('path')
+        .style('fill', getColor);
+
+      year.filterAll();
+    }
+  }
+
+  $('#selectSubindicator').attr('onchange', "selectSubindicator(this.value);")
+
+
 
   // function for making legends
   function makeLegend(x, y, size, colors, labels) {
@@ -205,7 +378,7 @@ mouseclick = function() {
   } else {
     d3.selectAll('.district').classed('selected', false);
     d3.select(this).classed('selected', true);
-    d3.selectAll('.district').style('stroke', 'white');
+    d3.selectAll('.district').style('stroke', 'gray');
     district = d3.select(this);
     district.moveToFront().style('stroke', 'black');
     district_text = d3.select(this).attr('label');
@@ -232,7 +405,7 @@ mouseover = function() {
 mouseout = function() {
   isFrozen = d3.select(this).classed('frozen');
   if (!isFrozen) {
-	  d3.select(this).style('stroke', 'white');
+	  d3.select(this).style('stroke', 'gray');
     cd_label.text('');
     cd_councilmember.text('');
   }
