@@ -62,6 +62,7 @@ path {
 }
 
 .sparkline {
+  margin: 5px 10px 5px 10px;
   padding: 5px;
   border-radius: 5px 5px 5px;
   border: 1px solid #CCC;

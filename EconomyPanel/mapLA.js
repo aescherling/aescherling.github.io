@@ -106,6 +106,33 @@ function map_ready(error, geodata, econdata) {
       .attr('opacity', 0.8);
 
 
+  // function for changing map color.
+  // assumes that the data have been filtered to a single variable.
+  // for now, use 2015 data
+  var changeColor = function() {
+    year.filter("2015");
+    var values = locality.group().reduceSum(function (d) {
+      return +d["value"];
+    });
+    var valueArray = values.all();
+    var kk = [];
+    var valuesByDistrict = [];
+    valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
+    year.filterAll();
+
+    var color = d3.scalePow()
+      .exponent(0.5)
+      .domain([0, d3.max(Object.values(valuesByDistrict))])
+      .range(['white', 'steelblue']);
+
+    getColor = function (d) {
+      myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
+      return myColor;
+    }
+
+    mapLayer.selectAll('path')
+      .style('fill', getColor);
+  }
 
 
 
@@ -134,27 +161,32 @@ function map_ready(error, geodata, econdata) {
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
       category.filterAll();
+      d3.select('#indicatorDiv').attr('style','display:none');
     } else {
       category.filter(cat);
+      d3.select('#indicatorDiv').attr('style','display:inline-block');
     }
 
     // remove all indicator and subindicator filters
     indicator.filterAll();
     subindicator.filterAll();
 
+    // show the indicator selector (this was done above) and hide the other selectors
+    d3.select('#subindicatorDiv').attr('style','display:none');
+    d3.select('#genderDiv').attr('style','display:none');
+    d3.select('#periodDiv').attr('style','display:none');
+
     // pick out all indicators with more than one observation using the current filters
     indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
     indicators = indicatorCounts.map(function (d) {return d.key});
 
-    // pick out all subindicators with more than one observation using the current filters
-    subindicatorCounts = subindicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    subindicators = subindicatorCounts.map(function (d) {return d.key});
-
     // change the options of the other selectors
     removeOptions('#selectIndicator');
     addOptions('#selectIndicator', indicators);
-    removeOptions('#selectSubindicator');
-    addOptions('#selectSubindicator', subindicators);
+
+    // change the map to white
+    mapLayer.selectAll('path')
+      .style('fill', 'white');
   }
 
   $('#selectCategory').attr('onchange', "selectCategory(this.value);")
@@ -169,6 +201,7 @@ function map_ready(error, geodata, econdata) {
     // If they choose "-", remove the filter; otherwise filter using given indicator
     if (ind=="-") {
       indicator.filterAll();
+      d3.select('#subindicatorDiv').attr('style','display:none');
     } else {
       indicator.filter(ind);
     }
@@ -182,40 +215,17 @@ function map_ready(error, geodata, econdata) {
     subindicators = subindicatorCounts.map(function (d) {return d.key});
 
     // change the options of the other selectors
-    // removeOptions('#selectCategory');
-    // addOptions('#selectCategory', categories);
     removeOptions('#selectSubindicator');
     addOptions('#selectSubindicator', subindicators);
+    subindicator.filterAll();
 
 
-    // if there is less than one subindicator, update the map.
+    // if there is less than one subindicator, update the map and hide the subindicator selector.
     // otherwise, make each district white and open the subindicator selector
     if (subindicators.length < 2) {
-      
-      // for now, use 2015 data
-      year.filter("2015");
-      var values = locality.group().reduceSum(function (d) {
-        return +d["value"];
-      });
-      var valueArray = values.all();
-      var kk = [];
-      var valuesByDistrict = [];
-      valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
-
-      var color = d3.scalePow()
-        .exponent(0.5)
-        .domain([0, d3.max(Object.values(valuesByDistrict))])
-        .range(['white', 'steelblue']);
-
-      getColor = function (d) {
-        myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
-        return myColor;
-      }
-
-      mapLayer.selectAll('path')
-        .style('fill', getColor);
-
-      year.filterAll();
+      d3.select('#subindicatorDiv').attr('style','display:none');
+      d3.select('#genderDiv').attr('style','display:none');
+      changeColor();
     } else {
       d3.select('#subindicatorDiv').attr('style','display:inline-block');
 
@@ -238,30 +248,7 @@ function map_ready(error, geodata, econdata) {
         .style('fill', 'white');
     } else {
       subindicator.filter(sub);
-      // for now, use 2015 data
-      year.filter("2015");
-      var values = locality.group().reduceSum(function (d) {
-        return +d["value"];
-      });
-      var valueArray = values.all();
-      var kk = [];
-      var valuesByDistrict = [];
-      valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
-
-      var color = d3.scalePow()
-        .exponent(0.5)
-        .domain([0, d3.max(Object.values(valuesByDistrict))])
-        .range(['white', 'steelblue']);
-
-      getColor = function (d) {
-        myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
-        return myColor;
-      }
-
-      mapLayer.selectAll('path')
-        .style('fill', getColor);
-
-      year.filterAll();
+      changeColor();
     }
   }
 
