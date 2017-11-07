@@ -1,5 +1,8 @@
 - Add gender filtering
 - Add time period filtering (slider?)
+- Add legend
+- Change data categories
+- Plot density where appropriate
 - Add a data table on the right hand side
 - Improve formatting for selected council districts (change opacity of unselected districts)
 - Attach sparklines to the dataset

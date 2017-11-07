@@ -73,6 +73,10 @@ function map_ready(error, geodata, econdata) {
     return d["indicator"];
   });
 
+  var gender = data.dimension(function (d) {
+    return d["gender"];
+  });
+
   var subindicator = data.dimension(function (d) {
     return d["sub_indicator"];
   });
@@ -80,8 +84,6 @@ function map_ready(error, geodata, econdata) {
   var year = data.dimension(function (d) {
     return d["calendar_year"];
   });
-
-
 
 
 
@@ -104,6 +106,7 @@ function map_ready(error, geodata, econdata) {
       .on('mouseover', mouseover)
       .on('mouseout', mouseout)
       .attr('opacity', 0.8);
+
 
 
   // function for changing map color.
@@ -138,8 +141,9 @@ function map_ready(error, geodata, econdata) {
 
   // set up variable selectors //
   // NOTE: I HAVE TO SET UP A TIME PERIOD SELECTOR AS WELL
-  // reference: https://stackoverflow.com/questions/1801499/how-to-change-options-of-select-with-jquery
+
   // helper functions
+  // reference: https://stackoverflow.com/questions/1801499/how-to-change-options-of-select-with-jquery
   removeOptions = function(selectId) {
     $(selectId + ' option:gt(0)').remove();
   }
@@ -158,6 +162,11 @@ function map_ready(error, geodata, econdata) {
   addOptions('#selectCategory', categories);
 
   selectCategory = function(cat) {
+    // remove indicator, subindicator, and gender filters
+    indicator.filterAll();
+    subindicator.filterAll();
+    gender.filterAll();
+    
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
       category.filterAll();
@@ -166,10 +175,6 @@ function map_ready(error, geodata, econdata) {
       category.filter(cat);
       d3.select('#indicatorDiv').attr('style','display:inline-block');
     }
-
-    // remove all indicator and subindicator filters
-    indicator.filterAll();
-    subindicator.filterAll();
 
     // show the indicator selector (this was done above) and hide the other selectors
     d3.select('#subindicatorDiv').attr('style','display:none');
@@ -198,39 +203,59 @@ function map_ready(error, geodata, econdata) {
   addOptions('#selectIndicator', indicators);
 
   selectIndicator = function(ind) {
-    // If they choose "-", remove the filter; otherwise filter using given indicator
+    // remove the filters that depend on this selection
+    subindicator.filterAll();
+    gender.filterAll();
+
+    // If they chose "-", remove the indicator filter.
+    // Otherwise filter using given indicator.
     if (ind=="-") {
       indicator.filterAll();
-      d3.select('#subindicatorDiv').attr('style','display:none');
     } else {
       indicator.filter(ind);
     }
 
-    // pick out all categories with more than one observation using the current filters
-    // categoryCounts = category.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    // categories = categoryCounts.map(function (d) {return d.key});
+    // check whether gender is an option
+    genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    genders = genderCounts.map(function (d) {return d.key});
+    hasGender = genders.length > 1;
 
-    // pick out all subindicators with more than one observation using the current filters
+    // check whether subindicator is an option
     subindicatorCounts = subindicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
     subindicators = subindicatorCounts.map(function (d) {return d.key});
+    hasSubindicator = subindicators.length > 1;
 
-    // change the options of the other selectors
-    removeOptions('#selectSubindicator');
-    addOptions('#selectSubindicator', subindicators);
-    subindicator.filterAll();
-
-
-    // if there is less than one subindicator, update the map and hide the subindicator selector.
-    // otherwise, make each district white and open the subindicator selector
-    if (subindicators.length < 2) {
-      d3.select('#subindicatorDiv').attr('style','display:none');
+    // If they chose "-", hide gender and subindicator.
+    // Otherwise proceed using the given filter.
+    if (ind=="-") {
       d3.select('#genderDiv').attr('style','display:none');
-      changeColor();
+      d3.select('#subindicatorDiv').attr('style','display:none');
     } else {
-      d3.select('#subindicatorDiv').attr('style','display:inline-block');
+      // if gender is an option, show gender selector and update categories
+      if (hasGender) {
+        d3.select('#genderDiv').attr('style','display:inline-block');
+        removeOptions('#selectGender');
+        addOptions('#selectGender', genders);
+      } else {
+        d3.select('#genderDiv').attr('style','display:none');
+      }
 
-      mapLayer.selectAll('path')
-        .style('fill', 'white');
+      // if subindicator is an option, show selector and update categories
+      if (hasSubindicator) {
+        d3.select('#subindicatorDiv').attr('style','display:inline-block');
+        removeOptions('#selectSubindicator');
+        addOptions('#selectSubindicator', subindicators);
+      } else {
+        d3.select('#subindicatorDiv').attr('style','display:none');
+      }
+
+      // if neither gender nor subindicator are options, update the map.
+      // otherwise, make it white
+      if (!hasGender & !hasSubindicator) {
+        changeColor();
+      } else {
+        mapLayer.selectAll('path').style('fill', 'white');
+      }
     }
 
   }
@@ -238,21 +263,53 @@ function map_ready(error, geodata, econdata) {
   $('#selectIndicator').attr('onchange', "selectIndicator(this.value);")
 
 
+
   // functionality for subindicator selection //
     selectSubindicator = function(sub) {
-    // If they choose "-", simply remove the filter and make the map white.
-    // Otherwise filter using given subindicator and plot
-    if (sub=="-") {
-      subindicator.filterAll();
-      mapLayer.selectAll('path')
-        .style('fill', 'white');
+    // remove gender filter
+    gender.filterAll();
+
+    // if there are less than two genders, update the map (depending on selection).
+    // otherwise, make each district white
+    genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    genders = genderCounts.map(function (d) {return d.key});
+
+    if (genders.length < 2) {
+      // If they choose "-", simply remove the filter and make the map white.
+      // Otherwise filter using given subindicator and plot
+      if (sub=="-") {
+        subindicator.filterAll();
+        mapLayer.selectAll('path').style('fill', 'white');
+      } else {
+        subindicator.filter(sub);
+        changeColor();
+      }
     } else {
-      subindicator.filter(sub);
-      changeColor();
+      mapLayer.selectAll('path').style('fill', 'white');
     }
+
+    
   }
 
   $('#selectSubindicator').attr('onchange', "selectSubindicator(this.value);")
+
+
+
+  // functionality for gender selection //
+    selectGender = function(sub) {
+    // If they choose "-", simply remove the filter and make the map white.
+    // Otherwise filter using given gender and plot.
+    if (sub=="-") {
+      gender.filterAll();
+      mapLayer.selectAll('path')
+        .style('fill', 'white');
+    } else {
+      gender.filter(sub);
+      changeColor();
+    }
+  }
+  
+  $('#selectGender').attr('onchange', "selectGender(this.value);")
 
 
 
