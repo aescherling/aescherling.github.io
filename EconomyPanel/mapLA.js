@@ -19,7 +19,7 @@ map_svg = d3.select('#map_div')
 	.attr('height', map_svg_height);
 
 // draw the box around the SVG
-//bb = map_svg.append('rect')
+// bb = map_svg.append('rect')
 //  .attr('x', 0)
 //  .attr('y', 0)
 //  .attr('width', map_svg_width)
@@ -85,6 +85,13 @@ function map_ready(error, geodata, econdata) {
     return d["calendar_year"];
   });
 
+  var units = data.dimension(function (d) {
+    return d["unit_of_measure"];
+  });
+
+  var desc = data.dimension(function (d) {
+    return d["unit_text"];
+  });
 
 
   // initial settings for the map //
@@ -95,6 +102,8 @@ function map_ready(error, geodata, econdata) {
       .attr('id', function (d) {return d.properties.Council_District.replace(/\s/g, '');})
       .attr('label', function (d) {return d.properties.Council_District;})
       .attr('councilmember', function (d) {return d.properties.Councilmember;})
+      .attr('value', '')
+      .attr('valueLabel', '')
       .classed('selected', false)
       .classed('frozen', false)
       .classed('district', true)
@@ -109,10 +118,10 @@ function map_ready(error, geodata, econdata) {
 
 
 
-  // function for changing map color.
+  // function for updating the map.
   // assumes that the data have been filtered to a single variable.
   // for now, use 2015 data
-  var changeColor = function() {
+  var updateMap = function() {
     year.filter("2015");
     var values = locality.group().reduceSum(function (d) {
       return +d["value"];
@@ -128,12 +137,34 @@ function map_ready(error, geodata, econdata) {
       .domain([0, d3.max(Object.values(valuesByDistrict))])
       .range(['white', 'steelblue']);
 
+    // In the future I may need to make this more complex to do proper rounding, formatting
+    getValue = function(d) {
+      myValue = valuesByDistrict[kk.indexOf(d.properties.Council_District)];
+      return myValue;
+    }
+
     getColor = function (d) {
       myColor = color(valuesByDistrict[kk.indexOf(d.properties.Council_District)]);
       return myColor;
     }
 
+    getUnits = function(d) {
+      // pick out all units with more than one observation using the current filters
+      unitCounts = units.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      units_tmp = unitCounts.map(function (d) {return d.key});
+      return(units_tmp[0])
+    }
+
+    getDesc = function(d) {
+      // pick out all descriptions with more than one observation using the current filters
+      descCounts = desc.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      descs_tmp = descCounts.map(function (d) {return d.key});
+      return(descs_tmp[0])
+    }
+
     mapLayer.selectAll('path')
+      .attr('value', getValue)
+      .attr('valueLabel', getDesc)
       .style('fill', getColor);
   }
 
@@ -252,7 +283,7 @@ function map_ready(error, geodata, econdata) {
       // if neither gender nor subindicator are options, update the map.
       // otherwise, make it white
       if (!hasGender & !hasSubindicator) {
-        changeColor();
+        updateMap();
       } else {
         mapLayer.selectAll('path').style('fill', 'white');
       }
@@ -282,7 +313,7 @@ function map_ready(error, geodata, econdata) {
         mapLayer.selectAll('path').style('fill', 'white');
       } else {
         subindicator.filter(sub);
-        changeColor();
+        updateMap();
       }
     } else {
       mapLayer.selectAll('path').style('fill', 'white');
@@ -305,7 +336,7 @@ function map_ready(error, geodata, econdata) {
         .style('fill', 'white');
     } else {
       gender.filter(sub);
-      changeColor();
+      updateMap();
     }
   }
   
@@ -370,16 +401,31 @@ function map_ready(error, geodata, econdata) {
 
 // label council districts
 cd_label = map_svg.append('text')
-  .attr('x', map_svg_width - 220)
+  .attr('x', map_svg_width - 200)
   .attr('y', 20)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px; font-weight: bold')
   .text('');
+
 cd_councilmember = map_svg.append('text')
-  .attr('x', map_svg_width - 220)
+  .attr('x', map_svg_width - 200)
   .attr('y', 40)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
+  .text('');
+
+cd_value = map_svg.append('text')
+  .attr('x', map_svg_width - 200)
+  .attr('y', 60)
+  .attr('text-anchor','left')
+  .attr('style', 'font-size: 16px')
+  .text('');
+
+cd_value_label = map_svg.append('text')
+  .attr('x', map_svg_width - 200)
+  .attr('y', 80)
+  .attr('text-anchor','left')
+  .attr('style', 'font-size: 12px')
   .text('');
 
 /* 
@@ -423,8 +469,12 @@ mouseover = function() {
 	  district.moveToFront().style('stroke', 'black');
     district_text = d3.select(this).attr('label');
     councilmember_text = d3.select(this).attr('councilmember');
+    value_tmp = +d3.select(this).attr('value')
+    value_text = "value: " + Math.round(value_tmp);
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
+    cd_value.text(value_text);
+    cd_value_label.text(d3.select(this).attr('valueLabel'));
   }
 }
 
@@ -434,6 +484,8 @@ mouseout = function() {
 	  d3.select(this).style('stroke', 'gray');
     cd_label.text('');
     cd_councilmember.text('');
+    cd_value.text('');
+    cd_value_label.text('');
   }
 }
 
