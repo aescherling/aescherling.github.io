@@ -4,7 +4,7 @@
   <title>Economy Panel test page</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/economy_panel.css">
-
+  <link rel="stylesheet" href="css/select-theme-custom.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="lib/jQuery3.2.1.js"></script>
   <script src="lib/crossfilter.min.js"></script>
@@ -43,15 +43,18 @@
 
     <hr style="margin-top:0px">
 
-    <div class="row">
+    <!-- <div class="row">
     	<h5>Select a variable:</h5>
-    </div>
+    </div> -->
 
 
     <div class="row">
+      <div class="col" style="border-right: 1px solid #CCC;">
+      <h5 style="display:inline-block; padding:0px 20px 0px 0px">Select a variable:</h5>
+
       <div id="categoryDiv" class="form-group" style="display:inline-block;">
         <label for="selectCategory" style="font-weight:bold">Category</label>
-        <select class="form-control" id="selectCategory" onchange="alert('hello');">
+        <select id="selectCategory" class="form-control" onchange="alert('hello');">
           <option>-</option>
         </select>
       </div>
@@ -83,10 +86,12 @@
           <option>-</option>
         </select>
       </div>
-      
-    </div>
 
-    <div class="row">
+      </div>
+      
+<!--     </div>
+
+    <div class="row"> -->
       <div class="col">
         <div id="map_div"></div>
         <a href="council_district_map.html" style="font-size:12px; padding: 0px 0px 0px 30px">Open a zoomable Council District map</a>

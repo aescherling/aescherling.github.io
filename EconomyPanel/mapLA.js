@@ -130,6 +130,9 @@ function map_ready(error, geodata, econdata) {
     var kk = [];
     var valuesByDistrict = [];
     valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
+    if (kk.length != 16) {
+      alert(kk.length);
+    }
     year.filterAll();
 
     var color = d3.scalePow()
@@ -495,5 +498,9 @@ d3.selection.prototype.moveToFront = function() {
     this.parentNode.appendChild(this);
   });
 };
+
+
+// Select.init();
+
 
 
