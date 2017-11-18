@@ -46,6 +46,9 @@ var path = d3.geoPath()
 
 // create a global version of the crossfilter, just for debugging purposes
 //var cf;
+var mykk;
+var mydata;
+var mydata2;
 
 // wait until all the data is loaded before proceeding
 queue()
@@ -116,7 +119,8 @@ function map_ready(error, geodata, econdata) {
       .on('mouseout', mouseout)
       .attr('opacity', 0.8);
 
-
+  // color scale
+  var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
 
   // function for updating the map.
   // assumes that the data have been filtered to a single variable.
@@ -135,10 +139,12 @@ function map_ready(error, geodata, econdata) {
     }
     year.filterAll();
 
-    var color = d3.scalePow()
-      .exponent(0.5)
-      .domain([0, d3.max(Object.values(valuesByDistrict))])
-      .range(['white', 'steelblue']);
+    var cityIndex = kk.indexOf('City of Los Angeles');
+    var cdOnly = valuesByDistrict.slice();
+    cdOnly.splice(cityIndex, 1);
+
+    // scale the color using Council District values only (not the city total)
+    color.domain([d3.min(Object.values(cdOnly)), d3.max(Object.values(cdOnly))]);
 
     // In the future I may need to make this more complex to do proper rounding, formatting
     getValue = function(d) {
@@ -169,6 +175,9 @@ function map_ready(error, geodata, econdata) {
       .attr('value', getValue)
       .attr('valueLabel', getDesc)
       .style('fill', getColor);
+
+    d3.selectAll('.legend').remove();
+    makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color, cdOnly);
   }
 
 
@@ -226,6 +235,9 @@ function map_ready(error, geodata, econdata) {
     // change the map to white
     mapLayer.selectAll('path')
       .style('fill', 'white');
+
+    // delete legend
+    d3.selectAll('.legend').remove();
   }
 
   $('#selectCategory').attr('onchange', "selectCategory(this.value);")
@@ -348,25 +360,29 @@ function map_ready(error, geodata, econdata) {
 
 
   // function for making legends
-  function makeLegend(x, y, size, colors, labels) {
+  function makeLegend(x, y, size, n, scale, values) {
     // make the legend object
     legend = map_svg.append('g')
       .classed('legend', true);
 
-    // # of items in the legend
-    var n = colors.length;
-
     var yTmp = y - (n * size * 0.5);
 
+    var legendValues = [];
+    var delta = (d3.max(values) - d3.min(values)) / n;
+    for (i=1; i<(n+1); i++) {
+      legendValues[i-1] = Math.round(d3.min(values) + delta * i);
+    }
+    var legendColors = legendValues.map(function (d) {return scale(d)});
+
     // legend title
-    legend.append('text')
-      .attr('x', x)
-      .attr('y', yTmp - size)
-      .text('Population per');
-    legend.append('text')
-      .attr('x', x)
-      .attr('y', yTmp - size * 0.4)
-      .text('sq. mile');
+    // legend.append('text')
+    //   .attr('x', x)
+    //   .attr('y', yTmp - size)
+    //   .text('Population per');
+    // legend.append('text')
+    //   .attr('x', x)
+    //   .attr('y', yTmp - size * 0.4)
+    //   .text('sq. mile');
 
     // loop to place the items
     for (var i=0; i<n; i++){
@@ -375,14 +391,14 @@ function map_ready(error, geodata, econdata) {
         .attr('y', yTmp + size * i)
         .attr('width', size)
         .attr('height', size)
-        .attr('fill', d3.rgb(colors[i]))
-        .attr('stroke', d3.rgb(colors[i]));
+        .attr('fill', d3.rgb(legendColors[i]))
+        .attr('stroke', d3.rgb(legendColors[i]));
       legend.append('text')
         .attr('x', x + 1.5 * size)
         .attr('y', 4 + size/2 + yTmp + size * i)
         .attr('text-anchor', 'center')
         .attr('style', "font-size: " + d3.min([d3.max([10, (size / 2)]), 16]) + "px")
-        .text(labels[i]);
+        .text(legendValues[i]);
     }
   }
 

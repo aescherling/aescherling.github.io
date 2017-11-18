@@ -1,8 +1,8 @@
-- Add legend
-- Add gender filtering
+- Add graph title (e.g. "Average Commuting Time, minutes")
 - Add time period filtering (slider?)
 - Change data categories
 - Plot density where appropriate
 - Add a data table on the right hand side
+- Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
 - Improve formatting for selected council districts (change opacity of unselected districts)
 - Attach sparklines to the dataset
