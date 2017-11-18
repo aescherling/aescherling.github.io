@@ -29,12 +29,12 @@ var msaGdpPer = [{"x":2001, "y":51466}, {"x":2002, "y":52490}, {"x":2003, "y":54
 
 // inspired by http://www.tnoda.com/blog/2013-12-19
 // and https://bl.ocks.org/mbostock/3902569
-function make_sparkline(elemId, numId, data, format) {
+function make_sparkline(elemId, numId, data, format, width=60, height=20, textwidth=110, margin=5) {
 
-    var width = 60;
-    var height = 20;
-    var textwidth = 110;
-    var margin = 5;
+    // var width = 60;
+    // var height = 20;
+    // var textwidth = 110;
+    // var margin = 5;
     var x = d3.scaleLinear().range([0, width - 2*margin]);
     var y = d3.scaleLinear().range([height - 2*margin, 0]);
 
@@ -128,7 +128,7 @@ function make_sparkline(elemId, numId, data, format) {
 var cityPopSparkline = make_sparkline('#cityPopSparkline', '#cityPopNum', cityPop, 'amount');
 cityPopSparkline();
 
-var cityUnempSparkline = make_sparkline('#cityUnempSparkline', '#cityUnempNum', cityUnemp, 'amount');
+var cityUnempSparkline = make_sparkline('#cityUnempSparkline', '#cityUnempNum', cityUnemp, 'amount', 60, 20, 70, 5);
 cityUnempSparkline();
 
 var cityIncomeSparkline = make_sparkline('#cityIncomeSparkline', '#cityIncomeNum', cityIncome, 'dollar');

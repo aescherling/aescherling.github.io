@@ -119,8 +119,21 @@ function map_ready(error, geodata, econdata) {
       .on('mouseout', mouseout)
       .attr('opacity', 0.8);
 
+
   // color scale
   var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
+
+  // function for updating the time scale
+  // assumes that the data have been filtered to a single variable
+  var updateTimescale = function() {
+    // pick out all time periods with more than one observation using the current filters
+    timePeriodCounts = year.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    timePeriods = timePeriodCounts.map(function (d) {return d.key});
+
+    // add a sparkline for setting the time period
+    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, 'amount');
+    timeToggleSetup();
+  }
 
   // function for updating the map.
   // assumes that the data have been filtered to a single variable.
@@ -298,6 +311,7 @@ function map_ready(error, geodata, econdata) {
       // if neither gender nor subindicator are options, update the map.
       // otherwise, make it white
       if (!hasGender & !hasSubindicator) {
+        updateTimescale();
         updateMap();
       } else {
         mapLayer.selectAll('path').style('fill', 'white');
@@ -328,6 +342,7 @@ function map_ready(error, geodata, econdata) {
         mapLayer.selectAll('path').style('fill', 'white');
       } else {
         subindicator.filter(sub);
+        updateTimescale();
         updateMap();
       }
     } else {
@@ -351,6 +366,7 @@ function map_ready(error, geodata, econdata) {
         .style('fill', 'white');
     } else {
       gender.filter(sub);
+      updateTimescale();
       updateMap();
     }
   }
@@ -374,16 +390,6 @@ function map_ready(error, geodata, econdata) {
     }
     var legendColors = legendValues.map(function (d) {return scale(d)});
 
-    // legend title
-    // legend.append('text')
-    //   .attr('x', x)
-    //   .attr('y', yTmp - size)
-    //   .text('Population per');
-    // legend.append('text')
-    //   .attr('x', x)
-    //   .attr('y', yTmp - size * 0.4)
-    //   .text('sq. mile');
-
     // loop to place the items
     for (var i=0; i<n; i++){
       legend.append('rect')
@@ -402,15 +408,6 @@ function map_ready(error, geodata, econdata) {
     }
   }
 
-  //makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
-  //      [color(3e5), color(2.9e5), color(2.8e5), color(2.7e5), color(2.6e5),
-  //       color(2.5e5), color(2.4e5), color(2.3e5), color(2.2e5), color(2.1e5)], 
-  //      ['300,000', '290,000', '280,000', '270,000', '260,000', '250,000', '240,000', '230,000', '220,000', '210,000']);
-
-  //makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 
-  //      [color(2e4), color(1e4), color(0.5e4), color(0.25e4), color(0.125e4), color(0.0625e4)],
-  //      ['20,000', '10,000','5,000','2,500', '1,250', '625']);
-
 }
 
 
@@ -418,7 +415,7 @@ function map_ready(error, geodata, econdata) {
 
 
 
-// label council districts
+// label council districts (appears upon mouseover)
 cd_label = map_svg.append('text')
   .attr('x', map_svg_width - 200)
   .attr('y', 20)
@@ -516,7 +513,8 @@ d3.selection.prototype.moveToFront = function() {
 };
 
 
-// Select.init();
 
-
+  // add time scale
+  // var timeSparkline = make_sparkline('#timeSparkline', '#timeLabel', cityPop, 'amount');
+  // cityPopSparkline();
 
