@@ -46,9 +46,7 @@ var path = d3.geoPath()
 
 // create a global version of the crossfilter, just for debugging purposes
 //var cf;
-var mykk;
-var mydata;
-var mydata2;
+var myVar;
 
 // wait until all the data is loaded before proceeding
 queue()
@@ -88,12 +86,8 @@ function map_ready(error, geodata, econdata) {
     return d["calendar_year"];
   });
 
-  var units = data.dimension(function (d) {
-    return d["unit_of_measure"];
-  });
-
-  var desc = data.dimension(function (d) {
-    return d["unit_text"];
+  var value = data.dimension(function (d) {
+  	return +d["value"];
   });
 
 
@@ -123,11 +117,32 @@ function map_ready(error, geodata, econdata) {
   // color scale
   var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
 
+  // function for updating the color scale
+  // assumes that the data have been filtered to a single variable and a particular time period
+  // use all available time periods for the selected indicator/subindicator
+  // use Council District values only (not the city total)
+  var updateColor = function() {
+    // get time filter
+    time_setting = d3.select('#timeToggleLabel').text();
+    // undo the time filter
+    year.filterAll();
+    // filter out the City data
+    locality.filter(function (d) {return d!= "City of Los Angeles"});
+    // get the min and max values
+    minValue = value.bottom(1)[0].value;
+    maxValue = value.top(1)[0].value;
+    // set the color domain
+    color.domain([minValue, maxValue]);
+    // undo the locality filter
+    locality.filterAll();
+    // redo the time filter
+    year.filter(time_setting);
+  }
+
   // function for updating the map.
-  // assumes that the data have been filtered to a single variable.
-  // for now, use 2015 data
+  // assumes that the data have been filtered to a single variable and a particular time period
+  // assumes that a color scale has already been set (and is available as "color" in the map_ready namespace)
   var updateMap = function() {
-    // year.filter("2015");
     var values = locality.group().reduceSum(function (d) {
       return +d["value"];
     });
@@ -138,14 +153,10 @@ function map_ready(error, geodata, econdata) {
     if (kk.length != 16) {
       alert(kk.length);
     }
-    // year.filterAll();
 
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
     cdOnly.splice(cityIndex, 1);
-
-    // scale the color using Council District values only (not the city total)
-    color.domain([d3.min(Object.values(cdOnly)), d3.max(Object.values(cdOnly))]);
 
     // In the future I may need to make this more complex to do proper rounding, formatting
     getValue = function(d) {
@@ -158,27 +169,43 @@ function map_ready(error, geodata, econdata) {
       return myColor;
     }
 
-    getUnits = function(d) {
-      // pick out all units with more than one observation using the current filters
-      unitCounts = units.group().reduceCount().all().filter(function (d) {return d.value > 0});
-      units_tmp = unitCounts.map(function (d) {return d.key});
-      return(units_tmp[0])
-    }
+    // // pick out all units with more than one observation using the current filters
+    // getUnits = function(d) {
 
-    getDesc = function(d) {
-      // pick out all descriptions with more than one observation using the current filters
-      descCounts = desc.group().reduceCount().all().filter(function (d) {return d.value > 0});
-      descs_tmp = descCounts.map(function (d) {return d.key});
-      return(descs_tmp[0])
-    }
+    //   // set up a units filter
+    //   var units = data.dimension(function (d) {
+    //     return d["unit_of_measure"];
+    //   });
+
+    //   unitCounts = units.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    //   units_tmp = unitCounts.map(function (d) {return d.key});
+
+    //   // remove the units filter
+    //   units.dispose();
+
+    //   return(units_tmp[0])
+    // }
+
+    // // pick out all descriptions with more than one observation using the current filters
+    // getDesc = function(d) {
+    //   // set up a description filter
+    //   var desc = data.dimension(function (d) {
+    //     return d["unit_text"];
+    //   });
+
+    //   descCounts = desc.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    //   descs_tmp = descCounts.map(function (d) {return d.key});
+
+    //   // remove the description filter
+    //   desc.dispose();
+
+    //   return(descs_tmp[0])
+    // }
 
     mapLayer.selectAll('path')
       .attr('value', getValue)
-      .attr('valueLabel', getDesc)
+      .attr('valueLabel', "I should probably get rid of this...")
       .style('fill', getColor);
-
-    d3.selectAll('.legend').remove();
-    makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color, cdOnly);
   }
 
   // function for updating the time scale
@@ -191,7 +218,7 @@ function map_ready(error, geodata, econdata) {
     // remove timeToggle if it exists, then add a new one
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
-    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, year, updateMap);
+    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, year, updateColor, updateMap);
     timeToggleSetup();
   }
 
@@ -221,10 +248,11 @@ function map_ready(error, geodata, econdata) {
 
   selectCategory = function(cat) {
     // remove indicator, subindicator, gender, and time filters
+    year.filterAll();
     indicator.filterAll();
     subindicator.filterAll();
     gender.filterAll();
-    year.filterAll();
+    
     
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
@@ -266,10 +294,10 @@ function map_ready(error, geodata, econdata) {
 
   selectIndicator = function(ind) {
     // remove the filters that depend on this selection
+    year.filterAll();
     subindicator.filterAll();
     gender.filterAll();
-    year.filterAll();
-
+    
     // If they chose "-", remove the indicator filter.
     // Otherwise filter using given indicator.
     if (ind=="-") {
@@ -316,6 +344,9 @@ function map_ready(error, geodata, econdata) {
       // otherwise, make it white
       if (!hasGender & !hasSubindicator) {
         updateTimescale();
+        updateColor();
+        d3.selectAll('.legend').remove();
+        makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
         // updateMap();
       } else {
         mapLayer.selectAll('path').style('fill', 'white');
@@ -327,12 +358,11 @@ function map_ready(error, geodata, econdata) {
   $('#selectIndicator').attr('onchange', "selectIndicator(this.value);")
 
 
-
   // functionality for subindicator selection //
     selectSubindicator = function(sub) {
     // remove gender and year filters
-    gender.filterAll();
     year.filterAll();
+    gender.filterAll();
 
     // if there are less than two genders, update the map (depending on selection).
     // otherwise, make each district white
@@ -345,9 +375,13 @@ function map_ready(error, geodata, econdata) {
       if (sub=="-") {
         subindicator.filterAll();
         mapLayer.selectAll('path').style('fill', 'white');
+        d3.selectAll('.legend').remove();
       } else {
         subindicator.filter(sub);
         updateTimescale();
+        updateColor();
+        d3.selectAll('.legend').remove();
+        makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
         // updateMap();
       }
     } else {
@@ -369,9 +403,13 @@ function map_ready(error, geodata, econdata) {
       gender.filterAll();
       mapLayer.selectAll('path')
         .style('fill', 'white');
+      d3.selectAll('.legend').remove();
     } else {
       gender.filter(sub);
       updateTimescale();
+      updateColor();
+      d3.selectAll('.legend').remove();
+      makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
       // updateMap();
     }
   }
@@ -381,7 +419,7 @@ function map_ready(error, geodata, econdata) {
 
 
   // function for making legends
-  function makeLegend(x, y, size, n, scale, values) {
+  function makeLegend(x, y, size, n, scale) {
     // make the legend object
     legend = map_svg.append('g')
       .classed('legend', true);
@@ -389,9 +427,11 @@ function map_ready(error, geodata, econdata) {
     var yTmp = y - (n * size * 0.5);
 
     var legendValues = [];
-    var delta = (d3.max(values) - d3.min(values)) / n;
+    var scaleMin = scale.domain()[0];
+    var scaleMax = scale.domain()[1];
+    var delta = (scaleMax - scaleMin) / n;
     for (i=1; i<(n+1); i++) {
-      legendValues[i-1] = Math.round(d3.min(values) + delta * i);
+      legendValues[i-1] = Math.round(scaleMin + delta * i);
     }
     var legendColors = legendValues.map(function (d) {return scale(d)});
 
@@ -414,10 +454,6 @@ function map_ready(error, geodata, econdata) {
   }
 
 }
-
-
-
-
 
 
 // label council districts (appears upon mouseover)
@@ -518,8 +554,4 @@ d3.selection.prototype.moveToFront = function() {
 };
 
 
-
-  // add time scale
-  // var timeSparkline = make_sparkline('#timeSparkline', '#timeLabel', cityPop, 'amount');
-  // cityPopSparkline();
 

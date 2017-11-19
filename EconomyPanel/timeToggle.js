@@ -1,9 +1,8 @@
-function make_timeToggle(elemId, numId, data, timeFilter, update, width=100, height=20, textwidth=40, margin=5) {
+function make_timeToggle(elemId, numId, data, timeFilter, updateColor, updateMap, width=100, height=20, textwidth=40, margin=5) {
 
 	data_json = data.map(function(d,i) {return {'x':i, 'y':d}});
 
     var x = d3.scaleLinear().range([0, width - 2*margin]);
-    // var y = d3.scaleLinear().range([height - 2*margin, 0]);
     var y = d3.scaleLinear().range([height/2, height/2]);
 
     var line = d3.line()
@@ -34,7 +33,7 @@ function make_timeToggle(elemId, numId, data, timeFilter, update, width=100, hei
     var dot = focus.append("circle")
         .attr('cx', x(data_json.length - 1))
         .attr('cy', y(data_json[data_json.length - 1].y))
-        .attr("r", 3);
+        .attr("r", 5);
 
   timeToggle = function() {
     svg.append("rect")
@@ -52,7 +51,7 @@ function make_timeToggle(elemId, numId, data, timeFilter, update, width=100, hei
       timeFilter.filter(data_json[i].y);
 
       // update the map
-      update();
+      updateMap();
     }
 
     d3.select(numId)
@@ -68,7 +67,10 @@ function make_timeToggle(elemId, numId, data, timeFilter, update, width=100, hei
       .attr('fill', 'steelblue')
       .text(data_json[data_json.length - 1].y);
 
-     update();
+     // filter using the last date in the time period and update the map
+     timeFilter.filter(data_json[data_json.length - 1].y);
+     updateColor();
+     updateMap();
   }
 
   // append properties of the graph to the function for later use
