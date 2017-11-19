@@ -123,23 +123,11 @@ function map_ready(error, geodata, econdata) {
   // color scale
   var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
 
-  // function for updating the time scale
-  // assumes that the data have been filtered to a single variable
-  var updateTimescale = function() {
-    // pick out all time periods with more than one observation using the current filters
-    timePeriodCounts = year.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    timePeriods = timePeriodCounts.map(function (d) {return d.key});
-
-    // add a sparkline for setting the time period
-    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, 'amount');
-    timeToggleSetup();
-  }
-
   // function for updating the map.
   // assumes that the data have been filtered to a single variable.
   // for now, use 2015 data
   var updateMap = function() {
-    year.filter("2015");
+    // year.filter("2015");
     var values = locality.group().reduceSum(function (d) {
       return +d["value"];
     });
@@ -150,7 +138,7 @@ function map_ready(error, geodata, econdata) {
     if (kk.length != 16) {
       alert(kk.length);
     }
-    year.filterAll();
+    // year.filterAll();
 
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
@@ -193,6 +181,20 @@ function map_ready(error, geodata, econdata) {
     makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color, cdOnly);
   }
 
+  // function for updating the time scale
+  // assumes that the data have been filtered to a single variable
+  var updateTimescale = function() {
+    // pick out all time periods with more than one observation using the current filters
+    timePeriodCounts = year.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    timePeriods = timePeriodCounts.map(function (d) {return d.key});
+
+    // remove timeToggle if it exists, then add a new one
+    d3.select('#timeToggleSVG').remove();
+    d3.select('#timeToggleLabel').remove();
+    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, year, updateMap);
+    timeToggleSetup();
+  }
+
 
 
   // set up variable selectors //
@@ -218,10 +220,11 @@ function map_ready(error, geodata, econdata) {
   addOptions('#selectCategory', categories);
 
   selectCategory = function(cat) {
-    // remove indicator, subindicator, and gender filters
+    // remove indicator, subindicator, gender, and time filters
     indicator.filterAll();
     subindicator.filterAll();
     gender.filterAll();
+    year.filterAll();
     
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
@@ -265,6 +268,7 @@ function map_ready(error, geodata, econdata) {
     // remove the filters that depend on this selection
     subindicator.filterAll();
     gender.filterAll();
+    year.filterAll();
 
     // If they chose "-", remove the indicator filter.
     // Otherwise filter using given indicator.
@@ -312,7 +316,7 @@ function map_ready(error, geodata, econdata) {
       // otherwise, make it white
       if (!hasGender & !hasSubindicator) {
         updateTimescale();
-        updateMap();
+        // updateMap();
       } else {
         mapLayer.selectAll('path').style('fill', 'white');
       }
@@ -326,8 +330,9 @@ function map_ready(error, geodata, econdata) {
 
   // functionality for subindicator selection //
     selectSubindicator = function(sub) {
-    // remove gender filter
+    // remove gender and year filters
     gender.filterAll();
+    year.filterAll();
 
     // if there are less than two genders, update the map (depending on selection).
     // otherwise, make each district white
@@ -343,7 +348,7 @@ function map_ready(error, geodata, econdata) {
       } else {
         subindicator.filter(sub);
         updateTimescale();
-        updateMap();
+        // updateMap();
       }
     } else {
       mapLayer.selectAll('path').style('fill', 'white');
@@ -367,7 +372,7 @@ function map_ready(error, geodata, econdata) {
     } else {
       gender.filter(sub);
       updateTimescale();
-      updateMap();
+      // updateMap();
     }
   }
   

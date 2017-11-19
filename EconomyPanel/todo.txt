@@ -1,5 +1,6 @@
 - Add graph title (e.g. "Average Commuting Time, minutes")
 - Add time period filtering (slider?)
+- change legend scale so it is invariant to changing the time period
 - Change data categories
 - Plot density where appropriate
 - Add a data table on the right hand side
