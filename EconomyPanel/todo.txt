@@ -1,3 +1,5 @@
+- Disable time toggle when a relevant field is still blank
+- Format the values
 - Add graph title (e.g. "Average Commuting Time, minutes")
 - Change data categories
 - Plot density where appropriate

@@ -62,9 +62,6 @@ function map_ready(error, geodata, econdata) {
 
   // set up crossfilter on the econdata //
   var data = crossfilter(econdata); //cf=data;
-  var locality = data.dimension(function (d) {
-    return d["locality"];
-  });
 
   var category = data.dimension(function(d) {
     return d["category"];
@@ -82,7 +79,7 @@ function map_ready(error, geodata, econdata) {
     return d["sub_indicator"];
   });
 
-  var year = data.dimension(function (d) {
+  var time = data.dimension(function (d) {
     return d["calendar_year"];
   });
 
@@ -100,7 +97,6 @@ function map_ready(error, geodata, econdata) {
       .attr('label', function (d) {return d.properties.Council_District;})
       .attr('councilmember', function (d) {return d.properties.Councilmember;})
       .attr('value', '')
-      .attr('valueLabel', '')
       .classed('selected', false)
       .classed('frozen', false)
       .classed('district', true)
@@ -125,7 +121,11 @@ function map_ready(error, geodata, econdata) {
     // get time filter
     time_setting = d3.select('#timeToggleLabel').text();
     // undo the time filter
-    year.filterAll();
+    time.filterAll();
+    // create locality filter
+    var locality = data.dimension(function (d) {
+      return d["locality"];
+    });
     // filter out the City data
     locality.filter(function (d) {return d!= "City of Los Angeles"});
     // get the min and max values
@@ -135,14 +135,20 @@ function map_ready(error, geodata, econdata) {
     color.domain([minValue, maxValue]);
     // undo the locality filter
     locality.filterAll();
+    // remove the locality filter
+    locality.dispose();
     // redo the time filter
-    year.filter(time_setting);
+    time.filter(time_setting);
   }
 
   // function for updating the map.
   // assumes that the data have been filtered to a single variable and a particular time period
   // assumes that a color scale has already been set (and is available as "color" in the map_ready namespace)
   var updateMap = function() {
+  	// create locality filter
+    var locality = data.dimension(function (d) {
+      return d["locality"];
+    });
     var values = locality.group().reduceSum(function (d) {
       return +d["value"];
     });
@@ -157,6 +163,11 @@ function map_ready(error, geodata, econdata) {
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
     cdOnly.splice(cityIndex, 1);
+
+    // undo the locality filter
+    locality.filterAll();
+    // remove the locality filter
+    locality.dispose();
 
     // In the future I may need to make this more complex to do proper rounding, formatting
     getValue = function(d) {
@@ -204,7 +215,6 @@ function map_ready(error, geodata, econdata) {
 
     mapLayer.selectAll('path')
       .attr('value', getValue)
-      .attr('valueLabel', "I should probably get rid of this...")
       .style('fill', getColor);
   }
 
@@ -212,13 +222,13 @@ function map_ready(error, geodata, econdata) {
   // assumes that the data have been filtered to a single variable
   var updateTimescale = function() {
     // pick out all time periods with more than one observation using the current filters
-    timePeriodCounts = year.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    timePeriodCounts = time.group().reduceCount().all().filter(function (d) {return d.value > 0});
     timePeriods = timePeriodCounts.map(function (d) {return d.key});
 
     // remove timeToggle if it exists, then add a new one
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
-    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, year, updateColor, updateMap);
+    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, time, updateColor, updateMap);
     timeToggleSetup();
   }
 
@@ -248,7 +258,7 @@ function map_ready(error, geodata, econdata) {
 
   selectCategory = function(cat) {
     // remove indicator, subindicator, gender, and time filters
-    year.filterAll();
+    time.filterAll();
     indicator.filterAll();
     subindicator.filterAll();
     gender.filterAll();
@@ -294,9 +304,12 @@ function map_ready(error, geodata, econdata) {
 
   selectIndicator = function(ind) {
     // remove the filters that depend on this selection
-    year.filterAll();
+    time.filterAll();
     subindicator.filterAll();
     gender.filterAll();
+
+    // dispose of the time filter
+    time.dispose();
     
     // If they chose "-", remove the indicator filter.
     // Otherwise filter using given indicator.
@@ -316,12 +329,32 @@ function map_ready(error, geodata, econdata) {
     subindicators = subindicatorCounts.map(function (d) {return d.key});
     hasSubindicator = subindicators.length > 1;
 
+    // check whether quarterly data are available
+    var quarter = data.dimension(function (d) {
+    	return d["cy_qtr"];
+    });
+    quarterCounts = quarter.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    quarters = quarterCounts.map(function (d) {return d.key});
+    hasQuarters = quarters.length > 1;
+    quarter.dispose();
+
     // If they chose "-", hide gender and subindicator.
     // Otherwise proceed using the given filter.
     if (ind=="-") {
       d3.select('#genderDiv').attr('style','display:none');
       d3.select('#subindicatorDiv').attr('style','display:none');
     } else {
+      // create a new time filter depending on the choice
+      if (hasQuarters) {
+        time = data.dimension(function (d) {
+          return d["cy_qtr"];
+        });
+      } else {
+      	time = data.dimension(function (d) {
+          return d["calendar_year"];
+        });
+      }
+
       // if gender is an option, show gender selector and update categories
       if (hasGender) {
         d3.select('#genderDiv').attr('style','display:inline-block');
@@ -360,8 +393,8 @@ function map_ready(error, geodata, econdata) {
 
   // functionality for subindicator selection //
     selectSubindicator = function(sub) {
-    // remove gender and year filters
-    year.filterAll();
+    // remove gender and time filters
+    time.filterAll();
     gender.filterAll();
 
     // if there are less than two genders, update the map (depending on selection).
@@ -478,13 +511,6 @@ cd_value = map_svg.append('text')
   .attr('style', 'font-size: 16px')
   .text('');
 
-cd_value_label = map_svg.append('text')
-  .attr('x', map_svg_width - 200)
-  .attr('y', 80)
-  .attr('text-anchor','left')
-  .attr('style', 'font-size: 12px')
-  .text('');
-
 /* 
 Helper functions
 */
@@ -531,7 +557,6 @@ mouseover = function() {
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
     cd_value.text(value_text);
-    cd_value_label.text(d3.select(this).attr('valueLabel'));
   }
 }
 
@@ -542,7 +567,6 @@ mouseout = function() {
     cd_label.text('');
     cd_councilmember.text('');
     cd_value.text('');
-    cd_value_label.text('');
   }
 }
 

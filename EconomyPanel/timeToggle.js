@@ -1,4 +1,4 @@
-function make_timeToggle(elemId, numId, data, timeFilter, updateColor, updateMap, width=100, height=20, textwidth=40, margin=5) {
+function make_timeToggle(elemId, numId, data, timeFilter, updateColor, updateMap, width=150, height=20, textwidth=55, margin=5) {
 
 	data_json = data.map(function(d,i) {return {'x':i, 'y':d}});
 
@@ -7,10 +7,10 @@ function make_timeToggle(elemId, numId, data, timeFilter, updateColor, updateMap
 
     var line = d3.line()
                .x(function(d, i) { return x(i); })
-               .y(function(d) { return y(d.y); });
+               .y(function(d) { return y(0); });
 
     x.domain(d3.extent(data_json, function(d, i) { return i; }));
-    y.domain(d3.extent(data_json, function(d) { return d.y; }));
+    y.domain(d3.extent(data_json, function(d) { return 0; }));
 
     var max_index = d3.extent(data_json, function(d, i) { return i; })[1];
 
@@ -21,7 +21,7 @@ function make_timeToggle(elemId, numId, data, timeFilter, updateColor, updateMap
       .attr('height', height)
       .append('g')
       .attr('class', 'timeToggle')
-      .attr('transform', 'translate(' + margin + ',' + margin + ')');
+      .attr('transform', 'translate(' + margin + ',0)');
 
     var path = svg.append('path')
       .datum(data_json)
