@@ -73,7 +73,17 @@ path {
   padding: 0px;
 }
 
+.district {
+  stroke: gray;
+  fill: white;
+  cursor: pointer;
+}
+
 .district.selected {
-  stroke: 'black';
+  stroke: black;
   stroke-width: 1.3;
+}
+
+.district.highlighted {
+  stroke: black;
 }

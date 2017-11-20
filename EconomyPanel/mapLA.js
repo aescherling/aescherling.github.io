@@ -101,13 +101,9 @@ function map_ready(error, geodata, econdata) {
       .classed('frozen', false)
       .classed('district', true)
       .attr('vector-effect', 'non-scaling-stroke')
-      .style('fill', 'white')
-      .style('stroke', 'gray')
-      .style('cursor', 'pointer')
       .on('click', mouseclick)
       .on('mouseover', mouseover)
-      .on('mouseout', mouseout)
-      .attr('opacity', 1);
+      .on('mouseout', mouseout);
 
 
   // color scale
@@ -264,7 +260,6 @@ function map_ready(error, geodata, econdata) {
     // show the indicator selector (this was done above) and hide the other selectors
     d3.select('#subindicatorDiv').attr('style','display:none');
     d3.select('#genderDiv').attr('style','display:none');
-    d3.select('#periodDiv').attr('style','display:none');
 
     // pick out all indicators with more than one observation using the current filters
     indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -483,22 +478,22 @@ function map_ready(error, geodata, econdata) {
 
 // label council districts (appears upon mouseover)
 cd_label = map_svg.append('text')
-  .attr('x', map_svg_width - 200)
-  .attr('y', 20)
+  .attr('x', map_svg_width - 190)
+  .attr('y', 40)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px; font-weight: bold')
   .text('');
 
 cd_councilmember = map_svg.append('text')
-  .attr('x', map_svg_width - 200)
-  .attr('y', 40)
+  .attr('x', map_svg_width - 190)
+  .attr('y', 60)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
   .text('');
 
 cd_value = map_svg.append('text')
-  .attr('x', map_svg_width - 200)
-  .attr('y', 60)
+  .attr('x', map_svg_width - 190)
+  .attr('y', 80)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
   .text('');
@@ -518,21 +513,23 @@ function fillFn(d){
 }
 
 mouseclick = function() {
+  district = d3.select(this);
   // determine the prior state of the district (selected or not)
-  isSelected = d3.select(this).classed('selected');
+  isSelected = district.classed('selected');
   // if it's selected, unselect it
   if (isSelected) {
-    d3.select(this).classed('selected', false);
+    district.classed('selected', false);
     d3.selectAll('.district').classed('frozen', false);
   } else {
   	// unselect all districts then select the chosen district
     d3.selectAll('.district').classed('selected', false);
-    d3.select(this).classed('selected', true);
+    d3.selectAll('.district').classed('highlighted', false);
+    district.moveToFront().classed('selected', true);
 
     // update the display text
-    district = d3.select(this);
-    district_text = d3.select(this).attr('label');
-    councilmember_text = d3.select(this).attr('councilmember');
+    district = district;
+    district_text = district.attr('label');
+    councilmember_text = district.attr('councilmember');
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
 
@@ -543,27 +540,28 @@ mouseclick = function() {
 
 mouseover = function() {
   // if the district is not frozen, highlight and update the display text
-  isFrozen = d3.select(this).classed('frozen');
+  district = d3.select(this);
+  isFrozen = district.classed('frozen');
   if (!isFrozen) {
-	  district = d3.select(this);
-	  district.moveToFront().style('stroke', 'black');
-    district_text = d3.select(this).attr('label');
-    councilmember_text = d3.select(this).attr('councilmember');
-    value_tmp = +d3.select(this).attr('value')
+	district.moveToFront().classed('highlighted', true);
+    district_text = district.attr('label');
+    councilmember_text = district.attr('councilmember');
+    value_tmp = +district.attr('value')
     value_text = "value: " + Math.round(value_tmp);
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
     // only show the value if it's not blank
-    if (d3.select(this).attr('value')!="") {
+    if (district.attr('value')!="") {
     	cd_value.text(value_text);
     }
   }
 }
 
 mouseout = function() {
-  isFrozen = d3.select(this).classed('frozen');
+  district = d3.select(this);
+  isFrozen = district.classed('frozen');
   if (!isFrozen) {
-	  d3.select(this).style('stroke', 'gray');
+	district.classed('highlighted', false);
     cd_label.text('');
     cd_councilmember.text('');
     cd_value.text('');
