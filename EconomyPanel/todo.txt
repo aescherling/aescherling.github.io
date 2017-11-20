@@ -1,3 +1,4 @@
+- turn time toggle into a sparkline when a district is selected
 - Disable time toggle when a relevant field is still blank
 - Format the values
 - Add graph title (e.g. "Average Commuting Time, minutes")

@@ -72,3 +72,8 @@ path {
   margin: 0px 20px 0px 0px;
   padding: 0px;
 }
+
+.district.selected {
+  stroke: 'black';
+  stroke-width: 1.3;
+}

@@ -107,7 +107,7 @@ function map_ready(error, geodata, econdata) {
       .on('click', mouseclick)
       .on('mouseover', mouseover)
       .on('mouseout', mouseout)
-      .attr('opacity', 0.8);
+      .attr('opacity', 1);
 
 
   // color scale
@@ -180,43 +180,28 @@ function map_ready(error, geodata, econdata) {
       return myColor;
     }
 
-    // // pick out all units with more than one observation using the current filters
-    // getUnits = function(d) {
-
-    //   // set up a units filter
-    //   var units = data.dimension(function (d) {
-    //     return d["unit_of_measure"];
-    //   });
-
-    //   unitCounts = units.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    //   units_tmp = unitCounts.map(function (d) {return d.key});
-
-    //   // remove the units filter
-    //   units.dispose();
-
-    //   return(units_tmp[0])
-    // }
-
-    // // pick out all descriptions with more than one observation using the current filters
-    // getDesc = function(d) {
-    //   // set up a description filter
-    //   var desc = data.dimension(function (d) {
-    //     return d["unit_text"];
-    //   });
-
-    //   descCounts = desc.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    //   descs_tmp = descCounts.map(function (d) {return d.key});
-
-    //   // remove the description filter
-    //   desc.dispose();
-
-    //   return(descs_tmp[0])
-    // }
-
     mapLayer.selectAll('path')
       .attr('value', getValue)
       .style('fill', getColor);
-  }
+
+    // if a district is selected, update the displayed value 
+    try {
+      var selected_district = d3.selectAll('.district.selected').attr('id');
+      district_tmp = d3.select('#'+selected_district);
+      value_tmp = +district_tmp.attr('value')
+      value_text = "value: " + Math.round(value_tmp);
+      // only show the value if it's not blank
+      if (district_tmp.attr('value')!="") {
+      	cd_value.text(value_text);
+      } else {
+    	cd_value.text("");
+      }
+    } catch (err) {
+      var selected_district = "";
+      cd_value.text("");
+    }
+
+  } // end of updateMap
 
   // function for updating the time scale
   // assumes that the data have been filtered to a single variable
@@ -263,6 +248,9 @@ function map_ready(error, geodata, econdata) {
     subindicator.filterAll();
     gender.filterAll();
     
+    // remove time toggle
+    d3.select('#timeToggleSVG').remove();
+    d3.select('#timeToggleLabel').remove();
     
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
@@ -310,6 +298,10 @@ function map_ready(error, geodata, econdata) {
 
     // dispose of the time filter
     time.dispose();
+
+    // remove time toggle
+    d3.select('#timeToggleSVG').remove();
+    d3.select('#timeToggleLabel').remove();
     
     // If they chose "-", remove the indicator filter.
     // Otherwise filter using given indicator.
@@ -486,7 +478,7 @@ function map_ready(error, geodata, econdata) {
     }
   }
 
-}
+} // end of map_ready
 
 
 // label council districts (appears upon mouseover)
@@ -526,29 +518,34 @@ function fillFn(d){
 }
 
 mouseclick = function() {
+  // determine the prior state of the district (selected or not)
   isSelected = d3.select(this).classed('selected');
+  // if it's selected, unselect it
   if (isSelected) {
     d3.select(this).classed('selected', false);
     d3.selectAll('.district').classed('frozen', false);
   } else {
+  	// unselect all districts then select the chosen district
     d3.selectAll('.district').classed('selected', false);
     d3.select(this).classed('selected', true);
-    d3.selectAll('.district').style('stroke', 'gray');
+
+    // update the display text
     district = d3.select(this);
-    district.moveToFront().style('stroke', 'black');
     district_text = d3.select(this).attr('label');
     councilmember_text = d3.select(this).attr('councilmember');
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
+
+    // "Freeze" all districts to disable mouseover
     d3.selectAll('.district').classed('frozen', true);
   }
 }
 
 mouseover = function() {
+  // if the district is not frozen, highlight and update the display text
   isFrozen = d3.select(this).classed('frozen');
   if (!isFrozen) {
 	  district = d3.select(this);
-	  //d3.select('#label' + districtNo(districtTmp)).remove();
 	  district.moveToFront().style('stroke', 'black');
     district_text = d3.select(this).attr('label');
     councilmember_text = d3.select(this).attr('councilmember');
@@ -556,7 +553,10 @@ mouseover = function() {
     value_text = "value: " + Math.round(value_tmp);
     cd_label.text(district_text);
     cd_councilmember.text(councilmember_text);
-    cd_value.text(value_text);
+    // only show the value if it's not blank
+    if (d3.select(this).attr('value')!="") {
+    	cd_value.text(value_text);
+    }
   }
 }
 
