@@ -51,7 +51,8 @@ var myVar;
 // wait until all the data is loaded before proceeding
 queue()
   .defer(d3.json, 'geodata/council_districts.geojson')
-  .defer(d3.csv, 'data/2017.10_city_data.csv')
+  // .defer(d3.csv, 'data/2017.10_city_data.csv')
+  .defer(d3.csv, 'data/EconomyPanel.csv')
   .await(map_ready)
 
 function map_ready(error, geodata, econdata) {
@@ -63,33 +64,33 @@ function map_ready(error, geodata, econdata) {
   // set up crossfilter on the econdata //
   var data = crossfilter(econdata); //cf=data;
 
-  var category = data.dimension(function(d) {
-    return d["category"];
-  })
-
-  var indicator = data.dimension(function (d) {
-    return d["indicator"];
-  });
-
-  var gender = data.dimension(function (d) {
-    return d["gender"];
-  });
-
-  var subindicator = data.dimension(function (d) {
-    return d["sub_indicator"];
-  });
-
-  var time = data.dimension(function (d) {
-    return d["calendar_year"];
-  });
-
-  var value = data.dimension(function (d) {
-  	return +d["value"];
-  });
+  var category = data.dimension(function(d) {return d["category"];});
+  var indicator = data.dimension(function (d) {return d["indicator"];});
+  var gender = data.dimension(function (d) {return d["gender"];});
+  var subindicator = data.dimension(function (d) {return d["sub_indicator"];});
+  var time = data.dimension(function (d) {return d["calendar_year"];});
+  var value = data.dimension(function (d) {return +d["value"];});
 
   cf = data;
 
+  // Remove indicators which are city-level only.
+  // to do so I keep only the indicators available for Council District 1
+  var locality = data.dimension(function(d) {return d.locality});
+  locality.filter('Council District 1');
+  // pick out all time periods with more than one observation using the current filters
+  CDindicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+  CDindicators = CDindicatorCounts.map(function (d) {return d.key});
 
+  // remove locality filter
+  locality.filterAll();
+  locality.dispose();
+
+  // select indicators not in the list
+  indicator.filter(function (d) {return CDindicators.indexOf(d)==-1});
+  // remove them!
+  data.remove();
+  // undo the filter
+  indicator.filterAll();
 
 
   mouseclick = function() {
@@ -101,7 +102,7 @@ function map_ready(error, geodata, econdata) {
       district.classed('selected', false);
       d3.selectAll('.district').classed('frozen', false);
     } else {
-    	// unselect all districts then select the chosen district
+      // unselect all districts then select the chosen district
       d3.selectAll('.district').classed('selected', false);
       d3.selectAll('.district').classed('highlighted', false);
       district.moveToFront().classed('selected', true);
@@ -215,7 +216,7 @@ function map_ready(error, geodata, econdata) {
     var valuesByDistrict = [];
     valueArray.forEach(function (d, i) {kk[i] = d.key; valuesByDistrict[i] = d.value});
     if (kk.length != 16) {
-      alert(kk.length);
+      alert("We've got problems: I expected 16 values (one for each district plus the city as a whole) but I only got " + kk.length + ".");
     }
 
     var cityIndex = kk.indexOf('City of Los Angeles');
