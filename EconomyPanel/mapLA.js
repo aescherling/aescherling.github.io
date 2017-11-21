@@ -45,7 +45,7 @@ var path = d3.geoPath()
   .projection(projection);
 
 // create a global version of the crossfilter, just for debugging purposes
-//var cf;
+var cf;
 var myVar;
 
 // wait until all the data is loaded before proceeding
@@ -87,6 +87,68 @@ function map_ready(error, geodata, econdata) {
   	return +d["value"];
   });
 
+  cf = data;
+
+
+
+
+  mouseclick = function() {
+    district = d3.select(this);
+    // determine the prior state of the district (selected or not)
+    isSelected = district.classed('selected');
+    // if it's selected, unselect it
+    if (isSelected) {
+      district.classed('selected', false);
+      d3.selectAll('.district').classed('frozen', false);
+    } else {
+    	// unselect all districts then select the chosen district
+      d3.selectAll('.district').classed('selected', false);
+      d3.selectAll('.district').classed('highlighted', false);
+      district.moveToFront().classed('selected', true);
+
+      // update the display text
+      district = district;
+      district_text = district.attr('label');
+      councilmember_text = district.attr('councilmember');
+      cd_label.text(district_text);
+      cd_councilmember.text(councilmember_text);
+
+      // "Freeze" all districts to disable mouseover
+      d3.selectAll('.district').classed('frozen', true);
+    }
+    // update the time toggle
+    updateTimescale();
+  }
+
+  mouseover = function() {
+    // if the district is not frozen, highlight and update the display text
+    district = d3.select(this);
+    isFrozen = district.classed('frozen');
+    if (!isFrozen) {
+  	district.moveToFront().classed('highlighted', true);
+      district_text = district.attr('label');
+      councilmember_text = district.attr('councilmember');
+      value_tmp = +district.attr('value')
+      value_text = "value: " + Math.round(value_tmp);
+      cd_label.text(district_text);
+      cd_councilmember.text(councilmember_text);
+      // only show the value if it's not blank
+      if (district.attr('value')!="") {
+      	cd_value.text(value_text);
+      }
+    }
+  }
+
+  mouseout = function() {
+    district = d3.select(this);
+    isFrozen = district.classed('frozen');
+    if (!isFrozen) {
+  	district.classed('highlighted', false);
+      cd_label.text('');
+      cd_councilmember.text('');
+      cd_value.text('');
+    }
+  }
 
   // initial settings for the map //
   mapLayer.selectAll('path')
@@ -181,19 +243,16 @@ function map_ready(error, geodata, econdata) {
       .style('fill', getColor);
 
     // if a district is selected, update the displayed value 
-    try {
-      var selected_district = d3.selectAll('.district.selected').attr('id');
-      district_tmp = d3.select('#'+selected_district);
-      value_tmp = +district_tmp.attr('value')
-      value_text = "value: " + Math.round(value_tmp);
+    selected_district = d3.selectAll('.district').filter('.selected')
+    if (selected_district._groups[0].length==1) {
+      value_tmp = selected_district.attr('value')
       // only show the value if it's not blank
-      if (district_tmp.attr('value')!="") {
-      	cd_value.text(value_text);
+      if (value_tmp!="") {
+      	cd_value.text('Value: ' + value_tmp);
       } else {
     	cd_value.text("");
       }
-    } catch (err) {
-      var selected_district = "";
+    } else {
       cd_value.text("");
     }
 
@@ -202,14 +261,54 @@ function map_ready(error, geodata, econdata) {
   // function for updating the time scale
   // assumes that the data have been filtered to a single variable
   var updateTimescale = function() {
-    // pick out all time periods with more than one observation using the current filters
-    timePeriodCounts = time.group().reduceCount().all().filter(function (d) {return d.value > 0});
-    timePeriods = timePeriodCounts.map(function (d) {return d.key});
+    // if a district is selected, add the time series for that district
+    selected_district = d3.selectAll('.district').filter('.selected');
+    if (selected_district._groups[0].length==1) {
+      // create locality filter
+      var locality = data.dimension(function (d) {
+        return d["locality"];
+      });
+      // select only the data for the selected district
+      locality.filter(selected_district.attr('label'));
+
+      // remove any time filters
+      time.filterAll();
+
+      // return the entries sorted by time, from earliest to latest
+      dd = time.bottom(1e7);
+
+      // pull the values
+      annual = time.top(1)[0].cy_qtr=="";
+      if (annual) {
+      	timePeriods = dd.map(function (d) {return d["calendar_year"]})
+      } else {
+      	timePeriods = dd.map(function (d) {return d["cy_qtr"]})
+      }
+      valuesTS = dd.map(function (d) {return d["value"]});
+
+      // undo the time filter
+      time.filterAll();
+      // undo the locality filter
+      locality.filterAll();
+      // remove the locality filter
+      locality.dispose();
+
+      // create the data to pass to the toggle
+      timeData = timePeriods.map(function(d,i) {return {'time':d, 'value':valuesTS[i]}});
+    } else {
+      // pick out all time periods with more than one observation using the current filters
+      timePeriodCounts = time.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      timePeriods = timePeriodCounts.map(function (d) {return d.key});
+
+
+      timeData = timePeriods.map(function(d,i) {return {'time':d, 'value':0}});
+    }
+	
 
     // remove timeToggle if it exists, then add a new one
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
-    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timePeriods, time, updateColor, updateMap);
+    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap);
     timeToggleSetup();
   }
 
@@ -473,6 +572,7 @@ function map_ready(error, geodata, econdata) {
     }
   }
 
+
 } // end of map_ready
 
 
@@ -512,61 +612,64 @@ function fillFn(d){
   return color(getDistrict(d));
 }
 
-mouseclick = function() {
-  district = d3.select(this);
-  // determine the prior state of the district (selected or not)
-  isSelected = district.classed('selected');
-  // if it's selected, unselect it
-  if (isSelected) {
-    district.classed('selected', false);
-    d3.selectAll('.district').classed('frozen', false);
-  } else {
-  	// unselect all districts then select the chosen district
-    d3.selectAll('.district').classed('selected', false);
-    d3.selectAll('.district').classed('highlighted', false);
-    district.moveToFront().classed('selected', true);
 
-    // update the display text
-    district = district;
-    district_text = district.attr('label');
-    councilmember_text = district.attr('councilmember');
-    cd_label.text(district_text);
-    cd_councilmember.text(councilmember_text);
 
-    // "Freeze" all districts to disable mouseover
-    d3.selectAll('.district').classed('frozen', true);
-  }
-}
 
-mouseover = function() {
-  // if the district is not frozen, highlight and update the display text
-  district = d3.select(this);
-  isFrozen = district.classed('frozen');
-  if (!isFrozen) {
-	district.moveToFront().classed('highlighted', true);
-    district_text = district.attr('label');
-    councilmember_text = district.attr('councilmember');
-    value_tmp = +district.attr('value')
-    value_text = "value: " + Math.round(value_tmp);
-    cd_label.text(district_text);
-    cd_councilmember.text(councilmember_text);
-    // only show the value if it's not blank
-    if (district.attr('value')!="") {
-    	cd_value.text(value_text);
-    }
-  }
-}
+// mouseclick = function() {
+//   district = d3.select(this);
+//   // determine the prior state of the district (selected or not)
+//   isSelected = district.classed('selected');
+//   // if it's selected, unselect it
+//   if (isSelected) {
+//     district.classed('selected', false);
+//     d3.selectAll('.district').classed('frozen', false);
+//   } else {
+//   	// unselect all districts then select the chosen district
+//     d3.selectAll('.district').classed('selected', false);
+//     d3.selectAll('.district').classed('highlighted', false);
+//     district.moveToFront().classed('selected', true);
 
-mouseout = function() {
-  district = d3.select(this);
-  isFrozen = district.classed('frozen');
-  if (!isFrozen) {
-	district.classed('highlighted', false);
-    cd_label.text('');
-    cd_councilmember.text('');
-    cd_value.text('');
-  }
-}
+//     // update the display text
+//     district = district;
+//     district_text = district.attr('label');
+//     councilmember_text = district.attr('councilmember');
+//     cd_label.text(district_text);
+//     cd_councilmember.text(councilmember_text);
+
+//     // "Freeze" all districts to disable mouseover
+//     d3.selectAll('.district').classed('frozen', true);
+//   }
+// }
+
+// mouseover = function() {
+//   // if the district is not frozen, highlight and update the display text
+//   district = d3.select(this);
+//   isFrozen = district.classed('frozen');
+//   if (!isFrozen) {
+// 	district.moveToFront().classed('highlighted', true);
+//     district_text = district.attr('label');
+//     councilmember_text = district.attr('councilmember');
+//     value_tmp = +district.attr('value')
+//     value_text = "value: " + Math.round(value_tmp);
+//     cd_label.text(district_text);
+//     cd_councilmember.text(councilmember_text);
+//     // only show the value if it's not blank
+//     if (district.attr('value')!="") {
+//     	cd_value.text(value_text);
+//     }
+//   }
+// }
+
+// mouseout = function() {
+//   district = d3.select(this);
+//   isFrozen = district.classed('frozen');
+//   if (!isFrozen) {
+// 	district.classed('highlighted', false);
+//     cd_label.text('');
+//     cd_councilmember.text('');
+//     cd_value.text('');
+//   }
+// }
 
 // http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
 d3.selection.prototype.moveToFront = function() {  

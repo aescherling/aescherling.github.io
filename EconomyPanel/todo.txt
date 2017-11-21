@@ -1,4 +1,4 @@
-- turn time toggle into a sparkline when a district is selected
+- fix time toggle so clicking on a district won't do anything until a variable is selected
 - Disable time toggle when a relevant field is still blank
 - Format the values
 - Add graph title (e.g. "Average Commuting Time, minutes")
@@ -8,7 +8,7 @@
 - Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
 - Improve formatting for selected council districts (change opacity of unselected districts)
 - Attach sparklines to the dataset
-
+- remove the cf variable which was used for debugging
 
 For speeding it up:
 - make sure there are no more than 8 filters defined at any time
