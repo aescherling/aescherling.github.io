@@ -51,8 +51,8 @@ var myVar;
 // wait until all the data is loaded before proceeding
 queue()
   .defer(d3.json, 'geodata/council_districts.geojson')
-  .defer(d3.csv, 'data/2017.10_city_data.csv')
-  // .defer(d3.csv, 'data/EconomyPanel.csv')
+  // .defer(d3.csv, 'data/2017.10_city_data.csv')
+  .defer(d3.csv, 'data/EconomyPanel.csv')
   .await(map_ready)
 
 function map_ready(error, geodata, econdata) {
