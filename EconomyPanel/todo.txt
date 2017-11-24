@@ -1,9 +1,10 @@
+- Create a more robust filtering system. Allow subindicator to change without changing gender?
 - fix time toggle so clicking on a district won't do anything until a variable is selected
 - Disable time toggle when a relevant field is still blank
-- Format the values
-- Add graph title (e.g. "Average Commuting Time, minutes")
+
 - Plot density where appropriate
-- Add a data table on the right hand side
+
+- Add a data table on the right hand side?
 - Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
 - Attach sparklines to the dataset
 - remove the cf variable which was used for debugging

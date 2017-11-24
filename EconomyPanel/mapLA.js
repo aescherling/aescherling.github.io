@@ -71,6 +71,10 @@ function map_ready(error, geodata, econdata) {
   var time = data.dimension(function (d) {return d["calendar_year"];});
   var value = data.dimension(function (d) {return +d["value"];});
 
+  var current_indicator = '-';
+  var current_subindicator = '_';
+  var selection_complete = false;
+
   cf = data;
 
   // Remove indicators which are city-level only.
@@ -91,6 +95,9 @@ function map_ready(error, geodata, econdata) {
   data.remove();
   // undo the filter
   indicator.filterAll();
+
+  // map title variable
+  mapTitle = d3.select('#mapTitle');
 
 
   mouseclick = function() {
@@ -130,7 +137,7 @@ function map_ready(error, geodata, econdata) {
       district_text = district.attr('label');
       councilmember_text = district.attr('councilmember');
       value_tmp = +district.attr('value')
-      value_text = "value: " + Math.round(value_tmp);
+      value_text = "value: " + formatAmount(value_tmp);
       cd_label.text(district_text);
       cd_councilmember.text(councilmember_text);
       // only show the value if it's not blank
@@ -259,12 +266,30 @@ function map_ready(error, geodata, econdata) {
 
   } // end of updateMap
 
+
+  var clearMap = function() {
+  	// change the map to white
+    mapLayer.selectAll('path').style('fill', 'white');
+
+    // delete legend
+    d3.selectAll('.legend').remove();
+
+    // delete title
+    mapTitle.text('');
+
+    // remove timeToggle if it exists
+    d3.select('#timeToggleSVG').remove();
+    d3.select('#timeToggleLabel').remove();
+    d3.select('#timePrelabel').text('');
+  }
+
+
   // function for updating the time scale
   // assumes that the data have been filtered to a single variable
   var updateTimescale = function() {
-    // if a district is selected, add the time series for that district
+    // if a district is selected and the selection is complete, add the time series for that district
     selected_district = d3.selectAll('.district').filter('.selected');
-    if (selected_district._groups[0].length==1) {
+    if (selected_district._groups[0].length==1 & selection_complete) {
       // create locality filter
       var locality = data.dimension(function (d) {
         return d["locality"];
@@ -301,16 +326,54 @@ function map_ready(error, geodata, econdata) {
       timePeriodCounts = time.group().reduceCount().all().filter(function (d) {return d.value > 0});
       timePeriods = timePeriodCounts.map(function (d) {return d.key});
 
-
       timeData = timePeriods.map(function(d,i) {return {'time':d, 'value':0}});
     }
 	
+	if (selection_complete) {
+      // remove timeToggle if it exists, then add a new one
+      d3.select('#timeToggleSVG').remove();
+      d3.select('#timeToggleLabel').remove();
+      var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap);
+      timeToggleSetup();
+      d3.select('#timePrelabel').text('Select time period: ');
+    } else {
+      // remove timeToggle if it exists
+      d3.select('#timeToggleSVG').remove();
+      d3.select('#timeToggleLabel').remove();
+      d3.select('#timePrelabel').text('');
+    }
+  }
 
-    // remove timeToggle if it exists, then add a new one
-    d3.select('#timeToggleSVG').remove();
-    d3.select('#timeToggleLabel').remove();
-    var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap);
-    timeToggleSetup();
+  // function for updating the map title
+  // assume the plotting variable has been chosen, and the mapTitle object
+  // is available in the map_ready namespace
+  updateTitle = function(maintext) {
+
+  	if (maintext!='') {
+  	  // find the units
+  	  unitsFilter = data.dimension(function (d) {return d.unit_of_measure});
+  	  unitCounts = unitsFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      units = unitCounts.map(function (d) {return d.key})[0];
+      unitsFilter.dispose();
+
+      if (units!='') {
+      	units = ', ' + units;
+      }
+
+      // find the unit text
+  	  unitTextFilter = data.dimension(function (d) {return d.unit_text});
+  	  unitTextCounts = unitTextFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      unitText = unitTextCounts.map(function (d) {return d.key})[0];
+      unitTextFilter.dispose();
+
+      if (unitText!='') {
+      	unitText = ', ' + unitText;
+      }
+
+      mapTitle.text(maintext + units + unitText);
+    } else {
+      mapTitle.text('');
+    }
   }
 
 
@@ -342,7 +405,11 @@ function map_ready(error, geodata, econdata) {
     time.filterAll();
     indicator.filterAll();
     subindicator.filterAll();
+    current_subindicator = '-';
     gender.filterAll();
+
+    // mark the selection as incomplete
+    selection_complete = false;
     
     // remove time toggle
     d3.select('#timeToggleSVG').remove();
@@ -369,12 +436,8 @@ function map_ready(error, geodata, econdata) {
     removeOptions('#selectIndicator');
     addOptions('#selectIndicator', indicators);
 
-    // change the map to white
-    mapLayer.selectAll('path')
-      .style('fill', 'white');
-
-    // delete legend
-    d3.selectAll('.legend').remove();
+    // clear the map
+    clearMap();
   }
 
   $('#selectCategory').attr('onchange', "selectCategory(this.value);")
@@ -391,6 +454,9 @@ function map_ready(error, geodata, econdata) {
     subindicator.filterAll();
     gender.filterAll();
 
+    // mark the selection as incomplete (will assess later whether it is complete)
+    selection_complete = false;
+
     // dispose of the time filter
     time.dispose();
 
@@ -402,8 +468,10 @@ function map_ready(error, geodata, econdata) {
     // Otherwise filter using given indicator.
     if (ind=="-") {
       indicator.filterAll();
+      current_indicator = '-';
     } else {
       indicator.filter(ind);
+      current_indicator = ind;
     }
 
     // check whether gender is an option
@@ -430,6 +498,7 @@ function map_ready(error, geodata, econdata) {
     if (ind=="-") {
       d3.select('#genderDiv').attr('style','display:none');
       d3.select('#subindicatorDiv').attr('style','display:none');
+      clearMap();
     } else {
       // create a new time filter depending on the choice
       if (hasQuarters) {
@@ -463,13 +532,15 @@ function map_ready(error, geodata, econdata) {
       // if neither gender nor subindicator are options, update the map.
       // otherwise, make it white
       if (!hasGender & !hasSubindicator) {
+      	selection_complete = true;
         updateTimescale();
         updateColor();
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
-        // updateMap();
+        updateTitle(ind);
       } else {
         mapLayer.selectAll('path').style('fill', 'white');
+        mapTitle.text('');
       }
     }
 
@@ -484,6 +555,12 @@ function map_ready(error, geodata, econdata) {
     time.filterAll();
     gender.filterAll();
 
+    // update current subindicator
+    current_subindicator = sub;
+
+    // set selection as incomplete (will assess later whether to mark as complete)
+    selection_complete = false;
+
     // if there are less than two genders, update the map (depending on selection).
     // otherwise, make each district white
     genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -494,18 +571,23 @@ function map_ready(error, geodata, econdata) {
       // Otherwise filter using given subindicator and plot
       if (sub=="-") {
         subindicator.filterAll();
-        mapLayer.selectAll('path').style('fill', 'white');
-        d3.selectAll('.legend').remove();
+        clearMap();
       } else {
         subindicator.filter(sub);
+        selection_complete = true;
         updateTimescale();
         updateColor();
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
+
+        // get indicator for title
+        indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+        indicators = indicatorCounts.map(function (d) {return d.key});
+        updateTitle(current_indicator + ', ' + sub);
         // updateMap();
       }
     } else {
-      mapLayer.selectAll('path').style('fill', 'white');
+      clearMap();
     }
 
     
@@ -521,15 +603,22 @@ function map_ready(error, geodata, econdata) {
     // Otherwise filter using given gender and plot.
     if (sub=="-") {
       gender.filterAll();
-      mapLayer.selectAll('path')
-        .style('fill', 'white');
-      d3.selectAll('.legend').remove();
+      selection_complete = false;
+      clearMap();
     } else {
       gender.filter(sub);
+      selection_complete = true;
       updateTimescale();
       updateColor();
       d3.selectAll('.legend').remove();
       makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
+      
+      if (current_subindicator=='-') {
+      	var subind = '';
+      } else {
+      	var subind = ', ' + current_subindicator ;
+      }
+      updateTitle(current_indicator + subind + ', ' + sub);
       // updateMap();
     }
   }
@@ -569,7 +658,7 @@ function map_ready(error, geodata, econdata) {
         .attr('y', 4 + size/2 + yTmp + size * i)
         .attr('text-anchor', 'center')
         .attr('style', "font-size: " + d3.min([d3.max([10, (size / 2)]), 16]) + "px")
-        .text(legendValues[i]);
+        .text(formatAmount(legendValues[i]));
     }
   }
 
