@@ -6,10 +6,10 @@
 // http://documents.lahsa.org/planning/homelesscount/2009/CityofLA-CouncilDistricts.pdf
 
 // set some variables
-var map_svg_width=450,
+var map_svg_width=650,
 	map_svg_height=450,
   map_zoom = 8.5,
-  map_long = -118.25,
+  map_long = -118.1,
   map_lat = 34.02;
 
 // make the SVG canvas
@@ -74,6 +74,9 @@ function map_ready(error, geodata, econdata) {
   var current_indicator = '-';
   var current_subindicator = '_';
   var selection_complete = false;
+  var has_gender = false;
+  var gender_selected = false;
+  var subind_selected = false;
 
   cf = data;
 
@@ -137,7 +140,7 @@ function map_ready(error, geodata, econdata) {
       district_text = district.attr('label');
       councilmember_text = district.attr('councilmember');
       value_tmp = +district.attr('value')
-      value_text = "value: " + formatAmount(value_tmp);
+      value_text = "Value: " + formatAmount(value_tmp);
       cd_label.text(district_text);
       cd_councilmember.text(councilmember_text);
       // only show the value if it's not blank
@@ -197,6 +200,8 @@ function map_ready(error, geodata, econdata) {
     // get the min and max values
     minValue = value.bottom(1)[0].value;
     maxValue = value.top(1)[0].value;
+    myVar = value.top(1000);
+
     // set the color domain
     color.domain([minValue, maxValue]);
     // undo the locality filter
@@ -256,7 +261,7 @@ function map_ready(error, geodata, econdata) {
       value_tmp = selected_district.attr('value')
       // only show the value if it's not blank
       if (value_tmp!="") {
-      	cd_value.text('Value: ' + value_tmp);
+      	cd_value.text('Value: ' + formatAmount(value_tmp));
       } else {
     	cd_value.text("");
       }
@@ -410,6 +415,8 @@ function map_ready(error, geodata, econdata) {
 
     // mark the selection as incomplete
     selection_complete = false;
+    gender_selected = false;
+    subind_selected = false;
     
     // remove time toggle
     d3.select('#timeToggleSVG').remove();
@@ -456,6 +463,8 @@ function map_ready(error, geodata, econdata) {
 
     // mark the selection as incomplete (will assess later whether it is complete)
     selection_complete = false;
+    gender_selected = false;
+    subind_selected = false;
 
     // dispose of the time filter
     time.dispose();
@@ -477,7 +486,7 @@ function map_ready(error, geodata, econdata) {
     // check whether gender is an option
     genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
     genders = genderCounts.map(function (d) {return d.key});
-    hasGender = genders.length > 1;
+    has_gender = genders.length > 1;
 
     // check whether subindicator is an option
     subindicatorCounts = subindicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -512,7 +521,7 @@ function map_ready(error, geodata, econdata) {
       }
 
       // if gender is an option, show gender selector and update categories
-      if (hasGender) {
+      if (has_gender) {
         d3.select('#genderDiv').attr('style','display:inline-block');
         removeOptions('#selectGender');
         addOptions('#selectGender', genders);
@@ -531,16 +540,14 @@ function map_ready(error, geodata, econdata) {
 
       // if neither gender nor subindicator are options, update the map.
       // otherwise, make it white
-      if (!hasGender & !hasSubindicator) {
+      if (!has_gender & !hasSubindicator) {
       	selection_complete = true;
         updateTimescale();
-        updateColor();
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
         updateTitle(ind);
       } else {
-        mapLayer.selectAll('path').style('fill', 'white');
-        mapTitle.text('');
+        clearMap();
       }
     }
 
@@ -553,7 +560,7 @@ function map_ready(error, geodata, econdata) {
     selectSubindicator = function(sub) {
     // remove gender and time filters
     time.filterAll();
-    gender.filterAll();
+    // gender.filterAll();
 
     // update current subindicator
     current_subindicator = sub;
@@ -566,25 +573,38 @@ function map_ready(error, geodata, econdata) {
     genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
     genders = genderCounts.map(function (d) {return d.key});
 
-    if (genders.length < 2) {
+    // filter as necessary
+    if (sub=="-") {
+      subindicator.filterAll();
+    } else {
+      subindicator.filter(sub);
+    }
+
+    // check that gender either isn't an option or has been selected already
+    if (genders.length < 2 | gender_selected) {
       // If they choose "-", simply remove the filter and make the map white.
       // Otherwise filter using given subindicator and plot
       if (sub=="-") {
-        subindicator.filterAll();
         clearMap();
       } else {
         subindicator.filter(sub);
         selection_complete = true;
         updateTimescale();
-        updateColor();
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
 
         // get indicator for title
         indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
         indicators = indicatorCounts.map(function (d) {return d.key});
-        updateTitle(current_indicator + ', ' + sub);
-        // updateMap();
+
+        // get gender for title
+        if (gender_selected) {
+          gen = ", " + value.top(1)[0].gender;
+        } else {
+          gen = "";
+        }
+
+        updateTitle(current_indicator + ': ' + sub + gen);
       }
     } else {
       clearMap();
@@ -598,28 +618,30 @@ function map_ready(error, geodata, econdata) {
 
 
   // functionality for gender selection //
-    selectGender = function(sub) {
+    selectGender = function(gen) {
     // If they choose "-", simply remove the filter and make the map white.
     // Otherwise filter using given gender and plot.
-    if (sub=="-") {
+    if (gen=="-") {
       gender.filterAll();
+      gender_selected = false;
       selection_complete = false;
       clearMap();
     } else {
-      gender.filter(sub);
+      gender.filter(gen);
+      gender_selected = true;
       selection_complete = true;
       updateTimescale();
-      updateColor();
       d3.selectAll('.legend').remove();
       makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
       
+      // update the title
       if (current_subindicator=='-') {
       	var subind = '';
       } else {
-      	var subind = ', ' + current_subindicator ;
+      	var subind = ': ' + current_subindicator ;
       }
-      updateTitle(current_indicator + subind + ', ' + sub);
-      // updateMap();
+
+      updateTitle(current_indicator + subind + ', ' + gen);
     }
   }
   
@@ -660,6 +682,9 @@ function map_ready(error, geodata, econdata) {
         .attr('style', "font-size: " + d3.min([d3.max([10, (size / 2)]), 16]) + "px")
         .text(formatAmount(legendValues[i]));
     }
+
+    // units and unit text for legend
+    // units = value.top(1)[0].
   }
 
 
@@ -701,65 +726,6 @@ function getDistrict(d){
 function fillFn(d){
   return color(getDistrict(d));
 }
-
-
-
-
-// mouseclick = function() {
-//   district = d3.select(this);
-//   // determine the prior state of the district (selected or not)
-//   isSelected = district.classed('selected');
-//   // if it's selected, unselect it
-//   if (isSelected) {
-//     district.classed('selected', false);
-//     d3.selectAll('.district').classed('frozen', false);
-//   } else {
-//   	// unselect all districts then select the chosen district
-//     d3.selectAll('.district').classed('selected', false);
-//     d3.selectAll('.district').classed('highlighted', false);
-//     district.moveToFront().classed('selected', true);
-
-//     // update the display text
-//     district = district;
-//     district_text = district.attr('label');
-//     councilmember_text = district.attr('councilmember');
-//     cd_label.text(district_text);
-//     cd_councilmember.text(councilmember_text);
-
-//     // "Freeze" all districts to disable mouseover
-//     d3.selectAll('.district').classed('frozen', true);
-//   }
-// }
-
-// mouseover = function() {
-//   // if the district is not frozen, highlight and update the display text
-//   district = d3.select(this);
-//   isFrozen = district.classed('frozen');
-//   if (!isFrozen) {
-// 	district.moveToFront().classed('highlighted', true);
-//     district_text = district.attr('label');
-//     councilmember_text = district.attr('councilmember');
-//     value_tmp = +district.attr('value')
-//     value_text = "value: " + Math.round(value_tmp);
-//     cd_label.text(district_text);
-//     cd_councilmember.text(councilmember_text);
-//     // only show the value if it's not blank
-//     if (district.attr('value')!="") {
-//     	cd_value.text(value_text);
-//     }
-//   }
-// }
-
-// mouseout = function() {
-//   district = d3.select(this);
-//   isFrozen = district.classed('frozen');
-//   if (!isFrozen) {
-// 	district.classed('highlighted', false);
-//     cd_label.text('');
-//     cd_councilmember.text('');
-//     cd_value.text('');
-//   }
-// }
 
 // http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
 d3.selection.prototype.moveToFront = function() {  
