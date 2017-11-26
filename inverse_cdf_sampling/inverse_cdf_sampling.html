@@ -49,7 +49,7 @@
 				& = y.	
 				\end{align}
 			</p>
-			<p>That is, the CDF of \(Y\) is the identity function \(F(y)=y\). This is the CDF of the uniform (0,1) distribution, implying that if you transform a random variable by applying the CDF, you get a uniform distribution.</p>
+			<p>That is, the CDF of \(Y\) is the identity function \(F(y)=y\). This happens to be the CDF of the uniform (0,1) distribution, implying that if you transform a random variable by applying the CDF, you get a uniform distribution.</p>
 			<p>The inversion method for sampling uses the same process in the opposite direction. Taking a uniform (0,1) variable and applying the inverse CDF, we get the desired distribution. In particular, let \(U \sim \text{unif} (0,1) \), let \(F(x)\) be the CDF for a desired distribution, and let \(Y=F^{-1}(U)\). It follows that:</p>
 			<p>
 				\begin{align}
@@ -58,8 +58,8 @@
 				& = F(y).
 				\end{align}
 			</p>
-			<p>Hence, \(Y\) is distributed following the desired distribution.</p>
-			<p>The following visualization shows an example of this, drawing samples from a uniform distribution (placed on the y-axis) and translating them to samples from an exponential distribution (on the x-axis) by passing them through the exponential CDF (plotted in blue).</p>
+			<p>Hence, \(Y\) follows the desired distribution.</p>
+			<p>The following visualization shows an example of this. Samples are drawn from a uniform distribution (placed on the y-axis) and are translated to samples from an exponential distribution (on the x-axis) by passing them through the exponential CDF (plotted in blue).</p>
 		</div>
 	</div>
 
