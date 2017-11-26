@@ -2,7 +2,8 @@
 # select only city-level data (council districts and city as a whole)
 
 setwd('~/github/aescherling.github.io/EconomyPanel/data')
-df <- read.csv('2017.10_updated_data.csv', stringsAsFactors=F)
+# df <- read.csv('2017.10_updated_data.csv', stringsAsFactors=F)
+df <- read.csv('Controller_Data_April_and_November.csv', stringsAsFactors=F)
 
 # select only city level data
 df <- df[df$locality=="LOS ANGELES CITY",]
@@ -45,4 +46,4 @@ df$council_district <- sapply(df$council_district, function(cd) {
 df$locality <- df$council_district
 df <- df[,-which(colnames(df)=="council_district")]
 
-write.csv(df, '2017.10_city_data.csv', row.names=F)
+write.csv(df, 'EconomyPanel.csv', row.names=F)
