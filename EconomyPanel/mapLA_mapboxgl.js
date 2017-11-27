@@ -12,9 +12,19 @@
 // add path directly to map:
 // https://stackoverflow.com/questions/37928238/making-a-path-with-coordinates-using-d3-and-mapbox
 
+// Constants for sizing
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
 // set some variables
-var map_svg_width=600,
-	map_svg_height=450;
+var map_svg_width=x,
+	map_svg_height=y;
+
+d3.select('#map').attr('style', 'height: ' + y + 'px; width: ' + x + 'px; margin:0; padding:0');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYWVzY2hlcmxpbmciLCJhIjoiY2o4cTRsdXdhMGVvbzJ4b3gwb3lmMDR6bCJ9.BpnZvVcHTuDFiTo9ngzQiw';
 
@@ -46,6 +56,29 @@ map.on('load', function() {
         'fill-color': 'steelblue',
         'fill-opacity': 0.5
       }
+    });
+
+    // https://www.mapbox.com/mapbox-gl-js/example/polygon-popup-on-click/
+    // When a click event occurs on a feature in the states layer, open a popup at the
+    // location of the click, with description HTML from its properties.
+    map.on('click', 'council_districts', function (e) {
+        myCD = e.features[0].properties.Council_District;
+        myCM = e.features[0].properties.Councilmember;
+        myHtml = "<div style='margin:5px'><span style='font-weight:bold'>" + myCD + "</span><br><span>" + myCM + "</span></div>";
+        new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(myHtml)
+            .addTo(map);
+    });
+
+    // Change the cursor to a pointer when the mouse is over the states layer.
+    map.on('mouseenter', 'council_districts', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'council_districts', function () {
+        map.getCanvas().style.cursor = '';
     });
 
     // to remove a layer:

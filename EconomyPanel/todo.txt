@@ -1,15 +1,6 @@
-- Create a more robust filtering system. Allow subindicator to change without changing gender?
-  - when indicator is selected, set a "hasGender" boolean for changing selection behavior
-
-- figure out what's wrong with educational attainment variables (by gender, and picking "" for the gender of the one that is supposedly not by gender)
-- population by age by gender also messed up
-- also population by income and gender, population by race and gender
-- also employment by occupation and gender
-
+- Create a more clean/robust filtering system
 - recode the "updateMap" function so it's a little less ugly
-
 - Plot density where appropriate
-
 - Add a data table on the right hand side?
 - Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
 - Attach sparklines to the dataset
