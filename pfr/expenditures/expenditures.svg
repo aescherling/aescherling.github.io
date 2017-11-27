@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="460"
+   height="460"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="expenditures.svg">
+  <metadata
+     id="metadata130">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs128" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1138"
+     inkscape:window-height="721"
+     id="namedview126"
+     showgrid="false"
+     inkscape:zoom="0.32129347"
+     inkscape:cx="482.42499"
+     inkscape:cy="268.01389"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <rect
+     class="detail"
+     x="161.12994"
+     y="-49.226379"
+     rx="10"
+     ry="10"
+     width="636.80103"
+     height="482.42499"
+     id="rect4"
+     style="opacity:0;fill:#ffffff;stroke:#000000" />
+  <text
+     class="exitButton detail"
+     x="767.93097"
+     y="-29.226379"
+     font-size="14"
+     id="text120"
+     style="font-size:14px;opacity:0" />
+  <g
+     class="detail description"
+     font-style="italic"
+     id="g122"
+     style="font-style:italic;opacity:0"
+     transform="translate(0,-76.02777)" />
+  <g
+     id="g4258"
+     transform="translate(-110,96)">
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle6"
+       cy="37.644119"
+       cx="289.54163"
+       r="71.470367"
+       name="Police"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle8"
+       cy="101.57385"
+       cx="398.02838"
+       r="60.975857"
+       name="Tax and Revenue Anticipation Notes"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle10"
+       cy="143.62329"
+       cx="214.26306"
+       r="52.228508"
+       name="Other Special Purpose Funds"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle12"
+       cy="64.093643"
+       cx="489.06976"
+       r="47.867962"
+       name="Fire"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle14"
+       cy="237.05655"
+       cx="234.48875"
+       r="47.806095"
+       name="Human Resources Benefits"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle16"
+       cy="177.45404"
+       cx="320.76855"
+       r="39.378902"
+       name="Wastewater Special Purpose"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle18"
+       cy="28.684341"
+       cx="196.40746"
+       r="31.864992"
+       name="General Services"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle20"
+       cy="249.42908"
+       cx="352.017"
+       r="30.707308"
+       name="Bureau of Sanitation"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle22"
+       cy="146.16144"
+       cx="512.42767"
+       r="28.587521"
+       name="Capital Finance and Administration"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle24"
+       cy="-4.7548676"
+       cx="438.00821"
+       r="28.345175"
+       name="Capital Improvement Expenditure Program"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle26"
+       cy="299.85797"
+       cx="307.70596"
+       r="27.930664"
+       name="Liability Claims"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle28"
+       cy="202.57584"
+       cx="422.47397"
+       r="26.498446"
+       name="Recreation &amp; Parks"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle30"
+       cy="-12.885864"
+       cx="386.35138"
+       r="26.182106"
+       name="Bureau of Street Services"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle32"
+       cy="218.68689"
+       cx="488.55304"
+       r="25.110085"
+       name="Library"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle34"
+       cy="-47.142639"
+       cx="333.74597"
+       r="24.694418"
+       name="Transportation"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle36"
+       cy="296.88821"
+       cx="391.93527"
+       r="23.082661"
+       name="City Attorney"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle38"
+       cy="174.24814"
+       cx="471.48868"
+       r="22.245153"
+       name="Bond Redemption and Interest"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle40"
+       cy="264.13614"
+       cx="462.18222"
+       r="21.248547"
+       name="City Employees' Retirement System"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle42"
+       cy="243.01825"
+       cx="398.33456"
+       r="20.424623"
+       name="Building and Safety"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle44"
+       cy="283.086"
+       cx="428.87494"
+       r="20.079088"
+       name="Proposition A Local Transit Assistance Trust"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle46"
+       cy="257.70929"
+       cx="299.52444"
+       r="19.663139"
+       name="Information Technology Agency"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle48"
+       cy="185.98422"
+       cx="380.66663"
+       r="19.342779"
+       name="Bureau of Engineering"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle50"
+       cy="136.99084"
+       cx="288.74191"
+       r="17.745077"
+       name="General City Purposes"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle52"
+       cy="222.98608"
+       cx="300.05481"
+       r="17.294079"
+       name="Housing and Community Investment"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle54"
+       cy="172.1441"
+       cx="156.84381"
+       r="16.376173"
+       name="Personnel"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle56"
+       cy="192.20551"
+       cx="516.98242"
+       r="14.735159"
+       name="Mayor"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle58"
+       cy="229.60315"
+       cx="453.7713"
+       r="14.308593"
+       name="City Planning"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle60"
+       cy="295.16245"
+       cx="351.4826"
+       r="13.811945"
+       name="Finance"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle62"
+       cy="245.7901"
+       cx="429.81635"
+       r="12.998023"
+       name="Council"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle64"
+       cy="317.94131"
+       cx="361.3172"
+       r="12.963906"
+       name="Bureau of Street Lighting"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle66"
+       cy="296.40891"
+       cx="262.94534"
+       r="12.943597"
+       name="Bureau of Contract Administration"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle68"
+       cy="-48.422073"
+       cx="401.15936"
+       r="11.744828"
+       name="City Clerk"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle70"
+       cy="-49.235336"
+       cx="372.71524"
+       r="11.313915"
+       name="Animal Services"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle72"
+       cy="85.464828"
+       cx="185.39005"
+       r="11.309205"
+       name="Board of Public Works"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle74"
+       cy="109.94627"
+       cx="157.59344"
+       r="10.722761"
+       name="Zoo"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle76"
+       cy="149.75806"
+       cx="455.32031"
+       r="10.416853"
+       name="City Administrative Officer"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle78"
+       cy="168.77954"
+       cx="433.2254"
+       r="10.296831"
+       name="Controller"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle80"
+       cy="89.002304"
+       cx="163.2834"
+       r="10.078638"
+       name="Economic and Workforce Development"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle82"
+       cy="71.430786"
+       cx="177.44989"
+       r="8.9368277"
+       name="Cultural Affairs"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle84"
+       cy="-38.672577"
+       cx="420.01535"
+       r="6.8979478"
+       name="Aging"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle86"
+       cy="319.02554"
+       cx="340.77429"
+       r="6.072823"
+       name="Emergency Management"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle88"
+       cy="252.41785"
+       cx="491.7005"
+       r="6.0401845"
+       name="Disability"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle90"
+       cy="211.06561"
+       cx="367.00006"
+       r="5.9367065"
+       name="Ethics Commission"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle92"
+       cy="185.21817"
+       cx="447.85812"
+       r="5.7168884"
+       name="Neighborhood Empowerment"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle94"
+       cy="134.4772"
+       cx="474.63022"
+       r="5.3121934"
+       name="El Pueblo de Los Angeles"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle96"
+       cy="213.56302"
+       cx="378.66458"
+       r="5.1457253"
+       name="Convention &amp; Tourism Development"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle98"
+       cy="-41.747345"
+       cx="429.80658"
+       r="4.023953"
+       name="Employee Relations Board"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle100"
+       cy="72.928055"
+       cx="164.02832"
+       r="3"
+       name="Commission on Children, Youth &amp; Families"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle102"
+       cy="-49.0354"
+       cx="282.52771"
+       r="3"
+       name="Commission on Status of Women"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle104"
+       cy="139.12769"
+       cx="469.14114"
+       r="3"
+       name="Environmental Affairs"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle106"
+       cy="-57.070053"
+       cx="382.68408"
+       r="3"
+       name="Human Relations Commission"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle108"
+       cy="323.52209"
+       cx="333.76605"
+       r="3"
+       name="Treasurer"
+       class="bubble notSelected" />
+    <text
+       style="font-weight:bold;font-size:13px;opacity:0"
+       id="text124"
+       font-size="13"
+       font-weight="bold"
+       y="-84.226379"
+       x="171.12994"
+       class="detail name">Item name</text>
+  </g>
+</svg>

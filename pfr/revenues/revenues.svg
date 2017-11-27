@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="320"
+   height="320"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="revenues.svg">
+  <metadata
+     id="metadata96">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs94" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="775"
+     id="namedview92"
+     showgrid="false"
+     inkscape:zoom="0.47880144"
+     inkscape:cx="323.72501"
+     inkscape:cy="179.84723"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <rect
+     class="detail"
+     x="108.12415"
+     y="-21.70973"
+     rx="10"
+     ry="10"
+     width="427.31699"
+     height="323.72501"
+     id="rect4"
+     style="opacity:0;fill:#ffffff;stroke:#000000" />
+  <text
+     class="exitButton detail"
+     x="505.44116"
+     y="-1.7097244"
+     font-size="14"
+     id="text86"
+     style="font-size:14px;opacity:0" />
+  <g
+     class="detail description"
+     font-style="italic"
+     id="g88"
+     style="font-style:italic;opacity:0"
+     transform="translate(0,-39.694452)" />
+  <g
+     id="g4224"
+     transform="translate(-92,-17.694454)">
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle6"
+       cy="160.42815"
+       cx="316.81741"
+       r="47.959259"
+       name="Property Tax - 1%"
+       class="bubble notSelected" />
+    <circle
+       id="circle8"
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       cy="280.89276"
+       cx="225.34605"
+       r="40.468628"
+       name="Licenses, Permits, Fees"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle10"
+       cy="233.25294"
+       cx="173.10667"
+       r="35.714233"
+       name="Other Special purpose Funds"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle12"
+       cy="99.577278"
+       cx="180.19502"
+       r="35.579281"
+       name="Sewer Construction &amp; Maintenance Fund"
+       class="bubble notSelected" />
+    <circle
+       id="circle14"
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       cy="279.62338"
+       cx="303.11371"
+       r="31.492161"
+       name="Business Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle16"
+       cy="207.44579"
+       cx="245.19408"
+       r="31.284431"
+       name="Sales Tax"
+       class="bubble notSelected" />
+    <circle
+       id="circle18"
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       cy="215.14537"
+       cx="368.74881"
+       r="28.189186"
+       name="Property Tax - Vehicle License Fee Replacement"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle20"
+       cy="91.911728"
+       cx="332.58389"
+       r="26.414118"
+       name="Electricity Users' Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle22"
+       cy="60.236259"
+       cx="233.90036"
+       r="25.199314"
+       name="Solid Waste Resources Revenue Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle24"
+       cy="168.68652"
+       cx="135.55875"
+       r="23.208523"
+       name="Transient Occupancy Tax"
+       class="bubble notSelected" />
+    <circle
+       id="circle26"
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       cy="238.62766"
+       cx="328.01498"
+       r="23.161831"
+       name="Power Revenue Transfer"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle28"
+       cy="213.1377"
+       cx="128.44748"
+       r="21.187666"
+       name="Building &amp; Safety Permit Enterprise Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle30"
+       cy="70.330124"
+       cx="279.09283"
+       r="20.97044"
+       name="Documentary Transfer Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle32"
+       cy="149.3071"
+       cx="249.18355"
+       r="20.290842"
+       name="Communications Users' Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle34"
+       cy="110.65507"
+       cx="247.01945"
+       r="17.737162"
+       name="Proposition A Local Transit Assistance Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle36"
+       cy="182.3576"
+       cx="204.327"
+       r="17.710791"
+       name="Parking Fines"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle38"
+       cy="138.50583"
+       cx="377.20239"
+       r="16.485958"
+       name="City Tax Levy (Debt Service)"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle40"
+       cy="129.06973"
+       cx="134.89156"
+       r="16.072361"
+       name="Parking Users' Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle42"
+       cy="153.78339"
+       cx="210.68607"
+       r="15.859344"
+       name="City Employees' Retirement Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle44"
+       cy="156.56319"
+       cx="170.26364"
+       r="15.59933"
+       name="Property Tax - Ex-CRA Tax Increment"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle46"
+       cy="103.95952"
+       cx="277.23727"
+       r="14.628683"
+       name="Special Gas Tax Street Improvement Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#509ce7;stroke:#386da1;stroke-width:2"
+       id="circle48"
+       cy="222.69241"
+       cx="290.08511"
+       r="13.974545"
+       name="Proposition C Anti-Gridlock Transit Improvement Fund"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle50"
+       cy="129.6308"
+       cx="219.02881"
+       r="13.646545"
+       name="Gas Users' Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle52"
+       cy="59.299244"
+       cx="305.99911"
+       r="12.890834"
+       name="Property Tax - Sales Tax Replacement"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle54"
+       cy="93.629768"
+       cx="228.40096"
+       r="11.12375"
+       name="Franchise Income"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle56"
+       cy="244.30029"
+       cx="275.7338"
+       r="10.386982"
+       name="Transfer from Reserve"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle58"
+       cy="309.8605"
+       cx="272.55151"
+       r="9.6007147"
+       name="Transfer from Special Parking"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle60"
+       cy="183.57877"
+       cx="174.71863"
+       r="8.689333"
+       name="Interest Receipts"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle62"
+       cy="165.222"
+       cx="186.92946"
+       r="7.2216854"
+       name="Grant Receipts"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle64"
+       cy="246.58604"
+       cx="261.20499"
+       r="6.7553248"
+       name="Tobacco Settlement"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle66"
+       cy="269.05029"
+       cx="351.14499"
+       r="5.8422074"
+       name="Residential Development Tax"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle68"
+       cy="118.65397"
+       cx="282.42285"
+       r="4.6661348"
+       name="State Motor Vehicle License Fees"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle70"
+       cy="138.41341"
+       cx="162.50943"
+       r="3"
+       name="Transfer from Telecommunication Development Account"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle72"
+       cy="187.04341"
+       cx="161.15643"
+       r="3"
+       name="Transfer from Business Tax Reform"
+       class="bubble notSelected" />
+    <circle
+       style="fill:#7aa25c;stroke:#557140;stroke-width:2"
+       id="circle74"
+       cy="313.5589"
+       cx="291.67529"
+       r="3"
+       name="Transfer from Budget Stabilization"
+       class="bubble notSelected" />
+    <text
+       style="font-weight:bold;font-size:13px;opacity:0"
+       id="text90"
+       font-size="13"
+       font-weight="bold"
+       y="42.984726"
+       x="118.12415"
+       class="detail name">Item name</text>
+  </g>
+</svg>
