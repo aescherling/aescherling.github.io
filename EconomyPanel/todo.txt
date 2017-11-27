@@ -1,10 +1,17 @@
-- Create a more clean/robust filtering system
+Buggy variables:
+- educational attainment, high school, male/female
+- taxable sales receipts
+
+- Create a more clean/robust variable selection system
 - recode the "updateMap" function so it's a little less ugly
-- Plot density where appropriate
 - Add a data table on the right hand side?
 - Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
-- Attach sparklines to the dataset
+- Attach sparklines to the dataset (or remove entirely?)
 - remove the cf variable which was used for debugging
 
 For speeding it up:
 - make sure there are no more than 8 filters defined at any time
+
+Variables to be adjusted:
+- population (adjust for area (i.e. square miles) of council district)
+- educational attainment by gender (calculate as % of population, otherwise adjust for area)

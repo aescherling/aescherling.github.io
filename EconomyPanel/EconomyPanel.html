@@ -33,14 +33,14 @@
 
   <div class="container">
 
-    <div class="row">
+<!--     <div class="row">
       <div class="col">
         <div id="sparklineContent"></div>
         <br>
       </div>
     </div>
 
-    <hr style="margin-top:0px">
+    <hr style="margin-top:0px"> -->
 
     <!-- <div class="row">
     	<h5>Select a variable:</h5>
@@ -84,11 +84,15 @@
 <!--     </div>
 
     <div class="row"> -->
-      <div class="col" style="border-right: 1px solid #CCC;">
+      <div class="col">
       	<h6 id="mapTitle"></h6>
       	<span class="timeToggle"><span id="timePrelabel"></span><span id="timeSparkline"></span> <span id="timeLabel"></span></span>
+      	<br>
+      	<a href="council_district_map.html" style="font-size:12px">Looking for geographic context? Open a detailed map</a>
         <div id="map_div"></div>
-        <a href="council_district_map.html" style="font-size:12px; padding: 0px 0px 0px 30px">Looking for geographic context? Open a detailed map</a>
+        <div id="source" style="display:none;">
+          <span style="font-weight: bold">Source: </span><span id="sourceSpan" style="font-size:16px"></span>
+        </div>
       </div>
 <!--       <div class="col">
         <div id="detail_div"></div>
@@ -99,8 +103,6 @@
 
   <script src="lib/d3_v4.js"></script>
   <script src="lib/queue.js"></script>
-  <!-- <script src="floatingTooltip.js"></script> -->
-  <!-- <script src="variable_selection.js"></script> -->
   <script src="sparklines.js"></script>
   <script src="timeToggle.js"></script>
   <script src="mapLA.js"></script>

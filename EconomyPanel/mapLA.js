@@ -27,9 +27,6 @@ map_svg = d3.select('#map_div')
 //  .attr('stroke', 'black')
 //  .attr('fill', 'none');
 
-// tooltip for displaying data on each district
-//var floating_tooltip = floatingTooltip('floatingTooltip', "250px");
-
 // make a group for holding map elements
 var mapLayer = map_svg.append('g')
   .classed('map-layer', true);
@@ -44,14 +41,13 @@ var projection = d3.geoMercator()
 var path = d3.geoPath()
   .projection(projection);
 
-// create a global version of the crossfilter, just for debugging purposes
-var cf;
-var myVar;
+// create some global variables for debugging purposes
+// var cf;
+// var myVar;
 
 // wait until all the data is loaded before proceeding
 queue()
   .defer(d3.json, 'geodata/council_districts.geojson')
-  // .defer(d3.csv, 'data/2017.10_city_data.csv')
   .defer(d3.csv, 'data/EconomyPanel.csv')
   .await(map_ready)
 
@@ -61,8 +57,8 @@ function map_ready(error, geodata, econdata) {
   // geodata //
   var geofeatures = geodata.features;
 
-  // set up crossfilter on the econdata //
-  var data = crossfilter(econdata); //cf=data;
+  // set up crossfilter on the economic data
+  var data = crossfilter(econdata);
 
   var category = data.dimension(function(d) {return d["category"];});
   var indicator = data.dimension(function (d) {return d["indicator"];});
@@ -71,36 +67,40 @@ function map_ready(error, geodata, econdata) {
   var time = data.dimension(function (d) {return d["calendar_year"];});
   var value = data.dimension(function (d) {return +d["value"];});
 
-  var current_indicator = '-';
-  var current_subindicator = '_';
+  var current_indicator = '';
+  var current_subindicator = '';
   var selection_complete = false;
   var has_gender = false;
   var gender_selected = false;
   var subind_selected = false;
 
-  cf = data;
+  // cf = data;
 
-  // Remove indicators which are city-level only.
-  // to do so I keep only the indicators available for Council District 1
-  var locality = data.dimension(function(d) {return d.locality});
-  locality.filter('Council District 1');
-  // pick out all time periods with more than one observation using the current filters
-  CDindicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
-  CDindicators = CDindicatorCounts.map(function (d) {return d.key});
-
-  // remove locality filter
-  locality.filterAll();
-  locality.dispose();
-
-  // select indicators not in the list
-  indicator.filter(function (d) {return CDindicators.indexOf(d)==-1});
-  // remove them!
-  data.remove();
-  // undo the filter
-  indicator.filterAll();
+  rmCityOnly = function() {
+    // Remove indicators which are city-level only.
+    // to do so I keep only the indicators available for Council District 1
+    var locality = data.dimension(function(d) {return d.locality});
+    locality.filter('Council District 1');
+    // pick out all indicators with more than one observation using the current filters
+    CDindicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    CDindicators = CDindicatorCounts.map(function (d) {return d.key});
+  
+    // remove locality filter
+    locality.filterAll();
+    locality.dispose();
+  
+    // select indicators not in the list
+    indicator.filter(function (d) {return CDindicators.indexOf(d)==-1});
+    // remove them!
+    data.remove();
+    // undo the filter
+    indicator.filterAll();
+  }
+  rmCityOnly();
 
   // map title variable
   mapTitle = d3.select('#mapTitle');
+  mapTitle.text('NO VARIABLE SELECTED');
 
 
   mouseclick = function() {
@@ -200,7 +200,6 @@ function map_ready(error, geodata, econdata) {
     // get the min and max values
     minValue = value.bottom(1)[0].value;
     maxValue = value.top(1)[0].value;
-    myVar = value.top(1000);
 
     // set the color domain
     color.domain([minValue, maxValue]);
@@ -269,6 +268,11 @@ function map_ready(error, geodata, econdata) {
       cd_value.text("");
     }
 
+    // update the source
+    varSource = value.top(1)[0].source;
+    d3.select('#sourceSpan').html(varSource);
+    d3.select('#source').attr('style', 'display:inline-block');
+
   } // end of updateMap
 
 
@@ -280,12 +284,15 @@ function map_ready(error, geodata, econdata) {
     d3.selectAll('.legend').remove();
 
     // delete title
-    mapTitle.text('');
+    mapTitle.text('NO VARIABLE SELECTED');
 
     // remove timeToggle if it exists
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
     d3.select('#timePrelabel').text('');
+
+    // remove source
+    d3.select('#source').attr('style', 'display:none');
   }
 
 
@@ -340,7 +347,7 @@ function map_ready(error, geodata, econdata) {
       d3.select('#timeToggleLabel').remove();
       var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap);
       timeToggleSetup();
-      d3.select('#timePrelabel').text('Select time period: ');
+      d3.select('#timePrelabel').text('Time period (hover to select): ');
     } else {
       // remove timeToggle if it exists
       d3.select('#timeToggleSVG').remove();
@@ -377,7 +384,7 @@ function map_ready(error, geodata, econdata) {
 
       mapTitle.text(maintext + units + unitText);
     } else {
-      mapTitle.text('');
+      mapTitle.text('NO VARIABLE SELECTED');
     }
   }
 
@@ -410,7 +417,7 @@ function map_ready(error, geodata, econdata) {
     time.filterAll();
     indicator.filterAll();
     subindicator.filterAll();
-    current_subindicator = '-';
+    current_subindicator = '';
     gender.filterAll();
 
     // mark the selection as incomplete
@@ -459,6 +466,7 @@ function map_ready(error, geodata, econdata) {
     // remove the filters that depend on this selection
     time.filterAll();
     subindicator.filterAll();
+    current_subindicator = '';
     gender.filterAll();
 
     // mark the selection as incomplete (will assess later whether it is complete)
@@ -477,7 +485,7 @@ function map_ready(error, geodata, econdata) {
     // Otherwise filter using given indicator.
     if (ind=="-") {
       indicator.filterAll();
-      current_indicator = '-';
+      current_indicator = '';
     } else {
       indicator.filter(ind);
       current_indicator = ind;
@@ -635,7 +643,7 @@ function map_ready(error, geodata, econdata) {
       makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
       
       // update the title
-      if (current_subindicator=='-') {
+      if (current_subindicator=='') {
       	var subind = '';
       } else {
       	var subind = ': ' + current_subindicator ;
