@@ -6,10 +6,10 @@
 // http://documents.lahsa.org/planning/homelesscount/2009/CityofLA-CouncilDistricts.pdf
 
 // set some variables
-var map_svg_width=650,
+var map_svg_width=700,
 	map_svg_height=450,
   map_zoom = 8.5,
-  map_long = -118.1,
+  map_long = -118,
   map_lat = 34.02;
 
 // make the SVG canvas
@@ -19,13 +19,13 @@ map_svg = d3.select('#map_div')
 	.attr('height', map_svg_height);
 
 // draw the box around the SVG
-// bb = map_svg.append('rect')
-//  .attr('x', 0)
-//  .attr('y', 0)
-//  .attr('width', map_svg_width)
-//  .attr('height', map_svg_height)
-//  .attr('stroke', 'black')
-//  .attr('fill', 'none');
+bb = map_svg.append('rect')
+ .attr('x', 0)
+ .attr('y', 0)
+ .attr('width', map_svg_width)
+ .attr('height', map_svg_height)
+ .attr('stroke', 'black')
+ .attr('fill', 'none');
 
 // make a group for holding map elements
 var mapLayer = map_svg.append('g')
@@ -43,7 +43,7 @@ var path = d3.geoPath()
 
 // create some global variables for debugging purposes
 // var cf;
-// var myVar;
+var myVar;
 
 // wait until all the data is loaded before proceeding
 queue()
@@ -178,6 +178,40 @@ function map_ready(error, geodata, econdata) {
       .on('mouseover', mouseover)
       .on('mouseout', mouseout);
 
+  // data table on the right
+  var tableGroup = mapLayer.append('g').attr('id', 'table');
+
+  // create a group for the titles and append text
+  var titleGroup = tableGroup.append('g').attr('id', 'titleGroup');
+  titleGroup.append('text').attr('x', 0).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Location');
+  titleGroup.append('text').attr('x', 100).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Value');
+
+  // example of moving an object around...
+  // d3.select('#titleGroup').transition().duration(200).attr('transform', 'translate(300,100)')
+
+  // create a group for each row
+  
+
+  // tableGroup.selectAll('text')
+  //     .data(geofeatures)
+  //     .enter().append('text')
+  //     .attr('id', function (d) {return d.properties.Council_District.replace(/\s/g, '');})
+  //     .attr('label', function (d) {return d.properties.Council_District;})
+  //     .attr('value', 'nada')
+  //     .attr('x', map_svg_width * 0.67)
+  //     .attr('y', function (d,i) {return (80 + i * 20)})
+  //     .attr('fill', 'black')
+  //     .attr('font-size', '14px')
+  //     .text('Council District X, blah blah blah');
+  // tableGroup.append('text')
+  //     .attr('id', 'tableTitle')
+  //     .attr('x', map_svg_width * 0.67)
+  //     .attr('y', 60)
+  //     .attr('fill', 'black')
+  //     .attr('font-size', '14px')
+  //     .attr('style', 'font-weight: bold')
+  //     .text('Location\t\t\tValue')
+
 
   // color scale
   var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
@@ -229,6 +263,8 @@ function map_ready(error, geodata, econdata) {
     if (kk.length != 16) {
       alert("We've got problems: I expected 16 values (one for each district plus the city as a whole) but I only got " + kk.length + ".");
     }
+
+    myVar = valueArray;
 
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
@@ -552,7 +588,7 @@ function map_ready(error, geodata, econdata) {
       	selection_complete = true;
         updateTimescale();
         d3.selectAll('.legend').remove();
-        makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
+        makeLegend(map_svg_width * 0.42, map_svg_height * 0.5, 30, 5, color);
         updateTitle(ind);
       } else {
         clearMap();
@@ -599,7 +635,7 @@ function map_ready(error, geodata, econdata) {
         selection_complete = true;
         updateTimescale();
         d3.selectAll('.legend').remove();
-        makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
+        makeLegend(map_svg_width * 0.42, map_svg_height * 0.5, 30, 5, color);
 
         // get indicator for title
         indicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -640,7 +676,7 @@ function map_ready(error, geodata, econdata) {
       selection_complete = true;
       updateTimescale();
       d3.selectAll('.legend').remove();
-      makeLegend(map_svg_width * 0.7, map_svg_height * 0.5, 30, 5, color);
+      makeLegend(map_svg_width * 0.42, map_svg_height * 0.5, 30, 5, color);
       
       // update the title
       if (current_subindicator=='') {
@@ -701,21 +737,21 @@ function map_ready(error, geodata, econdata) {
 
 // label council districts (appears upon mouseover)
 cd_label = map_svg.append('text')
-  .attr('x', map_svg_width - 190)
+  .attr('x', map_svg_width * 0.37)
   .attr('y', 40)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px; font-weight: bold')
   .text('');
 
 cd_councilmember = map_svg.append('text')
-  .attr('x', map_svg_width - 190)
+  .attr('x', map_svg_width * 0.37)
   .attr('y', 60)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
   .text('');
 
 cd_value = map_svg.append('text')
-  .attr('x', map_svg_width - 190)
+  .attr('x', map_svg_width * 0.37)
   .attr('y', 80)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')

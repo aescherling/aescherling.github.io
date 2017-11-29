@@ -2,12 +2,17 @@ Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
+
+- Add a data table on the right hand side
+
 - Create a more clean/robust variable selection system
 - recode the "updateMap" function so it's a little less ugly
-- Add a data table on the right hand side?
+
 - Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
 - Attach sparklines to the dataset (or remove entirely?)
 - remove the cf variable which was used for debugging
+
+- Make the whole thing robust to screen size changes
 
 For speeding it up:
 - make sure there are no more than 8 filters defined at any time
