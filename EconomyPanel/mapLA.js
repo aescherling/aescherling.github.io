@@ -298,6 +298,8 @@ function map_ready(error, geodata, econdata) {
       alert("We've got problems: I expected 16 values (one for each district plus the city as a whole) but I only got " + kk.length + ".");
     }
 
+    myVar = valueArray;
+
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
     cdOnly.splice(cityIndex, 1);
@@ -350,12 +352,15 @@ function map_ready(error, geodata, econdata) {
     locations.forEach(function (d) {
     	// get the group id for the table row for this location
     	id_tmp = '#' + d.short;
-    	// get the new value to put in the table
-    	text_tmp = valueArray.filter(function (dd) {return dd.key==d.long})[0].value;
+    	// sort the data by value
+    	sorted = valueArray.sort(function(a, b) {return b.value - a.value;});
+    	// get the value for this district
+    	text_tmp = sorted.filter(function (dd) {return dd.key==d.long})[0].value;
+    	// get the rank for this district
+    	sorted_locations = sorted.map(function(dd) {return dd.key});
+    	rank = sorted_locations.indexOf(d.long) + 1;
+    	// update the value and rank
     	d3.select(id_tmp + 'Value').text(formatAmount(+text_tmp));
-    	// find the rank of the value and move the group accordingly
-    	values = valueArray.map(function (dd) {return dd.value}).sort(function(a, b) {return b - a;});
-    	rank = values.indexOf(text_tmp) + 1;
     	d3.select(id_tmp).transition().duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
 
     })

@@ -2,7 +2,6 @@ Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
-- fix table sort when there are ties
 - mouseover table => highlight district on map?
 
 - Create a more clean/robust variable selection system
@@ -11,6 +10,8 @@ Buggy variables:
 - why doesn't unemployment rate round to 2 decimals? any other variables?
 
 - Make the whole thing robust to screen size changes
+
+- Don't change the time period when a district is selected
 
 For speeding it up:
 - make sure there are no more than 8 filters defined at any time
