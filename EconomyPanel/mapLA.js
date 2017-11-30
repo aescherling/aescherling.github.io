@@ -181,36 +181,40 @@ function map_ready(error, geodata, econdata) {
   // data table on the right
   var tableGroup = mapLayer.append('g').attr('id', 'table');
 
+  // create a group for each row
+  // var locations = ["City of Los Angeles","Council District 1","Council District 2","Council District 3","Council District 4","Council District 5","Council District 6","Council District 7","Council District 8","Council District 9","Council District 10","Council District 11","Council District 12","Council District 13","Council District 14","Council District 15"];
+  var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}]
+
+  tableGroup.selectAll('g')
+    .data(locations).enter()
+    .append('g')
+    .attr('id', function (d) {return d.short})
+    .append('text')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('fill', 'black')
+    .attr('font-size', '14px')
+    .text(function(d) {return d.long});
+
+  locations.forEach(function(d) {
+  	var id_tmp = '#' + d.short;
+  	d3.select(id_tmp)
+  	  .append('text')
+  	  .attr('id', d.short + 'Value')
+      .attr('x', 130)
+      .attr('y', 0)
+      .attr('fill', 'black')
+      .attr('font-size', '14px')
+      .text('value goes here');
+  })
+
   // create a group for the titles and append text
   var titleGroup = tableGroup.append('g').attr('id', 'titleGroup');
   titleGroup.append('text').attr('x', 0).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Location');
-  titleGroup.append('text').attr('x', 100).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Value');
+  titleGroup.append('text').attr('x', 130).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Value');
 
-  // example of moving an object around...
-  // d3.select('#titleGroup').transition().duration(200).attr('transform', 'translate(300,100)')
-
-  // create a group for each row
-  
-
-  // tableGroup.selectAll('text')
-  //     .data(geofeatures)
-  //     .enter().append('text')
-  //     .attr('id', function (d) {return d.properties.Council_District.replace(/\s/g, '');})
-  //     .attr('label', function (d) {return d.properties.Council_District;})
-  //     .attr('value', 'nada')
-  //     .attr('x', map_svg_width * 0.67)
-  //     .attr('y', function (d,i) {return (80 + i * 20)})
-  //     .attr('fill', 'black')
-  //     .attr('font-size', '14px')
-  //     .text('Council District X, blah blah blah');
-  // tableGroup.append('text')
-  //     .attr('id', 'tableTitle')
-  //     .attr('x', map_svg_width * 0.67)
-  //     .attr('y', 60)
-  //     .attr('fill', 'black')
-  //     .attr('font-size', '14px')
-  //     .attr('style', 'font-weight: bold')
-  //     .text('Location\t\t\tValue')
+  // place all the text on the right hand side
+  tableGroup.attr('transform', 'translate(460,70)');
 
 
   // color scale
@@ -308,6 +312,22 @@ function map_ready(error, geodata, econdata) {
     varSource = value.top(1)[0].source;
     d3.select('#sourceSpan').html(varSource);
     d3.select('#source').attr('style', 'display:inline-block');
+
+    // update the table
+    var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+    locations.forEach(function (d) {
+    	// get the group id for the table row for this location
+    	id_tmp = '#' + d.short;
+    	// get the new value to put in the table
+    	text_tmp = valueArray.filter(function (dd) {return dd.key==d.long})[0].value;
+    	d3.select(id_tmp + 'Value').text(text_tmp);
+    	// find the rank of the value and move the group accordingly
+    	values = valueArray.map(function (dd) {return dd.value}).sort(function(a, b) {return b - a;});
+    	rank = values.indexOf(text_tmp) + 1;
+    	d3.select(id_tmp).transition().duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
+
+    })
+
 
   } // end of updateMap
 

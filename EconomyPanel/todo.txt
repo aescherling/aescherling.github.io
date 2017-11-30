@@ -2,8 +2,8 @@ Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
-
-- Add a data table on the right hand side
+- sync data table with variable selection so it's blank if a variable isn't chosen
+- sync data table so a row is highlighted if the district is selected on the map (click or mouseover)
 
 - Create a more clean/robust variable selection system
 - recode the "updateMap" function so it's a little less ugly
