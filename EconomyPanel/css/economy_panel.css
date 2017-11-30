@@ -86,5 +86,6 @@ path {
 
 .district.highlighted {
   stroke: black;
+  stroke-width: 1;
 }
 

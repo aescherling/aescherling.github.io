@@ -104,7 +104,15 @@ function map_ready(error, geodata, econdata) {
 
 
   mouseclick = function() {
-    district = d3.select(this);
+  	// check whether the object is a path in the map, or a row in the table
+  	// we want to select the path, not the row
+  	if (d3.select(this)._groups[0][0].tagName=="path") {
+  		district = d3.select(this);
+  	} else if (d3.select(this).attr('id')!="City") {
+  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  		district = d3.select('#' + id_tmp);
+  	}
+
     // determine the prior state of the district (selected or not)
     isSelected = district.classed('selected');
     // if it's selected, unselect it
@@ -142,8 +150,17 @@ function map_ready(error, geodata, econdata) {
   }
 
   mouseover = function() {
+  	// check whether the object is a path in the map, or a row in the table
+  	// we want to select the path, not the row
+  	if (d3.select(this)._groups[0][0].tagName=="path") {
+  		district = d3.select(this);
+  	} else if (d3.select(this).attr('id')!="City") {
+  		d3.select(this).style('cursor', 'pointer');
+  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  		district = d3.select('#' + id_tmp);
+  	}
+
     // if the district is not frozen, highlight and update the display text
-    district = d3.select(this);
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
   	  district.moveToFront().classed('highlighted', true);
@@ -169,7 +186,16 @@ function map_ready(error, geodata, econdata) {
   }
 
   mouseout = function() {
-    district = d3.select(this);
+    // check whether the object is a path in the map, or a row in the table
+  	// we want to select the path, not the row
+  	if (d3.select(this)._groups[0][0].tagName=="path") {
+  		district = d3.select(this);
+  	} else if (d3.select(this).attr('id')!="City") {
+  		d3.select(this).style('cursor', 'auto');
+  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  		district = d3.select('#' + id_tmp);
+  	}
+
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
   	  district.classed('highlighted', false);
@@ -215,6 +241,10 @@ function map_ready(error, geodata, econdata) {
     .data(locations).enter()
     .append('g')
     .attr('id', function (d) {return d.short})
+    .attr('longID', function (d) {return d.long})
+    .on('click', mouseclick)
+    .on('mouseover', mouseover)
+    .on('mouseout', mouseout)
     .append('text')
     .attr('x', 0)
     .attr('y', 0)

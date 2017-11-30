@@ -2,12 +2,11 @@ Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
-- mouseover table => highlight district on map?
-
 - Create a more clean/robust variable selection system
 - recode the "updateMap" function so it's a little less ugly
 
 - why doesn't unemployment rate round to 2 decimals? any other variables?
+- also housing vacancy rate
 
 - Make the whole thing robust to screen size changes
 
