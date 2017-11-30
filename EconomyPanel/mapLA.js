@@ -19,13 +19,13 @@ map_svg = d3.select('#map_div')
 	.attr('height', map_svg_height);
 
 // draw the box around the SVG
-bb = map_svg.append('rect')
- .attr('x', 0)
- .attr('y', 0)
- .attr('width', map_svg_width)
- .attr('height', map_svg_height)
- .attr('stroke', 'black')
- .attr('fill', 'none');
+// bb = map_svg.append('rect')
+//  .attr('x', 0)
+//  .attr('y', 0)
+//  .attr('width', map_svg_width)
+//  .attr('height', map_svg_height)
+//  .attr('stroke', 'black')
+//  .attr('fill', 'none');
 
 // make a group for holding map elements
 var mapLayer = map_svg.append('g')
@@ -111,11 +111,13 @@ function map_ready(error, geodata, econdata) {
     if (isSelected) {
       district.classed('selected', false);
       d3.selectAll('.district').classed('frozen', false);
+      d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
     } else {
       // unselect all districts then select the chosen district
       d3.selectAll('.district').classed('selected', false);
       d3.selectAll('.district').classed('highlighted', false);
       district.moveToFront().classed('selected', true);
+      d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
 
       // update the display text
       district = district;
@@ -123,6 +125,14 @@ function map_ready(error, geodata, econdata) {
       councilmember_text = district.attr('councilmember');
       cd_label.text(district_text);
       cd_councilmember.text(councilmember_text);
+
+      // highlight the district in the table
+      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+      var locations_long = locations.map(function (d) {return d.long});
+      var locations_short = locations.map(function (d) {return d.short});
+      var index_tmp = locations_long.indexOf(district_text);
+      var id_tmp = '#' + locations_short[index_tmp];
+      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
 
       // "Freeze" all districts to disable mouseover
       d3.selectAll('.district').classed('frozen', true);
@@ -136,7 +146,7 @@ function map_ready(error, geodata, econdata) {
     district = d3.select(this);
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
-  	district.moveToFront().classed('highlighted', true);
+  	  district.moveToFront().classed('highlighted', true);
       district_text = district.attr('label');
       councilmember_text = district.attr('councilmember');
       value_tmp = +district.attr('value')
@@ -145,8 +155,16 @@ function map_ready(error, geodata, econdata) {
       cd_councilmember.text(councilmember_text);
       // only show the value if it's not blank
       if (district.attr('value')!="") {
-      	cd_value.text(value_text);
+      	// cd_value.text(value_text);
+      	cd_value.text('(Click to select/unselect)');
       }
+      // highlight the district in the table
+      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+      var locations_long = locations.map(function (d) {return d.long});
+      var locations_short = locations.map(function (d) {return d.short});
+      var index_tmp = locations_long.indexOf(district_text);
+      var id_tmp = '#' + locations_short[index_tmp];
+      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
     }
   }
 
@@ -154,10 +172,17 @@ function map_ready(error, geodata, econdata) {
     district = d3.select(this);
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
-  	district.classed('highlighted', false);
+  	  district.classed('highlighted', false);
       cd_label.text('');
       cd_councilmember.text('');
       cd_value.text('');
+      // unhighlight the district in the table
+      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+      var locations_long = locations.map(function (d) {return d.long});
+      var locations_short = locations.map(function (d) {return d.short});
+      var index_tmp = locations_long.indexOf(district_text);
+      var id_tmp = '#' + locations_short[index_tmp];
+      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:normal');
     }
   }
 
@@ -185,6 +210,7 @@ function map_ready(error, geodata, econdata) {
   // var locations = ["City of Los Angeles","Council District 1","Council District 2","Council District 3","Council District 4","Council District 5","Council District 6","Council District 7","Council District 8","Council District 9","Council District 10","Council District 11","Council District 12","Council District 13","Council District 14","Council District 15"];
   var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}]
 
+  // add the location column
   tableGroup.selectAll('g')
     .data(locations).enter()
     .append('g')
@@ -196,12 +222,13 @@ function map_ready(error, geodata, econdata) {
     .attr('font-size', '14px')
     .text(function(d) {return d.long});
 
+  // add the value column
   locations.forEach(function(d) {
   	var id_tmp = '#' + d.short;
   	d3.select(id_tmp)
   	  .append('text')
   	  .attr('id', d.short + 'Value')
-      .attr('x', 130)
+      .attr('x', 140)
       .attr('y', 0)
       .attr('fill', 'black')
       .attr('font-size', '14px')
@@ -211,10 +238,13 @@ function map_ready(error, geodata, econdata) {
   // create a group for the titles and append text
   var titleGroup = tableGroup.append('g').attr('id', 'titleGroup');
   titleGroup.append('text').attr('x', 0).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Location');
-  titleGroup.append('text').attr('x', 130).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Value');
+  titleGroup.append('text').attr('x', 140).attr('y', 0).attr('fill', 'black').attr('style', 'font-size: 14px; font-weight: bold').text('Value');
 
   // place all the text on the right hand side
   tableGroup.attr('transform', 'translate(460,70)');
+
+  // make the table invisible
+  d3.select('#table').selectAll('text').attr('fill', 'white');
 
 
   // color scale
@@ -268,8 +298,6 @@ function map_ready(error, geodata, econdata) {
       alert("We've got problems: I expected 16 values (one for each district plus the city as a whole) but I only got " + kk.length + ".");
     }
 
-    myVar = valueArray;
-
     var cityIndex = kk.indexOf('City of Los Angeles');
     var cdOnly = valuesByDistrict.slice();
     cdOnly.splice(cityIndex, 1);
@@ -300,7 +328,8 @@ function map_ready(error, geodata, econdata) {
       value_tmp = selected_district.attr('value')
       // only show the value if it's not blank
       if (value_tmp!="") {
-      	cd_value.text('Value: ' + formatAmount(value_tmp));
+      	// cd_value.text('Value: ' + formatAmount(+value_tmp));
+      	cd_value.text('(Click to select/unselect)');
       } else {
     	cd_value.text("");
       }
@@ -314,13 +343,16 @@ function map_ready(error, geodata, econdata) {
     d3.select('#source').attr('style', 'display:inline-block');
 
     // update the table
+    // first, make the table invisible
+    d3.select('#table').selectAll('text').attr('fill', 'black');
+    // update the values and sort
     var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
     locations.forEach(function (d) {
     	// get the group id for the table row for this location
     	id_tmp = '#' + d.short;
     	// get the new value to put in the table
     	text_tmp = valueArray.filter(function (dd) {return dd.key==d.long})[0].value;
-    	d3.select(id_tmp + 'Value').text(text_tmp);
+    	d3.select(id_tmp + 'Value').text(formatAmount(+text_tmp));
     	// find the rank of the value and move the group accordingly
     	values = valueArray.map(function (dd) {return dd.value}).sort(function(a, b) {return b - a;});
     	rank = values.indexOf(text_tmp) + 1;
@@ -349,6 +381,9 @@ function map_ready(error, geodata, econdata) {
 
     // remove source
     d3.select('#source').attr('style', 'display:none');
+
+    // make the table invisible
+    d3.select('#table').selectAll('text').attr('fill', 'white');
   }
 
 
@@ -758,21 +793,21 @@ function map_ready(error, geodata, econdata) {
 // label council districts (appears upon mouseover)
 cd_label = map_svg.append('text')
   .attr('x', map_svg_width * 0.37)
-  .attr('y', 40)
+  .attr('y', 50)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px; font-weight: bold')
   .text('');
 
 cd_councilmember = map_svg.append('text')
   .attr('x', map_svg_width * 0.37)
-  .attr('y', 60)
+  .attr('y', 70)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
   .text('');
 
 cd_value = map_svg.append('text')
   .attr('x', map_svg_width * 0.37)
-  .attr('y', 80)
+  .attr('y', 90)
   .attr('text-anchor','left')
   .attr('style', 'font-size: 16px')
   .text('');

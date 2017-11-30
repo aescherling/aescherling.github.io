@@ -2,15 +2,13 @@ Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
-- sync data table with variable selection so it's blank if a variable isn't chosen
-- sync data table so a row is highlighted if the district is selected on the map (click or mouseover)
+- fix table sort when there are ties
+- mouseover table => highlight district on map?
 
 - Create a more clean/robust variable selection system
 - recode the "updateMap" function so it's a little less ugly
 
-- Consider having an option to break up the map and turn it into a 4x4 grid (a la d3-exploder)
-- Attach sparklines to the dataset (or remove entirely?)
-- remove the cf variable which was used for debugging
+- why doesn't unemployment rate round to 2 decimals? any other variables?
 
 - Make the whole thing robust to screen size changes
 
