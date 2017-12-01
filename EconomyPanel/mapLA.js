@@ -290,7 +290,7 @@ function map_ready(error, geodata, econdata) {
 
 
   // color scale
-  var color = d3.scalePow().exponent(0.5).range(['white', 'steelblue']);
+  var color = d3.scalePow().exponent(0.5).range(['white', d3.rgb('steelblue').darker()]);
 
   // function for updating the color scale
   // assumes that the data have been filtered to a single variable and a particular time period
