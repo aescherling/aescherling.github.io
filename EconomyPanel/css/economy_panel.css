@@ -89,3 +89,8 @@ path {
   stroke-width: 1;
 }
 
+#mapTitle:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+

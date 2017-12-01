@@ -100,7 +100,7 @@ function map_ready(error, geodata, econdata) {
 
   // map title variable
   mapTitle = d3.select('#mapTitle');
-  mapTitle.text('NO VARIABLE SELECTED');
+  mapTitle.text('Please select a variable (click here to toggle variable selection)');
 
 
   mouseclick = function() {
@@ -211,6 +211,14 @@ function map_ready(error, geodata, econdata) {
       d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:normal');
     }
   }
+
+  // make the map title toggle the variable selection div
+  toggleSelectionDiv = function() {
+  	$('#selectionDiv').fadeToggle(0);
+  };
+
+  d3.select('#mapTitle').on('click', toggleSelectionDiv);
+
 
   // initial settings for the map //
   mapLayer.selectAll('path')
@@ -407,7 +415,7 @@ function map_ready(error, geodata, econdata) {
     d3.selectAll('.legend').remove();
 
     // delete title
-    mapTitle.text('NO VARIABLE SELECTED');
+    mapTitle.text('Please select a variable (click here to toggle variable selection)');
 
     // remove timeToggle if it exists
     d3.select('#timeToggleSVG').remove();
@@ -510,7 +518,7 @@ function map_ready(error, geodata, econdata) {
 
       mapTitle.text(maintext + units + unitText);
     } else {
-      mapTitle.text('NO VARIABLE SELECTED');
+      mapTitle.text('Please select a variable (click here to toggle variable selection)');
     }
   }
 
@@ -680,6 +688,8 @@ function map_ready(error, geodata, econdata) {
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.42, map_svg_height * 0.5, 30, 5, color);
         updateTitle(ind);
+        // hide the selection div
+        toggleSelectionDiv();
       } else {
         clearMap();
       }
@@ -739,6 +749,9 @@ function map_ready(error, geodata, econdata) {
         }
 
         updateTitle(current_indicator + ': ' + sub + gen);
+
+        // hide the selection div
+        toggleSelectionDiv();
       }
     } else {
       clearMap();
@@ -776,6 +789,9 @@ function map_ready(error, geodata, econdata) {
       }
 
       updateTitle(current_indicator + subind + ', ' + gen);
+
+      // hide the selection div
+      toggleSelectionDiv();
     }
   }
   

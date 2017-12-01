@@ -1,16 +1,17 @@
+- Don't change the time period when a district is selected
+- make mouseover change the time toggle to a sparkline time series chart
+- disable mouseover and click for table when the table isn't visible
+
+- come up with an elegant way of hiding/showing the variable selectors (click on title to reveal/hide?)
+- Create a more clean/robust variable selection system
+- recode the "updateMap" function so it's a little less ugly
+
 Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 
-- Create a more clean/robust variable selection system
-- recode the "updateMap" function so it's a little less ugly
-
 - why doesn't unemployment rate round to 2 decimals? any other variables?
 - also housing vacancy rate
-
-- Make the whole thing robust to screen size changes
-
-- Don't change the time period when a district is selected
 
 For speeding it up:
 - make sure there are no more than 8 filters defined at any time
@@ -18,3 +19,5 @@ For speeding it up:
 Variables to be adjusted:
 - population (adjust for area (i.e. square miles) of council district)
 - educational attainment by gender (calculate as % of population, otherwise adjust for area)
+
+- Check: is the whole thing robust to screen size changes?
