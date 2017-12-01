@@ -94,3 +94,10 @@ path {
   text-decoration: underline;
 }
 
+#expand:hover {
+  cursor: pointer;
+}
+
+#collapse:hover {
+  cursor: pointer;
+}

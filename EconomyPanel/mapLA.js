@@ -100,7 +100,7 @@ function map_ready(error, geodata, econdata) {
 
   // map title variable
   mapTitle = d3.select('#mapTitle');
-  mapTitle.text('Please select a variable (click here to toggle variable selection)');
+  mapTitle.text('Please select a variable');
 
 
   mouseclick = function() {
@@ -215,9 +215,13 @@ function map_ready(error, geodata, econdata) {
   // make the map title toggle the variable selection div
   toggleSelectionDiv = function() {
   	$('#selectionDiv').fadeToggle(0);
+  	$('#collapse').fadeToggle(0);
+  	$('#expand').fadeToggle(0);
   };
 
   d3.select('#mapTitle').on('click', toggleSelectionDiv);
+  d3.select('#collapse').on('click', toggleSelectionDiv);
+  d3.select('#expand').on('click', toggleSelectionDiv);
 
 
   // initial settings for the map //
@@ -415,7 +419,7 @@ function map_ready(error, geodata, econdata) {
     d3.selectAll('.legend').remove();
 
     // delete title
-    mapTitle.text('Please select a variable (click here to toggle variable selection)');
+    mapTitle.text('Please select a variable');
 
     // remove timeToggle if it exists
     d3.select('#timeToggleSVG').remove();
@@ -518,7 +522,7 @@ function map_ready(error, geodata, econdata) {
 
       mapTitle.text(maintext + units + unitText);
     } else {
-      mapTitle.text('Please select a variable (click here to toggle variable selection)');
+      mapTitle.text('Please select a variable');
     }
   }
 

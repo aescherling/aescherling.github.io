@@ -33,23 +33,12 @@
 
   <div class="container">
 
-<!--     <div class="row">
-      <div class="col">
-        <div id="sparklineContent"></div>
-        <br>
-      </div>
-    </div>
-
-    <hr style="margin-top:0px"> -->
-
-    <!-- <div class="row">
-    	<h5>Select a variable:</h5>
-    </div> -->
-
-
     <div class="row">
 
-      <div id="selectionDiv" class="col col-md-3" style="border-right: 1px solid #CCC;">
+      <div id="selectionDiv" class="col col-md-3" style="padding:0px">
+      	<div id="collapse" style="float:right">
+      	  <img src="triangle.svg" width="25px" style="padding:5px; transform: scaleX(-1)"/>
+        </div>
         <!-- <h5 style="display:inline-block; padding:0px 20px 0px 0px">Select a variable:</h5> -->
 
         <div id="categoryDiv" class="form-group" style="display:inline-block;">
@@ -82,9 +71,13 @@
 
       </div> <!-- end of variable selection column -->
 
+      <div id="expand">
+      	<img src="triangle.svg" width="25px" style="padding:5px; margin:0px"/>
+      </div>
 
 
-      <div class="col-md-9">
+
+      <div class="col-md-9" style="border-left: 1px solid #CCC;">
       	<h5 id="mapTitle"></h5>
       	<span class="timeToggle"><span id="timePrelabel"></span><span id="timeSparkline"></span> <span id="timeLabel"></span></span>
         <div id="map_div"></div>
@@ -100,8 +93,8 @@
 
   </div> <!-- end of container div -->
 
-  <!-- automatically hide the selection div -->
-  <!-- <script> $('#selectionDiv').hide() </script> -->
+  <!-- automatically hide the expand div -->
+  <script> $('#expand').hide() </script>
 
   <script src="lib/d3_v4.js"></script>
   <script src="lib/queue.js"></script>
