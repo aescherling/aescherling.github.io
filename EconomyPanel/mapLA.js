@@ -205,6 +205,7 @@ function map_ready(error, geodata, econdata) {
       var index_tmp = locations_long.indexOf(district_text);
       var id_tmp = '#' + locations_short[index_tmp];
       d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
+      d3.select(id_tmp).select('.background').attr('style', 'stroke:gray; fill:none');
     }
   }
 
@@ -232,6 +233,7 @@ function map_ready(error, geodata, econdata) {
       var index_tmp = locations_long.indexOf(district_text);
       var id_tmp = '#' + locations_short[index_tmp];
       d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:normal');
+      d3.select(id_tmp).select('.background').attr('style', 'stroke: none; fill:none');
     }
   }
 
@@ -302,7 +304,7 @@ function map_ready(error, geodata, econdata) {
   // var locations = ["City of Los Angeles","Council District 1","Council District 2","Council District 3","Council District 4","Council District 5","Council District 6","Council District 7","Council District 8","Council District 9","Council District 10","Council District 11","Council District 12","Council District 13","Council District 14","Council District 15"];
   var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}]
 
-  // add the location column
+  // create the groups and background rects for highlighting
   tableGroup.selectAll('g')
     .data(locations).enter()
     .append('g')
@@ -311,13 +313,44 @@ function map_ready(error, geodata, econdata) {
     .on('click', mouseclick)
     .on('mouseover', mouseover)
     .on('mouseout', mouseout)
-    .append('text')
-    .attr('x', 0)
-    .attr('y', 0)
-    .attr('fill', 'black')
-    .attr('font-size', '14px')
-    .text(function(d) {return d.long});
+    .append('rect')
+    .attr('id', function (d) {return d.short + 'Background'})
+    .attr('class', 'background')
+    .attr('x', -5)
+    .attr('y', -15)
+    .attr('height', '20px')
+    .attr('width', '310px')
+    .attr('style', 'fill: none; stroke: none');
 
+  // add the location column
+  // tableGroup.selectAll('g')
+  //   .data(locations).enter()
+  //   .append('g')
+  //   .attr('id', function (d) {return d.short})
+  //   .attr('longID', function (d) {return d.long})
+  //   .on('click', mouseclick)
+  //   .on('mouseover', mouseover)
+  //   .on('mouseout', mouseout)
+  //   .append('text')
+  //   .attr('x', 0)
+  //   .attr('y', 0)
+  //   .attr('fill', 'black')
+  //   .attr('font-size', '14px')
+  //   .text(function(d) {return d.long});
+
+  // add the location column
+  locations.forEach(function(d) {
+  	var id_tmp = '#' + d.short;
+  	d3.select(id_tmp)
+  	  .append('text')
+  	  .attr('id', d.short + 'Name')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('fill', 'black')
+      .attr('font-size', '14px')
+      .text(d.long);
+  })
+    
   // add the value column
   locations.forEach(function(d) {
   	var id_tmp = '#' + d.short;
@@ -337,6 +370,7 @@ function map_ready(error, geodata, econdata) {
   	d3.select(id_tmp)
   	  .append('rect')
   	  .attr('id', d.short + 'Bar')
+  	  .attr('class', 'bar')
       .attr('x', 240)
       .attr('y', -12)
       .attr('height', '12px')
@@ -356,14 +390,14 @@ function map_ready(error, geodata, econdata) {
   d3.select('#table').selectAll('text').attr('fill', 'white');
 
 
-  // color scale
+
+
+
+
+
+
+  // color scale for the map
   var color = d3.scalePow().exponent(0.5).range(['white', d3.rgb('steelblue').darker()]);
-
-
-
-
-
-
 
 
   // function for updating the color scale
@@ -394,6 +428,8 @@ function map_ready(error, geodata, econdata) {
     // redo the time filter
     time.filter(time_setting);
   }
+
+
 
 
   // function for updating the map.
@@ -502,14 +538,24 @@ function map_ready(error, geodata, econdata) {
     	}
     	// reorder the districts
     	d3.select(id_tmp).transition().delay(300).duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
-
-
     })
+
+    // if a district is selected, highlight the background
+    // var selectedDistrics = 0;
+    // d3.selectAll('.district').each(function (d,i) {
+    // 	if (this.classed('selected')) {
+    // 		selectedDistricts += 1;
+    // 	}
+    // });
+    // d3.selectAll('.district').filter('.selected')
 
 
   } // end of updateMap
 
 
+
+
+  // function for removing all data from the visualization when changing variables
   var clearMap = function() {
   	// change the map to the original colors
     mapLayer.selectAll('path').attr('style', function (d,i) {return 'fill:' + defaultColors[i]});
@@ -530,9 +576,11 @@ function map_ready(error, geodata, econdata) {
 
     // make the table invisible
     d3.select('#table').selectAll('text').attr('fill', 'white');
+    d3.select('#table').selectAll('.background').attr('style', 'stroke: none; fill:none');
 
     // make the bars invisible
-    d3.select('#table').selectAll('rect').attr('width',0);
+    d3.select('#table').selectAll('.bar').attr('width',0);
+
   }
 
 
@@ -596,6 +644,8 @@ function map_ready(error, geodata, econdata) {
     }
   }
 
+
+
   // function for updating the map title
   // assume the plotting variable has been chosen, and the mapTitle object
   // is available in the map_ready namespace
@@ -630,8 +680,8 @@ function map_ready(error, geodata, econdata) {
 
 
 
+
   // set up variable selectors //
-  // NOTE: I HAVE TO SET UP A TIME PERIOD SELECTOR AS WELL
 
   // helper functions
   // reference: https://stackoverflow.com/questions/1801499/how-to-change-options-of-select-with-jquery
