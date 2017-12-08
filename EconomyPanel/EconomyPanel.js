@@ -570,11 +570,14 @@ function map_ready(error, geodata, econdata) {
       dd = time.bottom(1e7);
 
       // pull the values
-      annual = time.top(1)[0].cy_qtr=="";
-      if (annual) {
-      	timePeriods = dd.map(function (d) {return d["calendar_year"]})
+      var calendar_quarter = dd[0].cy_qtr!="";
+      var fiscalOnly = dd[0].calendar_year=="NA" & dd[0].fiscal_year!="";
+      if (calendar_quarter) {
+        timePeriods = dd.map(function (d) {return d["cy_qtr"]});
+      } else if (fiscalOnly) {
+        timePeriods = dd.map(function (d) {return d["fiscal_year"]});
       } else {
-      	timePeriods = dd.map(function (d) {return d["cy_qtr"]})
+        timePeriods = dd.map(function (d) {return d["calendar_year"]});
       }
       valuesTS = dd.map(function (d) {return d["value"]});
 
