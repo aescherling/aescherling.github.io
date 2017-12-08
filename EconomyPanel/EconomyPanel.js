@@ -45,7 +45,7 @@ var path = d3.geoPath()
 
 // create some global variables for debugging purposes
 // var cf;
-var myVar;
+// var myVar;
 
 // wait until all the data is loaded before proceeding
 queue()
@@ -242,7 +242,7 @@ function map_ready(error, geodata, econdata) {
     }
   }
 
-  // make the map title toggle the variable selection div
+  // clicking the map title or the gray traingle will toggle the variable selection div
   toggleSelectionDiv = function() {
   	$('#selectionDiv').fadeToggle(0);
   	$('#collapse').fadeToggle(0);
@@ -326,22 +326,6 @@ function map_ready(error, geodata, econdata) {
     .attr('height', '20px')
     .attr('width', '310px')
     .attr('style', 'fill: none; stroke: none');
-
-  // add the location column
-  // tableGroup.selectAll('g')
-  //   .data(locations).enter()
-  //   .append('g')
-  //   .attr('id', function (d) {return d.short})
-  //   .attr('longID', function (d) {return d.long})
-  //   .on('click', mouseclick)
-  //   .on('mouseover', mouseover)
-  //   .on('mouseout', mouseout)
-  //   .append('text')
-  //   .attr('x', 0)
-  //   .attr('y', 0)
-  //   .attr('fill', 'black')
-  //   .attr('font-size', '14px')
-  //   .text(function(d) {return d.long});
 
   // add the location column
   locations.forEach(function(d) {
@@ -531,16 +515,6 @@ function map_ready(error, geodata, econdata) {
     	// reorder the districts
     	d3.select(id_tmp).transition().delay(300).duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
     })
-
-    // if a district is selected, highlight the background
-    // var selectedDistrics = 0;
-    // d3.selectAll('.district').each(function (d,i) {
-    // 	if (this.classed('selected')) {
-    // 		selectedDistricts += 1;
-    // 	}
-    // });
-    // d3.selectAll('.district').filter('.selected')
-
 
   } // end of updateMap
 
@@ -791,8 +765,6 @@ function map_ready(error, geodata, econdata) {
       indicator.filter(ind);
       current_indicator = ind;
     }
-
-    myVar = value.top(1e5);
 
     // check whether gender is an option
     genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
@@ -1049,16 +1021,6 @@ cd_value = map_svg.append('text')
 /* 
 Helper functions
 */
-
-// Get council district
-function getDistrict(d){
-  return d.properties.Council_District;
-}
-
-// Get district color
-function fillFn(d){
-  return color(getDistrict(d));
-}
 
 // http://bl.ocks.org/eesur/4e0a69d57d3bfc8a82c2
 d3.selection.prototype.moveToFront = function() {  

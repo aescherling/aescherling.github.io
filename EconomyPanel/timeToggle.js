@@ -1,5 +1,7 @@
 function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, updateMap, currentTime=null, width=200, height=20, textwidth=55, margin=5) {
 
+    // if a time period is passed to the function, get the index of that time period in the given time data object
+    // if it's not given, return the last time period
     var currentTimeIndex;
     if (currentTime==null) {
       currentTimeIndex = data_json.length - 1;
@@ -7,9 +9,11 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
       currentTimeIndex = data_json.map(function(d) {return d.time}).indexOf(currentTime);
     }
 
+    // create the x scale
     var x = d3.scaleLinear().range([0, width - 2*margin]);
 
-    // change the y range depending on the input (if it sums to zero, make the range constant)
+    // create the y scale
+    // change the range depending on the input (if it sums to zero, make the range constant, i.e. the output is a flat line)
     ySum = d3.sum(data_json.map(function (d) {return d.value}))
     if (ySum==0) {
       var y = d3.scaleLinear().range([height/2, height/2]);
@@ -17,15 +21,18 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
       var y = d3.scaleLinear().range([height - margin, margin]);
     }
 
+    // line object. shows the user the time range and may also plot a time series for a selected district.
     var line = d3.line()
                .x(function(d, i) { return x(i); })
                .y(function(d) { return y(d.value); });
 
+    // domain for x and y scales, data-dependent
     x.domain(d3.extent(data_json, function(d, i) { return i; }));
     y.domain(d3.extent(data_json, function(d) { return +d.value; }));
 
     var max_index = d3.extent(data_json, function(d, i) { return i; })[1];
 
+    // create the time toggle SVG
     var svg = d3.select(elemId)
       .append('svg')
       .attr('id', 'timeToggleSVG')
@@ -42,11 +49,13 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
     var focus = svg.append("g")
         .attr("class", "focus");
 
+    // dot shows the current time selection
     var dot = focus.append("circle")
         .attr('cx', x(currentTimeIndex))
         .attr('cy', y(data_json[currentTimeIndex].value))
         .attr("r", 5);
 
+  // timeToggle function. this is what the make_timeToggle function returns
   timeToggle = function() {
     svg.append("rect")
         .attr("class", "overlay")
@@ -54,6 +63,8 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
         .attr("height", height)
         .on("mousemove", mousemove);
 
+    // change the time selection when the user mouses over the time toggle
+    // uses the crossfilter "time" filter passed in to make_timeToggle
     function mousemove() {
       var i = Math.min(Math.round(x.invert(d3.mouse(this)[0])), max_index);
       focus.select('circle').attr('cx', x(i)).attr('cy', y(data_json[i].value));
@@ -66,6 +77,7 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
       updateMap();
     }
 
+    // add the time label
     d3.select(numId)
       .append('svg')
       .attr('id', 'timeToggleLabel')
@@ -73,9 +85,9 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
       .attr('height', height)
       .append('text')
       .attr('x', 0)
-      .attr('y', height)
+      .attr('y', height * 0.75)
       .attr('text-anchor', 'left')
-      .attr('style', 'font-size:13px')
+      .attr('style', 'font-size:14px')
       .attr('fill', 'steelblue')
       .text(data_json[currentTimeIndex].time);
 
@@ -90,14 +102,6 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
   timeToggle.x = x;
   timeToggle.y = y;
   timeToggle.data = data_json;
-
-  // this currently isn't connected to anything, but it works. the 
-  // idea is to make an external function for changing the info.
-  // try to sync all the timeToggle dates?
-  // timeToggle.changeSelection = function(index){
-  //   dot.attr('cx', x(index)).attr('cy', y(data[index]));
-  // 	d3.selectAll(numId).select('text').text(data[index]);
-  // }
 
   return timeToggle;
 }

@@ -10,17 +10,6 @@
   <script src="lib/tether.min.js"></script>
   <script src="lib/bootstrap.min.js"></script>
   <script src="lib/stringFormatting.js"></script>
-
-  <script> 
-    $(function(){
-      $("#sparklineContent").load("sparklines.html"); 
-    });
-  </script>
-
-
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 </head>
 
 <header>
@@ -39,7 +28,6 @@
       	<div id="collapse" style="float:right">
       	  <img src="triangle.svg" width="25px" style="padding:5px; transform: scaleX(-1)"/>
         </div>
-        <!-- <h5 style="display:inline-block; padding:0px 20px 0px 0px">Select a variable:</h5> -->
 
         <div id="categoryDiv" class="form-group" style="display:inline-block;">
           <label for="selectCategory" style="font-weight:bold">Category</label>
@@ -71,6 +59,7 @@
 
       </div> <!-- end of variable selection column -->
 
+      <!-- a small placeholder div that the user can click to open up the variable selection column after it's closed -->
       <div>
       	<img id="expand" src="triangle.svg" width="25px" style="padding:5px; margin:0px"/>
       </div>
@@ -79,7 +68,9 @@
 
       <div class="col-md-9" style="border-left: 1px solid #CCC;">
       	<h5 id="mapTitle"></h5>
-      	<span class="timeToggle"><span id="timePrelabel"></span><span id="timeSparkline"></span> <span id="timeLabel"></span></span>
+        <div style="height:20px">
+      	  <span class="timeToggle"><span id="timePrelabel" style="line-height:20px; vertical-align: top"></span><span id="timeSparkline"></span> <span id="timeLabel"></span></span>
+        </div>
         <div id="map_div"></div>
         <div id="source" style="display:none;">
           <span style="font-weight: bold">Source: </span><span id="sourceSpan" style="font-size:16px"></span>
@@ -104,7 +95,6 @@
 
   <script src="lib/d3_v4.js"></script>
   <script src="lib/queue.js"></script>
-  <script src="sparklines.js"></script>
   <script src="timeToggle.js"></script>
   <script src="EconomyPanel.js"></script>
 
