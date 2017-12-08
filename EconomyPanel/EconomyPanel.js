@@ -127,113 +127,122 @@ function map_ready(error, geodata, econdata) {
   // mouse functionality - click, mouseover, mouseout //
 
   mouseclick = function() {
-  	// check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // only continue if the selection is complete
+    if (selection_complete) {
+  	  // check whether the object is a path in the map, or a row in the table
+  	  // we want to select the path, not the row
+  	  if (d3.select(this)._groups[0][0].tagName=="path") {
+  	  	district = d3.select(this);
+  	  } else if (d3.select(this).attr('id')!="City") {
+  	  	id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  	  	district = d3.select('#' + id_tmp);
+  	  }
 
-    // determine the prior state of the district (selected or not)
-    isSelected = district.classed('selected');
-    // if it's selected, unselect it
-    if (isSelected) {
-      district.classed('selected', false);
-      d3.selectAll('.district').classed('frozen', false);
-      d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
-    } else {
-      // unselect all districts then select the chosen district
-      d3.selectAll('.district').classed('selected', false);
-      d3.selectAll('.district').classed('highlighted', false);
-      district.moveToFront().classed('selected', true);
-      d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
+      // determine the prior state of the district (selected or not)
+      isSelected = district.classed('selected');
+      // if it's selected, unselect it
+      if (isSelected) {
+        district.classed('selected', false);
+        d3.selectAll('.district').classed('frozen', false);
+        d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
+      } else {
+        // unselect all districts then select the chosen district
+        d3.selectAll('.district').classed('selected', false);
+        d3.selectAll('.district').classed('highlighted', false);
+        district.moveToFront().classed('selected', true);
+        d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
 
-      // update the display text
-      district = district;
-      district_text = district.attr('label');
-      councilmember_text = district.attr('councilmember');
-      cd_label.text(district_text);
-      cd_councilmember.text(councilmember_text);
+        // update the display text
+        district = district;
+        district_text = district.attr('label');
+        councilmember_text = district.attr('councilmember');
+        cd_label.text(district_text);
+        cd_councilmember.text(councilmember_text);
 
-      // highlight the district in the table
-      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
-      var locations_long = locations.map(function (d) {return d.long});
-      var locations_short = locations.map(function (d) {return d.short});
-      var index_tmp = locations_long.indexOf(district_text);
-      var id_tmp = '#' + locations_short[index_tmp];
-      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
+        // highlight the district in the table
+        var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+        var locations_long = locations.map(function (d) {return d.long});
+        var locations_short = locations.map(function (d) {return d.short});
+        var index_tmp = locations_long.indexOf(district_text);
+        var id_tmp = '#' + locations_short[index_tmp];
+        d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
 
-      // "Freeze" all districts to disable mouseover
-      d3.selectAll('.district').classed('frozen', true);
+        // "Freeze" all districts to disable mouseover
+        d3.selectAll('.district').classed('frozen', true);
+      }
+      // update the time toggle
+      updateTimescale();
     }
-    // update the time toggle
-    updateTimescale();
   }
 
   mouseover = function() {
-  	// check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		d3.select(this).style('cursor', 'pointer');
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // only continue if the selection is complete
+    if (selection_complete) {
+  	  // check whether the object is a path in the map, or a row in the table
+  	  // we want to select the path, not the row
+  	  if (d3.select(this)._groups[0][0].tagName=="path") {
+  	  	district = d3.select(this);
+  	  } else if (d3.select(this).attr('id')!="City") {
+  	  	d3.select(this).style('cursor', 'pointer');
+  	  	id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  	  	district = d3.select('#' + id_tmp);
+  	  }
 
-    // if the district is not frozen, highlight and update the display text
-    isFrozen = district.classed('frozen');
-    if (!isFrozen) {
-  	  district.moveToFront().classed('highlighted', true);
-      district_text = district.attr('label');
-      councilmember_text = district.attr('councilmember');
-      value_tmp = +district.attr('value')
-      value_text = "Value: " + formatAmount(value_tmp);
-      cd_label.text(district_text);
-      cd_councilmember.text(councilmember_text);
-      // only show the value if it's not blank
-      if (district.attr('value')!="") {
-      	// cd_value.text(value_text);
-      	cd_value.text('(Click to select/unselect)');
+      // if the district is not frozen, highlight and update the display text
+      isFrozen = district.classed('frozen');
+      if (!isFrozen) {
+  	    district.moveToFront().classed('highlighted', true);
+        district_text = district.attr('label');
+        councilmember_text = district.attr('councilmember');
+        value_tmp = +district.attr('value')
+        value_text = "Value: " + formatAmount(value_tmp);
+        cd_label.text(district_text);
+        cd_councilmember.text(councilmember_text);
+        // only show the value if it's not blank
+        if (district.attr('value')!="") {
+        	// cd_value.text(value_text);
+        	cd_value.text('(Click to select/unselect)');
+        }
+        // highlight the district in the table
+        var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+        var locations_long = locations.map(function (d) {return d.long});
+        var locations_short = locations.map(function (d) {return d.short});
+        var index_tmp = locations_long.indexOf(district_text);
+        var id_tmp = '#' + locations_short[index_tmp];
+        d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
+        d3.select(id_tmp).select('.background').attr('style', 'stroke:gray; fill:none');
       }
-      // highlight the district in the table
-      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
-      var locations_long = locations.map(function (d) {return d.long});
-      var locations_short = locations.map(function (d) {return d.short});
-      var index_tmp = locations_long.indexOf(district_text);
-      var id_tmp = '#' + locations_short[index_tmp];
-      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
-      d3.select(id_tmp).select('.background').attr('style', 'stroke:gray; fill:none');
     }
   }
 
   mouseout = function() {
-    // check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		d3.select(this).style('cursor', 'auto');
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // only continue if the selection is complete
+    if (selection_complete) {
+      // check whether the object is a path in the map, or a row in the table
+  	  // we want to select the path, not the row
+  	  if (d3.select(this)._groups[0][0].tagName=="path") {
+  	  	district = d3.select(this);
+  	  } else if (d3.select(this).attr('id')!="City") {
+  	  	d3.select(this).style('cursor', 'auto');
+  	  	id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+  	  	district = d3.select('#' + id_tmp);
+  	  }
 
-    isFrozen = district.classed('frozen');
-    if (!isFrozen) {
-  	  district.classed('highlighted', false);
-      cd_label.text('');
-      cd_councilmember.text('');
-      cd_value.text('');
-      // unhighlight the district in the table
-      var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
-      var locations_long = locations.map(function (d) {return d.long});
-      var locations_short = locations.map(function (d) {return d.short});
-      var index_tmp = locations_long.indexOf(district_text);
-      var id_tmp = '#' + locations_short[index_tmp];
-      d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:normal');
-      d3.select(id_tmp).select('.background').attr('style', 'stroke: none; fill:none');
+      isFrozen = district.classed('frozen');
+      if (!isFrozen) {
+  	    district.classed('highlighted', false);
+        cd_label.text('');
+        cd_councilmember.text('');
+        cd_value.text('');
+        // unhighlight the district in the table
+        var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
+        var locations_long = locations.map(function (d) {return d.long});
+        var locations_short = locations.map(function (d) {return d.short});
+        var index_tmp = locations_long.indexOf(district_text);
+        var id_tmp = '#' + locations_short[index_tmp];
+        d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:normal');
+        d3.select(id_tmp).select('.background').attr('style', 'stroke: none; fill:none');
+      }
     }
   }
 

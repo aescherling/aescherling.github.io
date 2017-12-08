@@ -1,12 +1,3 @@
-- make mouseover change the time toggle to a sparkline time series chart
-- disable mouseover and click for table when the table isn't visible
-
-- add an option to disable the menu toggling
-
-- Create a more clean/robust variable selection system
-
-- click "location" and "value" to change the ordering
-- create a gray rect underneath a row when it is highlighted (or make one visible)
 
 Buggy variables:
 - educational attainment, high school, male/female
@@ -14,6 +5,15 @@ Buggy variables:
 - selecting gender before subindicator
 
 - why doesn't unemployment rate round to 2 decimals? any other variables? also housing vacancy rate. make sure Math.round() is being called on a number and not a string
+
+
+- make mouseover change the time toggle to a sparkline time series chart
+
+
+- Create a more clean/robust variable selection system
+
+- click "location" and "value" to change the ordering
+
 
 Variables to be adjusted:
 - population (adjust for area (i.e. square miles) of council district)
