@@ -27,6 +27,17 @@ function addCommas(nStr) {
   return x1 + x2;
 }
 
+function addCommasNoDeci(nStr) {
+  nStr += '';
+
+  var rgx = /(\d+)(\d{3})/;
+  while (rgx.test(nStr)) {
+    nStr = nStr.replace(rgx, '$1' + ',' + '$2');
+  }
+
+  return nStr;
+}
+
 function formatDollarAmount(n) {
   if (n >= 1e9) {
     out = addCommas(Math.round(n / 1e7) / 100) + ' billion';
@@ -49,8 +60,10 @@ function formatAmount(n) {
     out = addCommas(Math.round(n / 1e7) / 100) + ' billion';
   } else if (n >= 1e6) {
     out = addCommas(Math.round(n / 1e4) / 100) + ' million';
+  } else if (n >= 1e3) {
+    out = addCommasNoDeci(Math.round(n));
   } else {
-    out = addCommas(n);
+    out = addCommas(Math.round(n * 100) / 100);
   }
   var check = isFinite(n)
   if (!check) {

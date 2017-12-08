@@ -7,7 +7,6 @@
 
 // INITIAL SETUP //
 
-
 // set some variables
 var map_svg_width=770,
 	map_svg_height=450,
@@ -194,15 +193,10 @@ function map_ready(error, geodata, econdata) {
   	    district.moveToFront().classed('highlighted', true);
         district_text = district.attr('label');
         councilmember_text = district.attr('councilmember');
-        value_tmp = +district.attr('value')
-        value_text = "Value: " + formatAmount(value_tmp);
         cd_label.text(district_text);
         cd_councilmember.text(councilmember_text);
-        // only show the value if it's not blank
-        if (district.attr('value')!="") {
-        	// cd_value.text(value_text);
-        	cd_value.text('(Click to select/unselect)');
-        }
+        cd_value.text('(Click to select/unselect)');
+
         // highlight the district in the table
         var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
         var locations_long = locations.map(function (d) {return d.long});
@@ -477,21 +471,6 @@ function map_ready(error, geodata, econdata) {
       .attr('value', getValue)
       .style('fill', getColor);
 
-    // // if a district is selected, update the displayed value 
-    // selected_district = d3.selectAll('.district').filter('.selected')
-    // if (selected_district._groups[0].length==1) {
-    //   value_tmp = selected_district.attr('value')
-    //   // only show the value if it's not blank
-    //   if (value_tmp!="") {
-    //   	// cd_value.text('Value: ' + formatAmount(+value_tmp));
-    //   	cd_value.text('(Click to select/unselect)');
-    //   } else {
-    // 	cd_value.text("");
-    //   }
-    // } else {
-    //   cd_value.text("");
-    // }
-
     // update the source
     varSource = value.top(1)[0].source;
     d3.select('#sourceSpan').html(varSource);
@@ -731,6 +710,7 @@ function map_ready(error, geodata, econdata) {
     // remove time toggle
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
+    d3.select('#timePrelabel').text('');
     
     // If they choose "-", remove the filter; otherwise filter using given category
     if (cat=="-") {
@@ -783,6 +763,7 @@ function map_ready(error, geodata, econdata) {
     // remove time toggle
     d3.select('#timeToggleSVG').remove();
     d3.select('#timeToggleLabel').remove();
+    d3.select('#timePrelabel').text('');
     
     // If they chose "-", remove the indicator filter.
     // Otherwise filter using given indicator.

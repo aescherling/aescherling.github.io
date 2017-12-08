@@ -1,16 +1,18 @@
+- switching between variables in the same category no longer works...
 
 Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
 - selecting gender before subindicator
 
-- why doesn't unemployment rate round to 2 decimals? any other variables? also housing vacancy rate. make sure Math.round() is being called on a number and not a string
-
+- mouseover changes the table text style
 
 - make mouseover change the time toggle to a sparkline time series chart
 
 
 - Create a more clean/robust variable selection system
+- make sure code is well-labeled and readable
+
 
 - click "location" and "value" to change the ordering
 
