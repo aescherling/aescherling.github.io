@@ -1,4 +1,3 @@
-- Don't change the time period when a district is selected
 - make mouseover change the time toggle to a sparkline time series chart
 - disable mouseover and click for table when the table isn't visible
 
@@ -14,11 +13,7 @@ Buggy variables:
 - taxable sales receipts
 - selecting gender before subindicator
 
-- why doesn't unemployment rate round to 2 decimals? any other variables?
-- also housing vacancy rate
-
-For speeding it up:
-- make sure there are no more than 8 filters defined at any time
+- why doesn't unemployment rate round to 2 decimals? any other variables? also housing vacancy rate. make sure Math.round() is being called on a number and not a string
 
 Variables to be adjusted:
 - population (adjust for area (i.e. square miles) of council district)

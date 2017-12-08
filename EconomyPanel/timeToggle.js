@@ -1,4 +1,11 @@
-function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, updateMap, width=200, height=20, textwidth=55, margin=5) {
+function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, updateMap, currentTime=null, width=200, height=20, textwidth=55, margin=5) {
+
+    var currentTimeIndex;
+    if (currentTime==null) {
+      currentTimeIndex = data_json.length - 1;
+    } else {
+      currentTimeIndex = data_json.map(function(d) {return d.time}).indexOf(currentTime);
+    }
 
     var x = d3.scaleLinear().range([0, width - 2*margin]);
 
@@ -36,8 +43,8 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
         .attr("class", "focus");
 
     var dot = focus.append("circle")
-        .attr('cx', x(data_json.length - 1))
-        .attr('cy', y(data_json[data_json.length - 1].value))
+        .attr('cx', x(currentTimeIndex))
+        .attr('cy', y(data_json[currentTimeIndex].value))
         .attr("r", 5);
 
   timeToggle = function() {
@@ -70,10 +77,10 @@ function make_timeToggle(elemId, numId, data_json, timeFilter, updateColor, upda
       .attr('text-anchor', 'left')
       .attr('style', 'font-size:13px')
       .attr('fill', 'steelblue')
-      .text(data_json[data_json.length - 1].time);
+      .text(data_json[currentTimeIndex].time);
 
      // filter using the last date in the time period and update the map
-     timeFilter.filter(data_json[data_json.length - 1].time);
+     timeFilter.filter(data_json[currentTimeIndex].time);
      updateColor();
      updateMap();
   }

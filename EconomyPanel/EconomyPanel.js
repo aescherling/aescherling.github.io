@@ -630,10 +630,14 @@ function map_ready(error, geodata, econdata) {
     }
 	
 	if (selection_complete) {
+      // if timeToggle exists, save current year
+      if (d3.select('#timePrelabel').text()!='') {
+        var currentTime = d3.select('#timeToggleLabel').text();
+      }
       // remove timeToggle if it exists, then add a new one
       d3.select('#timeToggleSVG').remove();
       d3.select('#timeToggleLabel').remove();
-      var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap);
+      var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap, currentTime);
       timeToggleSetup();
       d3.select('#timePrelabel').text('Time period (hover to select): ');
     } else {
