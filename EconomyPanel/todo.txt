@@ -1,26 +1,42 @@
-- label fiscal year, calendar year, calendar quarter?
 
-Buggy variables:
-- educational attainment, high school, male/female
-- taxable sales receipts
+** very necessary things **
+---------------------------
+- put together instructions for Beacon as to formatting the data
+  - have them reformat "educational attainment" so that it doesn't include gendered values
+- put together instructions for the city controller's office for updating the data
 
+
+** other improvements and fixes **
+----------------------------------
 - mouseover changes the table text style
-
-- make mouseover change the time toggle to a sparkline time series chart
-
-
 - Create a more clean/robust variable selection system
 - make sure code is well-labeled and readable
+- Variables to be adjusted:
+  - population (adjust for area (i.e. square miles) of council district)
+  - educational attainment by gender (calculate as % of population, otherwise adjust for area)
+- Check: is the whole thing robust to screen size changes?
 
 
+** things that might be cool **
+-------------------------------
+- make mouseover change the time toggle to a sparkline time series chart
 - click "location" and "value" to change the ordering
 
 
-Variables to be adjusted:
-- population (adjust for area (i.e. square miles) of council district)
-- educational attainment by gender (calculate as % of population, otherwise adjust for area)
 
-- Check: is the whole thing robust to screen size changes?
 
-- put together instructions for Beacon as to formatting the data
-- put together instructions for the city controller's office for updating the data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
