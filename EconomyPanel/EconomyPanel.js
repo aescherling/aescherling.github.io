@@ -353,6 +353,7 @@ function map_ready(error, geodata, econdata) {
       .attr('y', 0)
       .attr('fill', 'black')
       .attr('font-size', '14px')
+      .attr('style', 'font-weight:normal')
       .text(d.long);
   })
     
@@ -366,6 +367,7 @@ function map_ready(error, geodata, econdata) {
       .attr('y', 0)
       .attr('fill', 'black')
       .attr('font-size', '14px')
+      .attr('style', 'font-weight:normal')
       .text('value goes here');
   })
 

@@ -101,3 +101,13 @@ path {
 #collapse:hover {
   cursor: pointer;
 }
+
+.footer {
+  text-align: center;
+  font-size: 13px;
+  line-height: 50%;
+}
+
+.footer a{
+  color: #444;
+}
