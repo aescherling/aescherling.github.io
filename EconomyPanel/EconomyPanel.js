@@ -629,7 +629,20 @@ function map_ready(error, geodata, econdata) {
       d3.select('#timeToggleLabel').remove();
       var timeToggleSetup = make_timeToggle('#timeSparkline', '#timeLabel', timeData, time, updateColor, updateMap, currentTime);
       timeToggleSetup();
-      d3.select('#timePrelabel').text('Time period (hover to select): ');
+
+      // find the data frequency
+      var topOne = value.top(1)[0];
+      var calendar_quarter = topOne.cy_qtr!="";
+      var calendar_year = topOne.calendar_year!="NA";
+      var fiscal_year = topOne.fiscal_year!="";
+      if (calendar_quarter) {
+        var freq = "Calendar quarter";
+      } else if (calendar_year) {
+        var freq = "Calendar year";
+      } else if (fiscal_year) {
+        var freq = "Fiscal year";
+      }
+      d3.select('#timePrelabel').text(freq + ' (hover to select): ');
     } else {
       // remove timeToggle if it exists
       d3.select('#timeToggleSVG').remove();
@@ -777,6 +790,8 @@ function map_ready(error, geodata, econdata) {
       current_indicator = ind;
     }
 
+    myVar = value.top(1e5);
+
     // check whether gender is an option
     genderCounts = gender.group().reduceCount().all().filter(function (d) {return d.value > 0});
     genders = genderCounts.map(function (d) {return d.key});
@@ -796,6 +811,10 @@ function map_ready(error, geodata, econdata) {
     hasQuarters = quarters.length > 1;
     quarter.dispose();
 
+    // check if only fiscal years are available
+    var topOne = value.top(1)[0]
+    var fiscalOnly = topOne.calendar_year=="NA" & topOne.fiscal_year!="";
+
     // If they chose "-", hide gender and subindicator.
     // Otherwise proceed using the given filter.
     if (ind=="-") {
@@ -807,6 +826,10 @@ function map_ready(error, geodata, econdata) {
       if (hasQuarters) {
         time = data.dimension(function (d) {
           return d["cy_qtr"];
+        });
+      } else if (fiscalOnly) {
+        time = data.dimension(function (d) {
+          return d["fiscal_year"];
         });
       } else {
       	time = data.dimension(function (d) {

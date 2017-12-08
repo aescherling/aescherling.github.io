@@ -1,9 +1,8 @@
-- don't disable council district labeling if selection isn't complete... just the table
+- label fiscal year, calendar year, calendar quarter?
 
 Buggy variables:
 - educational attainment, high school, male/female
 - taxable sales receipts
-- selecting gender before subindicator
 
 - mouseover changes the table text style
 
