@@ -1,4 +1,4 @@
-- switching between variables in the same category no longer works...
+- don't disable council district labeling if selection isn't complete... just the table
 
 Buggy variables:
 - educational attainment, high school, male/female
