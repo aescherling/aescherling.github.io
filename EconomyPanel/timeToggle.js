@@ -1,9 +1,15 @@
-function make_timeToggle(elemId, numId, jsonData, timeFilter, updateColor, updateMap, currentTime=null, width=200, height=20, textwidth=55, margin=5) {
+function make_timeToggle(elemId, numId, jsonData, timeFilter, updateColor, updateMap, currentTime) {
+
+    // set width, height, textwidth
+    var width = 200;
+    var height = 20;
+    var textwidth = 55;
+    var margin = 5;
 
     // if a time period is passed to the function, get the index of that time period in the given time data object
     // if it's not given, return the last time period
     var currentTimeIndex;
-    if (currentTime==null) {
+    if (currentTime === undefined) {
       currentTimeIndex = jsonData.length - 1;
     } else {
       currentTimeIndex = jsonData.map(function(d) {return d.time}).indexOf(currentTime);
