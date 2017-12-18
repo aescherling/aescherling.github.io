@@ -2,6 +2,7 @@
 ** very necessary things **
 ---------------------------
 - figure out why it's not compatible with IE and give user some sort of warning
+- sometimes the districts change color when a category is selected for the first time... why??
 - put together instructions for Beacon as to formatting the data
   - have them reformat "educational attainment" so that it doesn't include gendered values
 - put together instructions for the city controller's office for updating the data

@@ -143,12 +143,14 @@ function map_ready(error, geodata, econdata) {
       district.classed('selected', false);
       d3.selectAll('.district').classed('frozen', false);
       d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
+      d3.select('#table').selectAll('.background').attr('style', 'stroke:none; fill:none');
     } else {
       // unselect all districts then select the chosen district
       d3.selectAll('.district').classed('selected', false);
       d3.selectAll('.district').classed('highlighted', false);
       district.moveToFront().classed('selected', true);
       d3.select('#table').selectAll('text').attr('style', 'font-weight:normal');
+      d3.select('#table').selectAll('.background').attr('style', 'stroke:none; fill:none');
 
       // update the display text
       district = district;
@@ -166,6 +168,7 @@ function map_ready(error, geodata, econdata) {
         var index_tmp = locations_long.indexOf(district_text);
         var id_tmp = '#' + locations_short[index_tmp];
         d3.select(id_tmp).selectAll('text').attr('style', 'font-weight:bold');
+        d3.select(id_tmp).select('.background').attr('style', 'stroke:gray; fill:none');
       }
 
       // "Freeze" all districts to disable mouseover
