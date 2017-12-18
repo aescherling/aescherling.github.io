@@ -178,8 +178,11 @@ function map_ready(error, geodata, econdata) {
     updateTimescale();
   }
 
+  var mouseoverStatus = false;
 
   mouseover = function() {
+
+    if (!mouseoverStatus) {
 
   	// check whether the object is a path in the map, or a row in the table
   	// we want to select the path, not the row
@@ -212,9 +215,12 @@ function map_ready(error, geodata, econdata) {
         d3.select(id_tmp).select('.background').attr('style', 'stroke:gray; fill:none');
       }
     }
+  mouseoverStatus = true;
+  } // end of if(!mouseoverStats)
   }
 
   mouseout = function() {
+    mouseoverStatus = false;
     // check whether the object is a path in the map, or a row in the table
   	// we want to select the path, not the row
   	if (d3.select(this)._groups[0][0].tagName=="path") {
