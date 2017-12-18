@@ -277,25 +277,25 @@ function map_ready(error, geodata, econdata) {
 
   // function for randomizing the colors
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-  function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+  // function shuffle(array) {
+  //   var currentIndex = array.length, temporaryValue, randomIndex;
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+  //   // While there remain elements to shuffle...
+  //   while (0 !== currentIndex) {
 
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+  //     // Pick a remaining element...
+  //     randomIndex = Math.floor(Math.random() * currentIndex);
+  //     currentIndex -= 1;
 
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
+  //     // And swap it with the current element.
+  //     temporaryValue = array[currentIndex];
+  //     array[currentIndex] = array[randomIndex];
+  //     array[randomIndex] = temporaryValue;
+  //   }
 
-    return array;
-  }
-  defaultColors = shuffle(['#92a8d1','#f7cac9','#f7786b','#d5f4e6','#80ced6','#fefbd8','#618685','#ffef96','#db89e5','#b2b2b2','#f4e1d2','#deeaee','#b1cbbb','#eea29a','#82b74b']);
+  //   return array;
+  // }
+  defaultColors = ['#92a8d1','#f7cac9','#f7786b','#d5f4e6','#80ced6','#fefbd8','#618685','#ffef96','#db89e5','#b2b2b2','#f4e1d2','#deeaee','#b1cbbb','#eea29a','#82b74b'];
   
   mapLayer.selectAll('path')
       .data(geofeatures)
