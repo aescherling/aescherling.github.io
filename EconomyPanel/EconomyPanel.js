@@ -9,16 +9,16 @@
 
 // set some variables
 var map_svg_width=770,
-	map_svg_height=450,
+  map_svg_height=450,
   map_zoom = 8.5,
   map_long = -117.95,
   map_lat = 34.02;
 
 // make the SVG canvas
 map_svg = d3.select('#map_div')
-	.append('svg')
-	.attr('width', map_svg_width)
-	.attr('height', map_svg_height);
+  .append('svg')
+  .attr('width', map_svg_width)
+  .attr('height', map_svg_height);
 
 // draw the box around the SVG
 // bb = map_svg.append('rect')
@@ -95,18 +95,27 @@ function map_ready(error, geodata, econdata) {
 
 
 
-  // Remove indicators which are city-level only.
-  // to do so I keep only the indicators available for Council District 1
-  rmCityOnly = function() {
+  // Keep only the indicators available for Council District 1
+  districtsOnly = function() {
     var locality = data.dimension(function(d) {return d.locality});
-    locality.filter('Council District 1');
+    // select non-city observations, e.g. county, MSA
+    locality.filter(function(d) {return(d!="LOS ANGELES CITY")});
+    // remove them!
+    data.remove();
+    // remove the filter
+    locality.filterAll();
+    locality.dispose();
+
+    // select indicators available for Council District 1
+    var cd = data.dimension(function(d) {return d.council_district});
+    cd.filter('Council District 1');
     // pick out all indicators with more than one observation using the current filters
     CDindicatorCounts = indicator.group().reduceCount().all().filter(function (d) {return d.value > 0});
     CDindicators = CDindicatorCounts.map(function (d) {return d.key});
   
-    // remove locality filter
-    locality.filterAll();
-    locality.dispose();
+    // remove cd filter
+    cd.filterAll();
+    cd.dispose();
   
     // select indicators not in the list
     indicator.filter(function (d) {return CDindicators.indexOf(d)==-1});
@@ -115,7 +124,7 @@ function map_ready(error, geodata, econdata) {
     // undo the filter
     indicator.filterAll();
   }
-  rmCityOnly();
+  districtsOnly();
 
 
 
@@ -127,14 +136,14 @@ function map_ready(error, geodata, econdata) {
 
   mouseclick = function() {
     
-  	// check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // check whether the object is a path in the map, or a row in the table
+    // we want to select the path, not the row
+    if (d3.select(this)._groups[0][0].tagName=="path") {
+      district = d3.select(this);
+    } else if (d3.select(this).attr('id')!="City") {
+      id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+      district = d3.select('#' + id_tmp);
+    }
 
     // determine the prior state of the district (selected or not)
     isSelected = district.classed('selected');
@@ -187,20 +196,20 @@ function map_ready(error, geodata, econdata) {
     // unhighlight all districts
     d3.selectAll('.district').classed('highlighted', false);
 
-  	// check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		d3.select(this).style('cursor', 'pointer');
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // check whether the object is a path in the map, or a row in the table
+    // we want to select the path, not the row
+    if (d3.select(this)._groups[0][0].tagName=="path") {
+      district = d3.select(this);
+    } else if (d3.select(this).attr('id')!="City") {
+      d3.select(this).style('cursor', 'pointer');
+      id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+      district = d3.select('#' + id_tmp);
+    }
 
     // if the district is not frozen, highlight and update the display text
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
-  	  district.moveToFront().classed('highlighted', true);
+      district.moveToFront().classed('highlighted', true);
       district_text = district.attr('label');
       councilmember_text = district.attr('councilmember');
       cd_label.text(district_text);
@@ -225,18 +234,18 @@ function map_ready(error, geodata, econdata) {
   mouseout = function() {
     mouseoverStatus = false;
     // check whether the object is a path in the map, or a row in the table
-  	// we want to select the path, not the row
-  	if (d3.select(this)._groups[0][0].tagName=="path") {
-  		district = d3.select(this);
-  	} else if (d3.select(this).attr('id')!="City") {
-  		d3.select(this).style('cursor', 'auto');
-  		id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
-  		district = d3.select('#' + id_tmp);
-  	}
+    // we want to select the path, not the row
+    if (d3.select(this)._groups[0][0].tagName=="path") {
+      district = d3.select(this);
+    } else if (d3.select(this).attr('id')!="City") {
+      d3.select(this).style('cursor', 'auto');
+      id_tmp = d3.select(this).attr('longID').replace(/\s/g, '');
+      district = d3.select('#' + id_tmp);
+    }
 
     isFrozen = district.classed('frozen');
     if (!isFrozen) {
-  	  district.classed('highlighted', false);
+      district.classed('highlighted', false);
       cd_label.text('');
       cd_councilmember.text('');
       cd_value.text('');
@@ -256,9 +265,9 @@ function map_ready(error, geodata, econdata) {
 
   // clicking the map title or the gray traingle will toggle the variable selection div
   toggleSelectionDiv = function() {
-  	$('#selectionDiv').fadeToggle(0);
-  	$('#collapse').fadeToggle(0);
-  	$('#expand').fadeToggle(0);
+    $('#selectionDiv').fadeToggle(0);
+    $('#collapse').fadeToggle(0);
+    $('#expand').fadeToggle(0);
   };
 
   d3.select('#mapTitle').on('click', toggleSelectionDiv);
@@ -345,10 +354,10 @@ function map_ready(error, geodata, econdata) {
 
   // add the location column
   locations.forEach(function(d) {
-  	var id_tmp = '#' + d.short;
-  	d3.select(id_tmp)
-  	  .append('text')
-  	  .attr('id', d.short + 'Name')
+    var id_tmp = '#' + d.short;
+    d3.select(id_tmp)
+      .append('text')
+      .attr('id', d.short + 'Name')
       .attr('x', 0)
       .attr('y', 0)
       .attr('fill', 'black')
@@ -359,10 +368,10 @@ function map_ready(error, geodata, econdata) {
     
   // add the value column
   locations.forEach(function(d) {
-  	var id_tmp = '#' + d.short;
-  	d3.select(id_tmp)
-  	  .append('text')
-  	  .attr('id', d.short + 'Value')
+    var id_tmp = '#' + d.short;
+    d3.select(id_tmp)
+      .append('text')
+      .attr('id', d.short + 'Value')
       .attr('x', 140)
       .attr('y', 0)
       .attr('fill', 'black')
@@ -373,11 +382,11 @@ function map_ready(error, geodata, econdata) {
 
   // add the bar column
   locations.forEach(function(d) {
-  	var id_tmp = '#' + d.short;
-  	d3.select(id_tmp)
-  	  .append('rect')
-  	  .attr('id', d.short + 'Bar')
-  	  .attr('class', 'bar')
+    var id_tmp = '#' + d.short;
+    d3.select(id_tmp)
+      .append('rect')
+      .attr('id', d.short + 'Bar')
+      .attr('class', 'bar')
       .attr('x', 240)
       .attr('y', -12)
       .attr('height', '12px')
@@ -416,22 +425,22 @@ function map_ready(error, geodata, econdata) {
     time_setting = d3.select('#timeToggleLabel').text();
     // undo the time filter
     time.filterAll();
-    // create locality filter
-    var locality = data.dimension(function (d) {
-      return d["locality"];
+    // create council_district filter
+    var council_district = data.dimension(function (d) {
+      return d["council_district"];
     });
     // filter out the City data
-    locality.filter(function (d) {return d!= "City of Los Angeles"});
+    council_district.filter(function (d) {return d!= "City of Los Angeles"});
     // get the min and max values
     minValue = value.bottom(1)[0].value;
     maxValue = value.top(1)[0].value;
 
     // set the color domain
     color.domain([minValue, maxValue]);
-    // undo the locality filter
-    locality.filterAll();
-    // remove the locality filter
-    locality.dispose();
+    // undo the council_district filter
+    council_district.filterAll();
+    // remove the council_district filter
+    council_district.dispose();
     // redo the time filter
     time.filter(time_setting);
   }
@@ -443,11 +452,11 @@ function map_ready(error, geodata, econdata) {
   // assumes that the data have been filtered to a single variable and a particular time period
   // assumes that a color scale has already been set (and is available as "color" in the map_ready namespace)
   var updateMap = function() {
-  	// create locality filter
-    var locality = data.dimension(function (d) {
-      return d["locality"];
+    // create council_district filter
+    var council_district = data.dimension(function (d) {
+      return d["council_district"];
     });
-    var values = locality.group().reduceSum(function (d) {
+    var values = council_district.group().reduceSum(function (d) {
       return +d["value"];
     });
 
@@ -455,10 +464,10 @@ function map_ready(error, geodata, econdata) {
     var topFour = values.top(4);
     var topFourSum = topFour.map(function (d) {return +d.value}).reduce(function(a,b){return a+b});
 
-    // undo the locality filter
-    locality.filterAll();
-    // remove the locality filter
-    locality.dispose();
+    // undo the council_district filter
+    council_district.filterAll();
+    // remove the council_district filter
+    council_district.dispose();
 
     // In the future I may need to make this more complex to do proper rounding, formatting
     getValue = function(d) {
@@ -489,47 +498,47 @@ function map_ready(error, geodata, econdata) {
 
     // check that the city is in the top 4
     if (topFour.map(function(d){return d.key}).indexOf("City of Los Angeles")==-1) {
-    	// if not, no need to worry about it. we'll include it.
-    	var cityOnTop = false;
-    	var cityLarge = false;
+      // if not, no need to worry about it. we'll include it.
+      var cityOnTop = false;
+      var cityLarge = false;
     } else {
-    	// if so, see if it's sufficiently large to merit inclusion
-    	var cityOnTop = topFour.filter(function(d) {return d.key=="City of Los Angeles"})[0].value == topFour[0].value;
-    	var cityLarge = +topFour[0].value / topFourSum > 0.49;
+      // if so, see if it's sufficiently large to merit inclusion
+      var cityOnTop = topFour.filter(function(d) {return d.key=="City of Los Angeles"})[0].value == topFour[0].value;
+      var cityLarge = +topFour[0].value / topFourSum > 0.49;
     }
 
     // if the city total is big, exclude it
     if (cityOnTop & cityLarge) {
-    	max_tmp = topFour[1].value;
-    	var exclude_city = true;
+      max_tmp = topFour[1].value;
+      var exclude_city = true;
     } else {
-    	max_tmp = topFour[0].value;
-    	var exclude_city = false;
+      max_tmp = topFour[0].value;
+      var exclude_city = false;
     }
     barScale = d3.scaleLinear().domain([0,max_tmp]).range([0,60]);
 
     // update the values and sort
     var locations = [{"long":"City of Los Angeles", "short":"City"},{"long": "Council District 1", "short":"CD1"},{"long": "Council District 2", "short":"CD2"},{"long": "Council District 3", "short":"CD3"},{"long": "Council District 4", "short":"CD4"},{"long": "Council District 5", "short":"CD5"},{"long": "Council District 6", "short":"CD6"},{"long": "Council District 7", "short":"CD7"},{"long": "Council District 8", "short":"CD8"},{"long": "Council District 9", "short":"CD9"},{"long": "Council District 10", "short":"CD10"},{"long": "Council District 11", "short":"CD11"},{"long": "Council District 12", "short":"CD12"},{"long": "Council District 13", "short":"CD13"},{"long": "Council District 14", "short":"CD14"},{"long": "Council District 15", "short":"CD15"}];
     locations.forEach(function (d) {
-    	// get the group id for the table row for this location
-    	id_tmp = '#' + d.short;
-    	// sort the data by value
-    	sorted = valueArray.sort(function(a, b) {return b.value - a.value;});
-    	// get the value for this district
-    	text_tmp = sorted.filter(function (dd) {return dd.key==d.long})[0].value;
-    	// get the rank for this district
-    	sorted_locations = sorted.map(function(dd) {return dd.key});
-    	rank = sorted_locations.indexOf(d.long) + 1;
-    	// update the value
-    	d3.select(id_tmp + 'Value').text(formatAmount(+text_tmp));
-    	// update the bars
-    	if (exclude_city & d.short=="City") {
-    	  d3.select(id_tmp + 'Bar').attr('width', 0);
-    	} else {
-    	  d3.select(id_tmp + 'Bar').transition().duration(200).attr('width', barScale(text_tmp));
-    	}
-    	// reorder the districts
-    	d3.select(id_tmp).transition().delay(300).duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
+      // get the group id for the table row for this location
+      id_tmp = '#' + d.short;
+      // sort the data by value
+      sorted = valueArray.sort(function(a, b) {return b.value - a.value;});
+      // get the value for this district
+      text_tmp = sorted.filter(function (dd) {return dd.key==d.long})[0].value;
+      // get the rank for this district
+      sorted_locations = sorted.map(function(dd) {return dd.key});
+      rank = sorted_locations.indexOf(d.long) + 1;
+      // update the value
+      d3.select(id_tmp + 'Value').text(formatAmount(+text_tmp));
+      // update the bars
+      if (exclude_city & d.short=="City") {
+        d3.select(id_tmp + 'Bar').attr('width', 0);
+      } else {
+        d3.select(id_tmp + 'Bar').transition().duration(200).attr('width', barScale(text_tmp));
+      }
+      // reorder the districts
+      d3.select(id_tmp).transition().delay(300).duration(100).attr('transform','translate(0,' + (rank * 20) + ')');
     })
 
   } // end of updateMap
@@ -539,7 +548,7 @@ function map_ready(error, geodata, econdata) {
 
   // function for removing all data from the visualization when changing variables
   var clearMap = function() {
-  	// change the map to the original colors
+    // change the map to the original colors
     mapLayer.selectAll('path').attr('style', function (d,i) {return 'fill:' + d.fill});
 
     // delete legend
@@ -572,12 +581,12 @@ function map_ready(error, geodata, econdata) {
     // if a district is selected and the selection is complete, add the time series for that district
     selected_district = d3.selectAll('.district').filter('.selected');
     if (selected_district._groups[0].length==1 & selection_complete) {
-      // create locality filter
-      var locality = data.dimension(function (d) {
-        return d["locality"];
+      // create council_district filter
+      var council_district = data.dimension(function (d) {
+        return d["council_district"];
       });
       // select only the data for the selected district
-      locality.filter(selected_district.attr('label'));
+      council_district.filter(selected_district.attr('label'));
 
       // remove any time filters
       time.filterAll();
@@ -599,10 +608,10 @@ function map_ready(error, geodata, econdata) {
 
       // undo the time filter
       time.filterAll();
-      // undo the locality filter
-      locality.filterAll();
-      // remove the locality filter
-      locality.dispose();
+      // undo the council_district filter
+      council_district.filterAll();
+      // remove the council_district filter
+      council_district.dispose();
 
       // create the data to pass to the toggle
       timeData = timePeriods.map(function(d,i) {return {'time':d, 'value':valuesTS[i]}});
@@ -613,8 +622,8 @@ function map_ready(error, geodata, econdata) {
 
       timeData = timePeriods.map(function(d,i) {return {'time':d, 'value':0}});
     }
-	
-	if (selection_complete) {
+  
+  if (selection_complete) {
       // if timeToggle exists, save current year
       if (d3.select('#timePrelabel').text()!='') {
         var currentTime = d3.select('#timeToggleLabel').text();
@@ -653,25 +662,25 @@ function map_ready(error, geodata, econdata) {
   // is available in the map_ready namespace
   updateTitle = function(maintext) {
 
-  	if (maintext!='') {
-  	  // find the units
-  	  unitsFilter = data.dimension(function (d) {return d.unit_of_measure});
-  	  unitCounts = unitsFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
+    if (maintext!='') {
+      // find the units
+      unitsFilter = data.dimension(function (d) {return d.unit_of_measure});
+      unitCounts = unitsFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
       units = unitCounts.map(function (d) {return d.key})[0];
       unitsFilter.dispose();
 
       if (units!='') {
-      	units = ', ' + units;
+        units = ', ' + units;
       }
 
       // find the unit text
-  	  unitTextFilter = data.dimension(function (d) {return d.unit_text});
-  	  unitTextCounts = unitTextFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
+      unitTextFilter = data.dimension(function (d) {return d.unit_text});
+      unitTextCounts = unitTextFilter.group().reduceCount().all().filter(function (d) {return d.value > 0});
       unitText = unitTextCounts.map(function (d) {return d.key})[0];
       unitTextFilter.dispose();
 
       if (unitText!='') {
-      	unitText = ', ' + unitText;
+        unitText = ', ' + unitText;
       }
 
       mapTitle.text(maintext + units + unitText);
@@ -797,7 +806,7 @@ function map_ready(error, geodata, econdata) {
 
     // check whether quarterly data are available
     var quarter = data.dimension(function (d) {
-    	return d["cy_qtr"];
+      return d["cy_qtr"];
     });
     quarterCounts = quarter.group().reduceCount().all().filter(function (d) {return d.value > 0});
     quarters = quarterCounts.map(function (d) {return d.key});
@@ -825,7 +834,7 @@ function map_ready(error, geodata, econdata) {
           return d["fiscal_year"];
         });
       } else {
-      	time = data.dimension(function (d) {
+        time = data.dimension(function (d) {
           return d["calendar_year"];
         });
       }
@@ -851,7 +860,7 @@ function map_ready(error, geodata, econdata) {
       // if neither gender nor subindicator are options, update the map.
       // otherwise, make it white
       if (!has_gender & !hasSubindicator) {
-      	selection_complete = true;
+        selection_complete = true;
         updateTimescale();
         d3.selectAll('.legend').remove();
         makeLegend(map_svg_width * 0.4, map_svg_height * 0.5, 30, 5, color);
@@ -959,9 +968,9 @@ function map_ready(error, geodata, econdata) {
       
       // update the title
       if (current_subindicator=='') {
-      	var subind = '';
+        var subind = '';
       } else {
-      	var subind = ': ' + current_subindicator ;
+        var subind = ': ' + current_subindicator ;
       }
 
       updateTitle(current_indicator + subind + ', ' + gen);
@@ -1047,6 +1056,5 @@ d3.selection.prototype.moveToFront = function() {
     this.parentNode.appendChild(this);
   });
 };
-
 
 
