@@ -303,7 +303,7 @@ function map_ready(error, geodata, econdata) {
       .attr('vector-effect', 'non-scaling-stroke')
       .on('click', mouseclick)
       .on('mouseover', mouseover)
-      .on('mouseout', mouseout);
+      .on('mouseleave', mouseout);
 
   // data table on the right
   var tableGroup = mapLayer.append('g').attr('id', 'table');
