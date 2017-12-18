@@ -277,25 +277,29 @@ function map_ready(error, geodata, econdata) {
 
   // function for randomizing the colors
   // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-  // function shuffle(array) {
-  //   var currentIndex = array.length, temporaryValue, randomIndex;
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
 
-  //   // While there remain elements to shuffle...
-  //   while (0 !== currentIndex) {
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
 
-  //     // Pick a remaining element...
-  //     randomIndex = Math.floor(Math.random() * currentIndex);
-  //     currentIndex -= 1;
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
 
-  //     // And swap it with the current element.
-  //     temporaryValue = array[currentIndex];
-  //     array[currentIndex] = array[randomIndex];
-  //     array[randomIndex] = temporaryValue;
-  //   }
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
 
-  //   return array;
-  // }
-  defaultColors = ['#92a8d1','#f7cac9','#f7786b','#d5f4e6','#80ced6','#fefbd8','#618685','#ffef96','#db89e5','#b2b2b2','#f4e1d2','#deeaee','#b1cbbb','#eea29a','#82b74b'];
+    return array;
+  }
+  defaultColors = shuffle(['#92a8d1','#f7cac9','#f7786b','#d5f4e6','#80ced6','#fefbd8','#618685','#ffef96','#db89e5','#b2b2b2','#f4e1d2','#deeaee','#b1cbbb','#eea29a','#82b74b']);
+  // add the colors to the geojson so that each color is assigned to a district
+  for (i=0; i<defaultColors.length; i++) {
+    geofeatures[i].fill = defaultColors[i];
+  }
   
   mapLayer.selectAll('path')
       .data(geofeatures)
@@ -305,7 +309,7 @@ function map_ready(error, geodata, econdata) {
       .attr('label', function (d) {return d.properties.Council_District;})
       .attr('councilmember', function (d) {return d.properties.Councilmember;})
       .attr('value', '')
-      .attr('style', function (d,i) {return 'fill:' + defaultColors[i]})
+      .attr('style', function (d,i) {return 'fill:' + d.fill})
       .classed('selected', false)
       .classed('frozen', false)
       .classed('district', true)
@@ -536,7 +540,7 @@ function map_ready(error, geodata, econdata) {
   // function for removing all data from the visualization when changing variables
   var clearMap = function() {
   	// change the map to the original colors
-    mapLayer.selectAll('path').attr('style', function (d,i) {return 'fill:' + defaultColors[i]});
+    mapLayer.selectAll('path').attr('style', function (d,i) {return 'fill:' + d.fill});
 
     // delete legend
     d3.selectAll('.legend').remove();
