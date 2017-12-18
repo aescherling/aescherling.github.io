@@ -184,6 +184,9 @@ function map_ready(error, geodata, econdata) {
 
     if (!mouseoverStatus) {
 
+    // unhighlight all districts
+    d3.selectAll('.district').classed('highlighted', false);
+
   	// check whether the object is a path in the map, or a row in the table
   	// we want to select the path, not the row
   	if (d3.select(this)._groups[0][0].tagName=="path") {
