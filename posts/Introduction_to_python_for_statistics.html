@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>Introduction to python for statistics</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Introduction to Python for statistics</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11778,16 +11778,25 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction-to-python-for-statistics">Introduction to python for statistics<a class="anchor-link" href="#Introduction-to-python-for-statistics">&#182;</a></h1><h3 id="Adam-Scherling">Adam Scherling<a class="anchor-link" href="#Adam-Scherling">&#182;</a></h3><h3 id="Stats-404,-Winter-2018">Stats 404, Winter 2018<a class="anchor-link" href="#Stats-404,-Winter-2018">&#182;</a></h3><h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><h2 id="What-is-python?">What is python?<a class="anchor-link" href="#What-is-python?">&#182;</a></h2><p>Python is a general-purpose programming language. Like <code>R</code>, it is a high-level, object-oriented language. Unlike <code>R</code>, it was not developed specifically for the practice of statistics. However, a number of useful packages have been developed in python for mathematics, statistics, and data science.</p>
-<h2 id="Why-use-python?">Why use python?<a class="anchor-link" href="#Why-use-python?">&#182;</a></h2><p>Having been developed in the computer science community, python is heavily used for data science and machine learning. Some reasons you might use python rather than <code>R</code>:</p>
+<h1 id="Introduction-to-Python-for-statistics">Introduction to Python for statistics<a class="anchor-link" href="#Introduction-to-Python-for-statistics">&#182;</a></h1><h3 id="Adam-Scherling">Adam Scherling<a class="anchor-link" href="#Adam-Scherling">&#182;</a></h3><h3 id="Stats-404,-Winter-2018">Stats 404, Winter 2018<a class="anchor-link" href="#Stats-404,-Winter-2018">&#182;</a></h3><h1 id="Outline">Outline<a class="anchor-link" href="#Outline">&#182;</a></h1><p>1) Introduction</p>
+<p>2) Python basics</p>
+<p>3) Python packages for statistics &amp; data science (numpy, matplotlib, scipy, pandas, statsmodels, scikit-learn)</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><h2 id="What-is-Python?">What is Python?<a class="anchor-link" href="#What-is-Python?">&#182;</a></h2><p>Python is a general-purpose programming language. Like <code>R</code>, it is a high-level, object-oriented language. Unlike <code>R</code>, it was not developed specifically for the practice of statistics. However, a number of useful packages have been developed in Python for mathematics, statistics, and data science.</p>
+<h2 id="Why-use-Python?">Why use Python?<a class="anchor-link" href="#Why-use-Python?">&#182;</a></h2><p>Having been developed in the computer science community, Python is used heavily for data science and machine learning. Some reasons you might use Python rather than <code>R</code>:</p>
 <ul>
-<li>You're interested in using a particular package in python (e.g. scikit-learn)</li>
+<li>You're interested in using a particular package in Python (e.g. scikit-learn)</li>
 <li>You're trying to do a more computer-sciencey task like web scraping</li>
-<li>You want to integrate your code into a project (e.g. a website) that is already coded in python</li>
-<li>You're more comfortable coding in python</li>
-<li>Your coworkers or collaborators are using python</li>
+<li>You want to integrate your code into a project (e.g. a website) that is already coded in Python</li>
+<li>You're more comfortable coding in Python</li>
+<li>Your coworkers or collaborators are using Python</li>
 </ul>
-<h2 id="Anaconda">Anaconda<a class="anchor-link" href="#Anaconda">&#182;</a></h2><p>The Anaconda distribution of python is an easy way to install python along with the most useful packages. You can download it here: <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></p>
+<p>Disadvantages:</p>
+<ul>
+<li>Documentation isn't great compared to R</li>
+<li>Working with data can be a little clunky compared to R</li>
+</ul>
+<h2 id="Anaconda">Anaconda<a class="anchor-link" href="#Anaconda">&#182;</a></h2><p>The Anaconda distribution of Python is an easy way to install Python along with the most useful packages. You can download it here: <a href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a></p>
+<h2 id="Python-2.7-vs-3.6">Python 2.7 vs 3.6<a class="anchor-link" href="#Python-2.7-vs-3.6">&#182;</a></h2><p>There are two widely supported versions of Python. Apart from some slight differences in syntax (ex: whether the print function requires parentheses) the practical differences are small usually not important. I'm using Python 3 and would recommend doing the same unless you have some prior reason for doing otherwise (working with older python code, coworkers using Python 2, etc.)</p>
 
 </div>
 </div>
@@ -11797,7 +11806,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-basics">The basics<a class="anchor-link" href="#The-basics">&#182;</a></h1><h2 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h2><p>Like <code>R</code>, comments in python use the <code>#</code> character.</p>
+<h1 id="The-basics">The basics<a class="anchor-link" href="#The-basics">&#182;</a></h1><h2 id="Comments">Comments<a class="anchor-link" href="#Comments">&#182;</a></h2><p>Like <code>R</code>, comments in Python use the <code>#</code> character.</p>
 
 </div>
 </div>
@@ -11960,7 +11969,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Explanation: python is looking for a variable called <code>my</code> that has method <code>var</code>.</p>
+<p>Explanation: Python is looking for a variable called <code>my</code> that has method <code>var</code>.</p>
 <p>Example of calling a method on an object:</p>
 
 </div>
@@ -11974,6 +11983,7 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># sort a list</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
 <span class="c1"># list attributes of an object using dir()</span>
@@ -12006,13 +12016,56 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Tuples,-lists,-and-dictionaries">Tuples, lists, and dictionaries<a class="anchor-link" href="#Tuples,-lists,-and-dictionaries">&#182;</a></h2>
+<p>A little trick: you can declare or set multiple variables at once.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+[1, 2, 3]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Tuples,-lists,-and-dictionaries">Tuples, lists, and dictionaries<a class="anchor-link" href="#Tuples,-lists,-and-dictionaries">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># list</span>
@@ -12042,7 +12095,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
@@ -12081,11 +12134,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">mylist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;taco&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">]</span>
-<span class="n">mytuple</span> <span class="o">=</span> <span class="n">mylist</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;taco&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+<span class="n">mytuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;taco&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
 <span class="n">mydictionary</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="s1">&#39;taco&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="n">y</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span><span class="n">z</span><span class="p">}</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">mylist</span><span class="p">)</span>
@@ -12105,7 +12158,7 @@ div#notebook {
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>(1, &#39;taco&#39;, [1, 2, 3], (4, 5, 6, 7), {&#39;a&#39;: 8, &#39;b&#39;: 9, &#39;c&#39;: 10, &#39;d&#39;: 11, &#39;e&#39;: 12})
+<pre>[1, &#39;taco&#39;, [1, 2, 3], (4, 5, 6, 7), {&#39;a&#39;: 8, &#39;b&#39;: 9, &#39;c&#39;: 10, &#39;d&#39;: 11, &#39;e&#39;: 12}]
 (1, &#39;taco&#39;, [1, 2, 3], (4, 5, 6, 7), {&#39;a&#39;: 8, &#39;b&#39;: 9, &#39;c&#39;: 10, &#39;d&#39;: 11, &#39;e&#39;: 12})
 {0: 1, 1: &#39;taco&#39;, 2: [1, 2, 3], 3: (4, 5, 6, 7), 4: {&#39;a&#39;: 8, &#39;b&#39;: 9, &#39;c&#39;: 10, &#39;d&#39;: 11, &#39;e&#39;: 12}}
 </pre>
@@ -12129,7 +12182,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># print the first element of each object</span>
@@ -12159,7 +12212,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># print the last element of each object</span>
@@ -12189,11 +12242,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># view all dictionary keys of z</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">z</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12205,12 +12258,14 @@ div#notebook {
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[13]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>dict_keys([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;])
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>dict_keys([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;])</pre>
 </div>
+
 </div>
 
 </div>
@@ -12219,11 +12274,11 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># convert to a list</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 </pre></div>
 
 </div>
@@ -12235,12 +12290,14 @@ div#notebook {
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[14]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;]</pre>
 </div>
+
 </div>
 
 </div>
@@ -12260,10 +12317,12 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 
@@ -12294,19 +12353,20 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Immuatbility">Immuatbility<a class="anchor-link" href="#Immuatbility">&#182;</a></h2><p>Tuples (and some other objects such as strings) are <em>immutable</em>. You can set the variable to be a different tuple, but once you've created it you can't change any part of the tuple.</p>
+<h2 id="Immutability">Immutability<a class="anchor-link" href="#Immutability">&#182;</a></h2><p>Tuples (and some other objects such as strings) are <em>immutable</em>. You can set the variable to be a different tuple, but once you've created it you can't change any part of the tuple.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># no problem editing the list or the dictionary</span>
 <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
 <span class="n">z</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
 </pre></div>
 
@@ -12333,7 +12393,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># trying to edit the tuple throws an error</span>
@@ -12355,7 +12415,7 @@ div#notebook {
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-16-edcf15e609fb&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-17-edcf15e609fb&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># trying to edit the tuple throws an error</span>
 <span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>y<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span> <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">7</span>
 
@@ -12379,7 +12439,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
@@ -12408,7 +12468,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:],</span> <span class="n">x</span><span class="p">[:])</span>
@@ -12448,13 +12508,14 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># problem</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
 <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -12491,7 +12552,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
@@ -12551,10 +12612,11 @@ c:  [1, 2, 30]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+
 <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x is greater than 10&#39;</span><span class="p">)</span>
 <span class="k">elif</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
@@ -12586,10 +12648,11 @@ c:  [1, 2, 30]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="mi">7</span>
+
 <span class="k">if</span> <span class="n">y</span><span class="o">==</span><span class="mi">7</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y is seven!&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -12625,10 +12688,11 @@ c:  [1, 2, 30]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span><span class="s1">&#39;banana&#39;</span><span class="p">,</span><span class="s1">&#39;cherry&#39;</span><span class="p">]</span>
+
 <span class="k">for</span> <span class="n">fruit</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">fruit</span><span class="p">)</span>
 </pre></div>
@@ -12658,7 +12722,7 @@ cherry
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
@@ -12690,10 +12754,11 @@ cherry
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">10</span>
+
 <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">13</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
     <span class="n">i</span><span class="o">+=</span><span class="mi">1</span>
@@ -12733,11 +12798,12 @@ cherry
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 
@@ -12764,14 +12830,14 @@ cherry
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># like R, you can give default parameter values</span>
-<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">prod</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
     <span class="k">return</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">foo</span><span class="p">(),</span> <span class="n">foo</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">foo</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">prod</span><span class="p">(),</span> <span class="n">prod</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">prod</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 </pre></div>
 
 </div>
@@ -12800,7 +12866,7 @@ cherry
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Indentation">Indentation<a class="anchor-link" href="#Indentation">&#182;</a></h2><p>In python, indentation is part of the syntax. If you fail to indent properly, it will return an error.
+<h2 id="Indentation">Indentation<a class="anchor-link" href="#Indentation">&#182;</a></h2><p>In Python, indentation is part of the syntax. If you fail to indent properly, it will return an error.
 This is particularly relevant for if statements, loops, and functions.</p>
 
 </div>
@@ -12808,7 +12874,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">if</span> <span class="kc">True</span><span class="p">:</span>
@@ -12828,7 +12894,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 
 <div class="output_subarea output_text output_error">
 <pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-28-ce54c251ecbd&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-29-ce54c251ecbd&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
 <span class="ansi-red-fg">    print(&#39;true&#39;)</span>
         ^
 <span class="ansi-red-fg">IndentationError</span><span class="ansi-red-fg">:</span> expected an indented block
@@ -12842,7 +12908,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">fruit</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
@@ -12862,7 +12928,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 
 <div class="output_subarea output_text output_error">
 <pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-29-4a529fdc0120&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-30-4a529fdc0120&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
 <span class="ansi-red-fg">    print(fruit)</span>
         ^
 <span class="ansi-red-fg">IndentationError</span><span class="ansi-red-fg">:</span> expected an indented block
@@ -12876,7 +12942,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -12896,7 +12962,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 
 <div class="output_subarea output_text output_error">
 <pre>
-<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-30-3d5cef0cc8ea&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
+<span class="ansi-cyan-fg">  File </span><span class="ansi-green-fg">&#34;&lt;ipython-input-31-3d5cef0cc8ea&gt;&#34;</span><span class="ansi-cyan-fg">, line </span><span class="ansi-green-fg">2</span>
 <span class="ansi-red-fg">    return(x**2)</span>
          ^
 <span class="ansi-red-fg">IndentationError</span><span class="ansi-red-fg">:</span> expected an indented block
@@ -12920,10 +12986,11 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;taco&#39;</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
@@ -12952,11 +13019,12 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;sauce&#39;</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">y</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 </pre></div>
 
@@ -12983,10 +13051,11 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="s1">&#39;chocolate&#39;</span> <span class="o">+</span> <span class="n">z</span><span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">:]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 </pre></div>
 
@@ -13023,7 +13092,7 @@ This is particularly relevant for if statements, loops, and functions.</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;One&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">]</span>
@@ -13071,11 +13140,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;fish taco&#39;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13112,11 +13182,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
@@ -13145,11 +13216,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create a long list of zeros</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">50</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13176,11 +13248,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># or an empty list</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13207,7 +13280,7 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The following all cause errors:</span>
@@ -13231,7 +13304,7 @@ One fish, two fish, red fish, blue...
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-39-845de10f1db6&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-40-845de10f1db6&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> <span class="ansi-red-fg"># The following all cause errors:</span>
 <span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>x <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">2</span>
 <span class="ansi-green-intense-fg ansi-bold">      3</span> x <span class="ansi-blue-fg">-</span> y
@@ -13267,10 +13340,11 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13297,10 +13371,11 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13337,11 +13412,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># all odd numbers from 0 to 9</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">2</span>==1]
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13368,11 +13444,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># counting by 3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13399,11 +13476,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[44]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># decimals</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -13419,7 +13497,7 @@ One fish, two fish, red fish, blue...
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[0.0, 0.1, 0.2, 0.3, 0.4]
+<pre>[0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 </pre>
 </div>
 </div>
@@ -13440,11 +13518,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">12</span><span class="p">]</span>
 <span class="n">x_squared</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x_squared</span><span class="p">)</span>
 </pre></div>
 
@@ -13481,11 +13560,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">myBool</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]</span>
 <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">if</span> <span class="n">myBool</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 
@@ -13522,7 +13602,7 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
@@ -13530,8 +13610,35 @@ One fish, two fish, red fish, blue...
 
 <span class="c1"># not so nice...</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x_squared</span><span class="p">)</span>
+</pre></div>
 
-<span class="n">x_squared</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x_squared</span><span class="p">)</span>
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;map object at 0x10ed63f28&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_squared</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">x_squared</span><span class="p">)</span>
 
 <span class="c1"># better</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x_squared</span><span class="p">)</span>
@@ -13549,8 +13656,7 @@ One fish, two fish, red fish, blue...
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;map object at 0x109a32748&gt;
-[1, 4, 9, 16, 25]
+<pre>[1, 4, 9, 16, 25]
 </pre>
 </div>
 </div>
@@ -13561,10 +13667,12 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[48]:</div>
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_filtered</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">%</span><span class="k">2</span>==1, x))
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># return odd numbers</span>
+<span class="n">x_filtered</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">%</span><span class="k">2</span>==1, x))
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x_filtered</span><span class="p">)</span>
 </pre></div>
 
@@ -13594,98 +13702,28 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-toolz-and-cytoolz-packages">The toolz and cytoolz packages<a class="anchor-link" href="#The-toolz-and-cytoolz-packages">&#182;</a></h1><p>The <code>toolz</code> and <code>cytoolz</code> packages were written for easy and fast object manipulation. <code>cytoolz</code> has all the same commands as <code>toolz</code>, but is written in C, so it's super fast. The <code>toolz</code> API is still the best source of documentation.</p>
-<p><a href="https://toolz.readthedocs.io/en/latest/api.html">https://toolz.readthedocs.io/en/latest/api.html</a></p>
-<p><a href="http://matthewrocklin.com/blog/work/2014/05/01/Introducing-CyToolz">http://matthewrocklin.com/blog/work/2014/05/01/Introducing-CyToolz</a></p>
-<p>Packages are loaded in python using <code>import</code>. It is common to specify an abbreviated name for loaded packages; these names help prevent mistakes if the same function is defined in multiple packages.</p>
+<h2 id="Reading-and-writing-to-files">Reading and writing to files<a class="anchor-link" href="#Reading-and-writing-to-files">&#182;</a></h2><p>In this regard, Python is quite similar to C.</p>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[49]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># doing this would allow all cytoolz functions to be used without any prefix.</span>
-<span class="c1"># from cytoolz import *</span>
-
-<span class="c1"># but it&#39;s safer to use a prefix</span>
-<span class="kn">import</span> <span class="nn">cytoolz</span> <span class="k">as</span> <span class="nn">ct</span>
-
-<span class="c1"># the remove command</span>
-<span class="n">x</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="o">%</span><span class="k">2</span>==0, range(20)))
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[50]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cube</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="k">return</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span>
-
-<span class="c1"># perform a map on dictionary values</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">valmap</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;a&#39;: 1, &#39;b&#39;: 8, &#39;c&#39;: 27, &#39;d&#39;: 64}
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[51]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">edit</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
-    <span class="k">return</span><span class="p">(</span><span class="s1">&#39;item &#39;</span> <span class="o">+</span> <span class="n">a</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create some data to write to file</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="s1">&#39;red&#39;</span><span class="p">]</span>
 
-<span class="c1"># perform a map on dictionary keys</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">keymap</span><span class="p">(</span><span class="n">edit</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="c1"># convert x and squares to strings</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">squares</span><span class="p">]</span>
+
+<span class="c1"># zip the three variables together</span>
+<span class="n">mydata</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">squares</span><span class="p">,</span> <span class="n">colors</span><span class="p">))</span>
+<span class="n">mydata</span>
 </pre></div>
 
 </div>
@@ -13697,12 +13735,18 @@ One fish, two fish, red fish, blue...
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[51]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{&#39;item a&#39;: 1, &#39;item b&#39;: 2, &#39;item c&#39;: 3, &#39;item d&#39;: 4}
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[(&#39;1&#39;, &#39;1&#39;, &#39;red&#39;),
+ (&#39;2&#39;, &#39;4&#39;, &#39;blue&#39;),
+ (&#39;3&#39;, &#39;9&#39;, &#39;yellow&#39;),
+ (&#39;4&#39;, &#39;16&#39;, &#39;green&#39;),
+ (&#39;5&#39;, &#39;25&#39;, &#39;red&#39;)]</pre>
 </div>
+
 </div>
 
 </div>
@@ -13714,41 +13758,43 @@ One fish, two fish, red fish, blue...
 <div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># partition range(10) into pieces of size 4</span>
-<span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">partition_all</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># open a file for writing</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testfile.csv&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+
+<span class="c1"># write one row at a time from mydata</span>
+<span class="c1"># the for loop automatically pulls one element at a time (in this case one tuple at a time)</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">mydata</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+<span class="c1"># close the file</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[(0, 1, 2, 3), (4, 5, 6, 7), (8, 9)]
-</pre>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now to read the data back in:</p>
 
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find the largest k values in a list</span>
-<span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">topk</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># look at the raw data</span>
+<span class="c1"># think about how this can be parsed</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testfile.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13760,12 +13806,14 @@ One fish, two fish, red fish, blue...
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[53]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>(10, 8, 7)
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;1,1,red\n2,4,blue\n3,9,yellow\n4,16,green\n5,25,red\n&#39;</pre>
 </div>
+
 </div>
 
 </div>
@@ -13777,10 +13825,20 @@ One fish, two fish, red fish, blue...
 <div class="prompt input_prompt">In&nbsp;[54]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find the unique values in a list</span>
-<span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">y</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># read in the data</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testfile.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">x2</span><span class="p">,</span> <span class="n">squares2</span><span class="p">,</span> <span class="n">colors2</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+    <span class="c1"># note: strip() takes out the \n</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="n">x2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">squares2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">colors2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">squares2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">colors2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13795,7 +13853,9 @@ One fish, two fish, red fish, blue...
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[1, 2, 3, 4, 5, 6, 7, 8, 10]
+<pre>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;]
+[&#39;1&#39;, &#39;4&#39;, &#39;9&#39;, &#39;16&#39;, &#39;25&#39;]
+[&#39;red&#39;, &#39;blue&#39;, &#39;yellow&#39;, &#39;green&#39;, &#39;red&#39;]
 </pre>
 </div>
 </div>
@@ -13809,10 +13869,12 @@ One fish, two fish, red fish, blue...
 <div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find the frequency count of elements in a list</span>
-<span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">ct</span><span class="o">.</span><span class="n">frequencies</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># convert the numeric strings to integers</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x2</span><span class="p">]</span>
+<span class="n">squares2</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">squares2</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">squares2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13827,7 +13889,8 @@ One fish, two fish, red fish, blue...
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{1: 1, 2: 3, 3: 1, 4: 3, 5: 1, 6: 1, 7: 2, 8: 1, 10: 1}
+<pre>[1, 2, 3, 4, 5]
+[1, 4, 9, 16, 25]
 </pre>
 </div>
 </div>
@@ -13841,9 +13904,10 @@ One fish, two fish, red fish, blue...
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-numpy-package">The numpy package<a class="anchor-link" href="#The-numpy-package">&#182;</a></h1><p><code>R</code> is designed so that everything is a vector, which is great for statistics. In python, vectors do not come as naturally.</p>
+<h1 id="The-numpy-package">The numpy package<a class="anchor-link" href="#The-numpy-package">&#182;</a></h1><p><code>R</code> is designed so that everything is a vector, which is great for statistics. In Python, vectors do not come as naturally.</p>
 <p>The <code>numpy</code> package makes life 
 easier. It includes many useful tools for mathematics and statistics. For more information see <a href="http://www.numpy.org">http://www.numpy.org</a>.</p>
+<p>Packages are loaded in Python using <code>import</code>. It is common to specify an abbreviated name for loaded packages; these names help prevent mistakes if the same function is defined in multiple packages.</p>
 
 </div>
 </div>
@@ -13853,7 +13917,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 <div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># note: it&#39;s standard practice to use the np prefix for numpy</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># it&#39;s standard practice to use the np prefix for numpy</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 
@@ -13877,7 +13941,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><code>np.arange</code> creates an array rather than a list (note the lack of commas).</p>
+<p><code>np.arange</code> creates an array rather than a range object or list</p>
 
 </div>
 </div>
@@ -13887,8 +13951,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 <div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13900,12 +13963,14 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[57]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[0 1 2 3 4 5 6 7 8 9]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</pre>
 </div>
+
 </div>
 
 </div>
@@ -13917,7 +13982,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Unlike python lists, array operations are elementwise.</p>
+<p><code>np.arange</code> also allows non-integer step sizes</p>
 
 </div>
 </div>
@@ -13927,8 +13992,93 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 <div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[58]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0. ,  0.2,  0.4,  0.6,  0.8,  1. ,  1.2,  1.4,  1.6,  1.8,  2. ,
+        2.2,  2.4,  2.6,  2.8])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>linspace</code> command is also helpful:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[59]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.        ,  0.11111111,  0.22222222,  0.33333333,  0.44444444,
+        0.55555556,  0.66666667,  0.77777778,  0.88888889,  1.        ])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unlike Python lists, array operations are elementwise.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 
@@ -13955,11 +14105,10 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -13995,10 +14144,11 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -14037,74 +14187,10 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[61]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[ 0.  0.]
- [ 0.  0.]
- [ 0.  0.]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[62]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[ 1.  1.  1.]
- [ 1.  1.  1.]]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[63]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -14116,14 +14202,81 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[63]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[1 0 0]
- [0 2 0]
- [0 0 3]]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 0.,  0.],
+       [ 0.,  0.],
+       [ 0.,  0.]])</pre>
 </div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[64]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 1.,  1.,  1.],
+       [ 1.,  1.,  1.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[65]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[1, 0, 0],
+       [0, 2, 0],
+       [0, 0, 3]])</pre>
+</div>
+
 </div>
 
 </div>
@@ -14142,12 +14295,13 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span>
 <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">17</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -14174,12 +14328,13 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">17</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
@@ -14217,10 +14372,11 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[66]:</div>
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -14253,14 +14409,14 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To concatenate arrays, the dimensions must align. Even for one dimensional vectors you have to be explicit about the shape.</p>
+<p>To concatenate arrays, the dimensions must align. Even for one-dimensional vectors you have to be explicit about the shape.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
@@ -14282,7 +14438,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-67-2564b3f87d13&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-fg">&lt;ipython-input-69-2564b3f87d13&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> y <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>array<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">6</span><span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">12</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">)</span>
 <span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>x <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>concatenate<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">[</span>x<span class="ansi-blue-fg">,</span>y<span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">,</span>axis<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span>
 
@@ -14296,11 +14452,12 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -14330,11 +14487,12 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[69]:</div>
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">z</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 
@@ -14365,7 +14523,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[70]:</div>
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -14418,7 +14576,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="prompt input_prompt">In&nbsp;[73]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -14428,8 +14586,7 @@ easier. It includes many useful tools for mathematics and statistics. For more i
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y: &#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
 
-<span class="c1"># alternatively:</span>
-<span class="c1"># print(np.dot(x,y))</span>
+<span class="c1"># note: x.dot(y) is equivalent to np.dot(x,y)</span>
 </pre></div>
 
 </div>
@@ -14471,10 +14628,10 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
 </div>
@@ -14486,13 +14643,15 @@ y:  [1 1]
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[74]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[[1 2 3]
- [2 4 6]]
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[1, 2, 3],
+       [2, 4, 6]])</pre>
 </div>
+
 </div>
 
 </div>
@@ -14511,7 +14670,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
@@ -14542,7 +14701,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[74]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -14573,7 +14732,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="prompt input_prompt">In&nbsp;[77]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
@@ -14613,7 +14772,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[76]:</div>
+<div class="prompt input_prompt">In&nbsp;[78]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">eig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -14659,10 +14818,10 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[77]:</div>
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 </pre></div>
 
 </div>
@@ -14674,12 +14833,14 @@ y:  [1 1]
 
 
 <div class="output_area">
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[79]:</div>
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>3.141592653589793
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>3.141592653589793</pre>
 </div>
+
 </div>
 
 </div>
@@ -14688,10 +14849,12 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[78]:</div>
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># note that these allow the input to be an array</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
@@ -14723,7 +14886,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[81]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
@@ -14760,15 +14923,15 @@ y:  [1 1]
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Plotting-using-matplotlib">Plotting using matplotlib<a class="anchor-link" href="#Plotting-using-matplotlib">&#182;</a></h1><p>Matplotlib is the standard plotting package in python. For a tutorial see <a href="https://matplotlib.org/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py">https://matplotlib.org/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py</a>.</p>
-<p>Other packages such as seaborn and ggplot are also available.</p>
+<h1 id="Plotting-using-matplotlib">Plotting using matplotlib<a class="anchor-link" href="#Plotting-using-matplotlib">&#182;</a></h1><p>Matplotlib is the standard plotting package in Python. For a tutorial see <a href="https://matplotlib.org/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py">https://matplotlib.org/tutorials/introductory/pyplot.html#sphx-glr-tutorials-introductory-pyplot-py</a>.</p>
+<p>Other packages such as ggplot and seaborn are also available.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="prompt input_prompt">In&nbsp;[82]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -14781,7 +14944,7 @@ y:  [1 1]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[81]:</div>
+<div class="prompt input_prompt">In&nbsp;[83]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
@@ -15047,7 +15210,8 @@ SUVORK5CYII=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Random-variables-using-the-scipy-package">Random variables using the scipy package<a class="anchor-link" href="#Random-variables-using-the-scipy-package">&#182;</a></h1><p><code>R</code> has built-in functionality for working with common probability distributions. In python similar functions are available through the <code>stats</code> portion of the <code>scipy</code> package.</p>
+<h1 id="Random-variables-using-the-scipy-package">Random variables using the scipy package<a class="anchor-link" href="#Random-variables-using-the-scipy-package">&#182;</a></h1><p><code>R</code> has built-in functionality for working with common probability distributions. In Python similar functions are available through the <code>stats</code> portion of the <code>scipy</code> package.</p>
+<p><code>scipy</code> has a lot more than just probability distributions; there are sub-libraries for topics such as linear algebra, optimization, Fourier transforms, signal processing, and more.</p>
 <p>For more information about <code>scipy</code> see <a href="https://docs.scipy.org/doc/scipy/reference/">https://docs.scipy.org/doc/scipy/reference/</a>.</p>
 
 </div>
@@ -15055,7 +15219,7 @@ SUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[82]:</div>
+<div class="prompt input_prompt">In&nbsp;[84]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
@@ -15068,7 +15232,7 @@ SUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[83]:</div>
+<div class="prompt input_prompt">In&nbsp;[85]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plot normal pdf</span>
@@ -15307,7 +15471,7 @@ ZP4/+7i+7IL0bC8AAAAASUVORK5CYII=
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[86]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plot normal cdf</span>
@@ -15487,10 +15651,11 @@ AElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[85]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># generate random variables from a distribution</span>
+<span class="c1"># (note: you can also do this in numpy using np.random)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">expon</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
@@ -15512,9 +15677,9 @@ AElFTkSuQmCC
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[ 2.48  6.72  4.87]
-[ 6.13  4.6   4.27  4.23]
-[3 2 1 0 0]
+<pre>[ 6.5   3.73  2.53]
+[ 4.17  5.81  5.03  5.76]
+[1 1 0 2 2]
 </pre>
 </div>
 </div>
@@ -15528,7 +15693,7 @@ AElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-pandas-package">The pandas package<a class="anchor-link" href="#The-pandas-package">&#182;</a></h1><p>The <code>pandas</code> package provides the <code>Series</code> and <code>DataFrame</code> objects, functions for easily reading in and manipulating data, time series functionality, and other useful tools.</p>
+<h1 id="The-pandas-package">The pandas package<a class="anchor-link" href="#The-pandas-package">&#182;</a></h1><p>The <code>pandas</code> package provides its own universe of special objects and functions for easily reading in and manipulating data, time series functionality, and other useful tools. In many ways <code>pandas</code> mimics R, but it also has some interesting tricks and tools of its own.</p>
 <p>For more information see <a href="http://pandas.pydata.org/pandas-docs/stable/">http://pandas.pydata.org/pandas-docs/stable/</a>.</p>
 
 </div>
@@ -15536,7 +15701,7 @@ AElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[86]:</div>
+<div class="prompt input_prompt">In&nbsp;[88]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -15552,7 +15717,7 @@ AElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-Series-object">The <code>Series</code> object<a class="anchor-link" href="#The-Series-object">&#182;</a></h2><p><code>pandas</code> has its own answer to vectorizing python: the <code>Series</code> object. These have an immense number of special attributes. See <a href="https://pandas.pydata.org/pandas-docs/stable/api.html#series">https://pandas.pydata.org/pandas-docs/stable/api.html#series</a>.</p>
+<h2 id="The-Series-object">The <code>Series</code> object<a class="anchor-link" href="#The-Series-object">&#182;</a></h2><p><code>pandas</code> has its own answer to vectorizing Python: the <code>Series</code> object. These have an immense number of special attributes. See <a href="https://pandas.pydata.org/pandas-docs/stable/api.html#series">https://pandas.pydata.org/pandas-docs/stable/api.html#series</a>.</p>
 <p>They can also be easily converted into <code>numpy</code> arrays if you so choose.</p>
 
 </div>
@@ -15560,7 +15725,7 @@ AElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[87]:</div>
+<div class="prompt input_prompt">In&nbsp;[89]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
@@ -15579,16 +15744,16 @@ AElFTkSuQmCC
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0   -0.465034
-1   -0.174125
-2    1.855407
-3   -0.390502
-4    0.610903
-5   -0.026587
-6   -1.317128
-7   -0.646235
-8    0.246485
-9   -1.930982
+<pre>0   -0.590286
+1    1.302291
+2    0.188369
+3    2.088794
+4    1.493113
+5   -0.061936
+6    0.538284
+7   -0.864297
+8   -0.697849
+9   -0.482385
 dtype: float64
 </pre>
 </div>
@@ -15600,75 +15765,11 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[88]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some of the many available summary statistics</span>
-<span class="n">summary_stats</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">autocorr</span><span class="p">()]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">summary_stats</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[-1.930982074532237, -0.6009348031165068, -0.28231386175407547, 0.17821723031569772, 1.8554066590832228, -0.22377979861486635, 1.0729588328846489, -0.13139139989653675]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[89]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find unique values</span>
-<span class="n">x</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[89]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([-0.,  2.,  1., -1., -2.])</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 <div class="prompt input_prompt">In&nbsp;[90]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter</span>
-<span class="n">x</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># some of the many available summary statistics</span>
+<span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">autocorr</span><span class="p">()]</span>
 </pre></div>
 
 </div>
@@ -15685,17 +15786,14 @@ dtype: float64
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0         NaN
-1         NaN
-2    1.855407
-3         NaN
-4    0.610903
-5         NaN
-6         NaN
-7         NaN
-8    0.246485
-9         NaN
-dtype: float64</pre>
+<pre>[-0.86429673744562519,
+ -0.5633105403249935,
+ 0.06321659502254168,
+ 1.1112894484704012,
+ 2.088793547642426,
+ 0.29140988069546114,
+ 1.0648235337042882,
+ 0.22850957452655532]</pre>
 </div>
 
 </div>
@@ -15709,8 +15807,8 @@ dtype: float64</pre>
 <div class="prompt input_prompt">In&nbsp;[91]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># remove missing values</span>
-<span class="n">x</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># find unique values</span>
+<span class="n">x</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -15727,9 +15825,85 @@ dtype: float64</pre>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>2    1.855407
-4    0.610903
-8    0.246485
+<pre>array([-1.,  1.,  0.,  2.])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter</span>
+<span class="n">x</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[92]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0         NaN
+1    1.302291
+2    0.188369
+3    2.088794
+4    1.493113
+5         NaN
+6    0.538284
+7         NaN
+8         NaN
+9         NaN
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># filter and remove missing values</span>
+<span class="n">x</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[93]:</div>
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1    1.302291
+2    0.188369
+3    2.088794
+4    1.493113
+6    0.538284
 dtype: float64</pre>
 </div>
 
@@ -15751,7 +15925,7 @@ dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[92]:</div>
+<div class="prompt input_prompt">In&nbsp;[94]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">+</span> <span class="n">x</span>
@@ -15766,21 +15940,21 @@ dtype: float64</pre>
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[92]:</div>
+<div class="prompt output_prompt">Out[94]:</div>
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0   -0.930068
-1   -0.348251
-2    3.710813
-3   -0.781005
-4    1.221807
-5   -0.053174
-6   -2.634255
-7   -1.292470
-8    0.492971
-9   -3.861964
+<pre>0   -1.180571
+1    2.604582
+2    0.376738
+3    4.177587
+4    2.986225
+5   -0.123872
+6    1.076569
+7   -1.728593
+8   -1.395697
+9   -0.964770
 dtype: float64</pre>
 </div>
 
@@ -15792,7 +15966,7 @@ dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[93]:</div>
+<div class="prompt input_prompt">In&nbsp;[95]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">**</span> <span class="mi">2</span>
@@ -15807,21 +15981,21 @@ dtype: float64</pre>
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[93]:</div>
+<div class="prompt output_prompt">Out[95]:</div>
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0    0.216256
-1    0.030320
-2    3.442534
-3    0.152492
-4    0.373203
-5    0.000707
-6    1.734825
-7    0.417620
-8    0.060755
-9    3.728692
+<pre>0    0.348437
+1    1.695962
+2    0.035483
+3    4.363058
+4    2.229385
+5    0.003836
+6    0.289750
+7    0.747009
+8    0.486993
+9    0.232695
 dtype: float64</pre>
 </div>
 
@@ -15843,7 +16017,7 @@ dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[94]:</div>
+<div class="prompt input_prompt">In&nbsp;[96]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -15862,26 +16036,26 @@ dtype: float64</pre>
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0   -0.465034
-1   -0.174125
-2    1.855407
-3   -0.390502
-4    0.610903
-5   -0.026587
-6   -1.317128
-7   -0.646235
-8    0.246485
-9   -1.930982
-0   -0.465034
-1   -0.174125
-2    1.855407
-3   -0.390502
-4    0.610903
-5   -0.026587
-6   -1.317128
-7   -0.646235
-8    0.246485
-9   -1.930982
+<pre>0   -0.590286
+1    1.302291
+2    0.188369
+3    2.088794
+4    1.493113
+5   -0.061936
+6    0.538284
+7   -0.864297
+8   -0.697849
+9   -0.482385
+0   -0.590286
+1    1.302291
+2    0.188369
+3    2.088794
+4    1.493113
+5   -0.061936
+6    0.538284
+7   -0.864297
+8   -0.697849
+9   -0.482385
 dtype: float64
 </pre>
 </div>
@@ -15902,7 +16076,7 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[95]:</div>
+<div class="prompt input_prompt">In&nbsp;[97]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create using a dictionary</span>
@@ -15924,16 +16098,16 @@ dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          x         y
-0  0.335082 -0.265507
-1  0.390982  0.871820
-2  0.816128 -0.029314
-3  0.976500  1.419256
-4  0.131069 -0.651520
-5  0.792161  0.211016
-6  0.976749 -2.043276
-7  0.172949  0.977092
-8  0.930067 -0.272389
-9  0.777383 -1.973052
+0  0.995540 -1.024095
+1  0.760468 -0.112515
+2  0.747581 -0.534737
+3  0.520562  0.927943
+4  0.102832 -0.100207
+5  0.330090  1.966341
+6  0.159934 -0.045331
+7  0.296269 -0.642336
+8  0.059245 -0.419487
+9  0.425802 -1.080367
 </pre>
 </div>
 </div>
@@ -15944,7 +16118,7 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[96]:</div>
+<div class="prompt input_prompt">In&nbsp;[98]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create using a list</span>
@@ -15966,12 +16140,12 @@ dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          0         1         2         3         4         5         6  \
-0  0.501324  0.302270  0.396105  0.920106  0.956081  0.361079  0.863363   
-1 -0.320243 -0.631978 -1.041968 -0.997213 -0.467502  1.013895 -0.540253   
+0  0.040638  0.610874  0.422926  0.685525  0.559767  0.159386  0.028805   
+1  0.212378  1.692645  2.183331 -0.704204 -0.876601  0.703533 -0.255970   
 
           7         8         9  
-0  0.732358  0.922750  0.487511  
-1  0.975833  0.180027 -0.015819  
+0  0.845882  0.540733  0.491503  
+1  1.426376 -0.576119 -1.310615  
 </pre>
 </div>
 </div>
@@ -15982,7 +16156,7 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[97]:</div>
+<div class="prompt input_prompt">In&nbsp;[99]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># transpose</span>
@@ -16003,16 +16177,16 @@ dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          0         1
-0  0.501324 -0.320243
-1  0.302270 -0.631978
-2  0.396105 -1.041968
-3  0.920106 -0.997213
-4  0.956081 -0.467502
-5  0.361079  1.013895
-6  0.863363 -0.540253
-7  0.732358  0.975833
-8  0.922750  0.180027
-9  0.487511 -0.015819
+0  0.040638  0.212378
+1  0.610874  1.692645
+2  0.422926  2.183331
+3  0.685525 -0.704204
+4  0.559767 -0.876601
+5  0.159386  0.703533
+6  0.028805 -0.255970
+7  0.845882  1.426376
+8  0.540733 -0.576119
+9  0.491503 -1.310615
 </pre>
 </div>
 </div>
@@ -16023,7 +16197,7 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[98]:</div>
+<div class="prompt input_prompt">In&nbsp;[100]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># rename columns</span>
@@ -16037,13 +16211,13 @@ dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[99]:</div>
+<div class="prompt input_prompt">In&nbsp;[101]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># pick out a column by name</span>
 <span class="n">df</span><span class="o">.</span><span class="n">x</span>
 
-<span class="c1"># also: df[&#39;x&#39;]</span>
+<span class="c1"># equivalent: df[&#39;x&#39;]</span>
 </pre></div>
 
 </div>
@@ -16055,21 +16229,21 @@ dtype: float64
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[99]:</div>
+<div class="prompt output_prompt">Out[101]:</div>
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>0    0.501324
-1    0.302270
-2    0.396105
-3    0.920106
-4    0.956081
-5    0.361079
-6    0.863363
-7    0.732358
-8    0.922750
-9    0.487511
+<pre>0    0.040638
+1    0.610874
+2    0.422926
+3    0.685525
+4    0.559767
+5    0.159386
+6    0.028805
+7    0.845882
+8    0.540733
+9    0.491503
 Name: x, dtype: float64</pre>
 </div>
 
@@ -16091,7 +16265,7 @@ Name: x, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[100]:</div>
+<div class="prompt input_prompt">In&nbsp;[102]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
@@ -16106,7 +16280,7 @@ Name: x, dtype: float64</pre>
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[100]:</div>
+<div class="prompt output_prompt">Out[102]:</div>
 
 
 
@@ -16122,7 +16296,7 @@ Name: x, dtype: float64</pre>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[101]:</div>
+<div class="prompt input_prompt">In&nbsp;[103]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select columns by index</span>
@@ -16142,16 +16316,16 @@ Name: x, dtype: float64</pre>
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0   -0.320243
-1   -0.631978
-2   -1.041968
-3   -0.997213
-4   -0.467502
-5    1.013895
-6   -0.540253
-7    0.975833
-8    0.180027
-9   -0.015819
+<pre>0    0.212378
+1    1.692645
+2    2.183331
+3   -0.704204
+4   -0.876601
+5    0.703533
+6   -0.255970
+7    1.426376
+8   -0.576119
+9   -1.310615
 Name: y, dtype: float64
 </pre>
 </div>
@@ -16163,7 +16337,7 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[102]:</div>
+<div class="prompt input_prompt">In&nbsp;[104]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select rows by index</span>
@@ -16184,11 +16358,11 @@ Name: y, dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          x         y
-0  0.501324 -0.320243
-1  0.302270 -0.631978
-2  0.396105 -1.041968
-3  0.920106 -0.997213
-4  0.956081 -0.467502
+0  0.040638  0.212378
+1  0.610874  1.692645
+2  0.422926  2.183331
+3  0.685525 -0.704204
+4  0.559767 -0.876601
 </pre>
 </div>
 </div>
@@ -16199,7 +16373,7 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[103]:</div>
+<div class="prompt input_prompt">In&nbsp;[105]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># select rows by value</span>
@@ -16220,12 +16394,11 @@ Name: y, dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          x         y
-0  0.501324 -0.320243
-3  0.920106 -0.997213
-4  0.956081 -0.467502
-6  0.863363 -0.540253
-7  0.732358  0.975833
-8  0.922750  0.180027
+1  0.610874  1.692645
+3  0.685525 -0.704204
+4  0.559767 -0.876601
+7  0.845882  1.426376
+8  0.540733 -0.576119
 </pre>
 </div>
 </div>
@@ -16249,17 +16422,18 @@ Name: y, dtype: float64
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>pandas</code> can read from and write to many different formats: tables, csv, json, Excel, html, SQL, Stata, SAS...</p>
+<p>Often much simpler than trying to do it manually using base Python.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[104]:</div>
+<div class="prompt input_prompt">In&nbsp;[106]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># write df to csv</span>
-<span class="c1"># index=False tells python not to write the row names</span>
+<span class="c1"># index=False tells Python not to write the row names</span>
 <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;test_df.csv&#39;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
@@ -16270,7 +16444,7 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[105]:</div>
+<div class="prompt input_prompt">In&nbsp;[107]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># read it back in</span>
@@ -16291,16 +16465,16 @@ Name: y, dtype: float64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>          x         y
-0  0.501324 -0.320243
-1  0.302270 -0.631978
-2  0.396105 -1.041968
-3  0.920106 -0.997213
-4  0.956081 -0.467502
-5  0.361079  1.013895
-6  0.863363 -0.540253
-7  0.732358  0.975833
-8  0.922750  0.180027
-9  0.487511 -0.015819
+0  0.040638  0.212378
+1  0.610874  1.692645
+2  0.422926  2.183331
+3  0.685525 -0.704204
+4  0.559767 -0.876601
+5  0.159386  0.703533
+6  0.028805 -0.255970
+7  0.845882  1.426376
+8  0.540733 -0.576119
+9  0.491503 -1.310615
 </pre>
 </div>
 </div>
@@ -16314,163 +16488,8 @@ Name: y, dtype: float64
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Otherwise, you can always read a file in using base python:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[106]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test_df.csv&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt output_prompt">Out[106]:</div>
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;x,y\n0.5013237607546083,-0.3202431094404727\n0.3022695550767328,-0.6319780448839187\n0.3961052858442118,-1.0419681354866699\n0.9201061921659364,-0.9972134070242296\n0.9560805402430528,-0.46750185122994387\n0.3610785420523832,1.013894649718326\n0.8633631828136001,-0.5402530438480775\n0.7323582887720005,0.97583335081115\n0.9227501443090157,0.180027224147048\n0.48751062474725537,-0.0158191678518439\n&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[107]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test_df.csv&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">))</span>
-    
-<span class="n">df3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>                      0                     1
-0                     x                     y
-1    0.5013237607546083   -0.3202431094404727
-2    0.3022695550767328   -0.6319780448839187
-3    0.3961052858442118   -1.0419681354866699
-4    0.9201061921659364   -0.9972134070242296
-5    0.9560805402430528  -0.46750185122994387
-6    0.3610785420523832     1.013894649718326
-7    0.8633631828136001   -0.5402530438480775
-8    0.7323582887720005      0.97583335081115
-9    0.9227501443090157     0.180027224147048
-10  0.48751062474725537   -0.0158191678518439
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[108]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fix the column names...</span>
-<span class="n">df3</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
-<span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">df3</span> <span class="o">=</span> <span class="n">df3</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>                     x                     y
-0   0.5013237607546083   -0.3202431094404727
-1   0.3022695550767328   -0.6319780448839187
-2   0.3961052858442118   -1.0419681354866699
-3   0.9201061921659364   -0.9972134070242296
-4   0.9560805402430528  -0.46750185122994387
-5   0.3610785420523832     1.013894649718326
-6   0.8633631828136001   -0.5402530438480775
-7   0.7323582887720005      0.97583335081115
-8   0.9227501443090157     0.180027224147048
-9  0.48751062474725537   -0.0158191678518439
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[134]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># write to file</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;test_df2.csv&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
-
-<span class="c1"># write column names</span>
-<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">df3</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-<span class="c1"># write data</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">df3</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">A</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-Statsmodels-package">The Statsmodels package<a class="anchor-link" href="#The-Statsmodels-package">&#182;</a></h2><p>The <code>statsmodels</code> package provides a number of basic statistical models like linear models, GLMs, ANOVA, and more. For more info see <a href="http://www.statsmodels.org">http://www.statsmodels.org</a>.</p>
+<h2 id="The-Statsmodels-package">The Statsmodels package<a class="anchor-link" href="#The-Statsmodels-package">&#182;</a></h2><p>The <code>statsmodels</code> package provides a number of basic statistical models like linear models, GLMs, ANOVA, and more.</p>
+<p>For more info see <a href="http://www.statsmodels.org">http://www.statsmodels.org</a>.</p>
 
 </div>
 </div>
@@ -16487,7 +16506,7 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[176]:</div>
+<div class="prompt input_prompt">In&nbsp;[108]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># load statsmodels</span>
@@ -16514,32 +16533,42 @@ Name: y, dtype: float64
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[176]:</div>
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/Users/adamscherling/anaconda/lib/python3.6/site-packages/statsmodels/compat/pandas.py:56: FutureWarning: The pandas.core.datetools module is deprecated and will be removed in a future version. Please use the pandas.tseries module instead.
+  from pandas.core import datetools
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[108]:</div>
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <table class="simpletable">
 <caption>OLS Regression Results</caption>
 <tr>
-  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.945</td>
+  <th>Dep. Variable:</th>            <td>y</td>        <th>  R-squared:         </th> <td>   0.944</td>
 </tr>
 <tr>
-  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.935</td>
+  <th>Model:</th>                   <td>OLS</td>       <th>  Adj. R-squared:    </th> <td>   0.933</td>
 </tr>
 <tr>
-  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   90.42</td>
+  <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   88.36</td>
 </tr>
 <tr>
-  <th>Date:</th>             <td>Mon, 29 Jan 2018</td> <th>  Prob (F-statistic):</th> <td>6.34e-13</td>
+  <th>Date:</th>             <td>Tue, 13 Feb 2018</td> <th>  Prob (F-statistic):</th> <td>7.96e-13</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>21:49:32</td>     <th>  Log-Likelihood:    </th> <td> -27.421</td>
+  <th>Time:</th>                 <td>18:21:47</td>     <th>  Log-Likelihood:    </th> <td> -33.834</td>
 </tr>
 <tr>
-  <th>No. Observations:</th>      <td>    25</td>      <th>  AIC:               </th> <td>   62.84</td>
+  <th>No. Observations:</th>      <td>    25</td>      <th>  AIC:               </th> <td>   75.67</td>
 </tr>
 <tr>
-  <th>Df Residuals:</th>          <td>    21</td>      <th>  BIC:               </th> <td>   67.72</td>
+  <th>Df Residuals:</th>          <td>    21</td>      <th>  BIC:               </th> <td>   80.54</td>
 </tr>
 <tr>
   <th>Df Model:</th>              <td>     4</td>      <th>                     </th>     <td> </td>   
@@ -16553,30 +16582,30 @@ Name: y, dtype: float64
    <td></td>     <th>coef</th>     <th>std err</th>      <th>t</th>      <th>P>|t|</th>  <th>[0.025</th>    <th>0.975]</th>  
 </tr>
 <tr>
-  <th>x1</th> <td>    2.7905</td> <td>    0.201</td> <td>   13.867</td> <td> 0.000</td> <td>    2.372</td> <td>    3.209</td>
+  <th>x1</th> <td>    3.2937</td> <td>    0.188</td> <td>   17.526</td> <td> 0.000</td> <td>    2.903</td> <td>    3.684</td>
 </tr>
 <tr>
-  <th>x2</th> <td>    0.4761</td> <td>    0.176</td> <td>    2.706</td> <td> 0.013</td> <td>    0.110</td> <td>    0.842</td>
+  <th>x2</th> <td>    0.6831</td> <td>    0.235</td> <td>    2.902</td> <td> 0.009</td> <td>    0.194</td> <td>    1.173</td>
 </tr>
 <tr>
-  <th>x3</th> <td>    0.7188</td> <td>    0.169</td> <td>    4.253</td> <td> 0.000</td> <td>    0.367</td> <td>    1.070</td>
+  <th>x3</th> <td>    1.0412</td> <td>    0.305</td> <td>    3.409</td> <td> 0.003</td> <td>    0.406</td> <td>    1.676</td>
 </tr>
 <tr>
-  <th>x4</th> <td>    1.9886</td> <td>    0.191</td> <td>   10.429</td> <td> 0.000</td> <td>    1.592</td> <td>    2.385</td>
+  <th>x4</th> <td>    1.9533</td> <td>    0.258</td> <td>    7.575</td> <td> 0.000</td> <td>    1.417</td> <td>    2.490</td>
 </tr>
 </table>
 <table class="simpletable">
 <tr>
-  <th>Omnibus:</th>       <td> 1.666</td> <th>  Durbin-Watson:     </th> <td>   1.946</td>
+  <th>Omnibus:</th>       <td> 1.376</td> <th>  Durbin-Watson:     </th> <td>   1.440</td>
 </tr>
 <tr>
-  <th>Prob(Omnibus):</th> <td> 0.435</td> <th>  Jarque-Bera (JB):  </th> <td>   1.424</td>
+  <th>Prob(Omnibus):</th> <td> 0.503</td> <th>  Jarque-Bera (JB):  </th> <td>   1.262</td>
 </tr>
 <tr>
-  <th>Skew:</th>          <td>-0.445</td> <th>  Prob(JB):          </th> <td>   0.491</td>
+  <th>Skew:</th>          <td>-0.441</td> <th>  Prob(JB):          </th> <td>   0.532</td>
 </tr>
 <tr>
-  <th>Kurtosis:</th>      <td> 2.241</td> <th>  Cond. No.          </th> <td>    1.35</td>
+  <th>Kurtosis:</th>      <td> 2.341</td> <th>  Cond. No.          </th> <td>    1.94</td>
 </tr>
 </table>
 </div>
@@ -16609,7 +16638,7 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
+<div class="prompt input_prompt">In&nbsp;[109]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import the RandomForestRegressor function</span>
@@ -16643,7 +16672,7 @@ Name: y, dtype: float64
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>3.62320547257 3.10550657603
+<pre>4.68268759134 5.00993018532
 </pre>
 </div>
 </div>
@@ -16654,13 +16683,15 @@ Name: y, dtype: float64
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[186]:</div>
+<div class="prompt input_prompt">In&nbsp;[110]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># take a look at the fitted values from the two models</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Y=Y&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">lm_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;lm fit&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">rf_pred</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;rf fit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;fitted values&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -16679,178 +16710,229 @@ Name: y, dtype: float64
 
 
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-Q7gAAAAASUVORK5CYII=
+<img src="data:image/png;base64,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
 "
 >
 </div>
