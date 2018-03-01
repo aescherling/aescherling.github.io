@@ -49,9 +49,14 @@ p, ol, ul {
           <li>Windows: alt+shift+n gives n screens</li>
           <li>Mac: option+cmd+n gives n screens</li>
         </ul>
-        <p>Multiple cursors: see <a href="https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html">https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html</a></p>
-        <p>Custom shortcuts: go to Preferences -> Key Bindings. Enter the desired key bindings in the User window.</p>
-        <p>Example:</p>
+        <p>Multiple cursors:</p>
+        <ul>
+          <li>See <a href="https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html">https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html</a></li>
+        </ul>
+        <p>Custom shortcuts:</p>
+        <ul>
+        <li>Go to Preferences -> Key Bindings. Enter the desired key bindings in the User window.</li>
+        <li>Example:<br><br>
         <pre><code>[
   // Executes a selection of text in REPL
 { "keys": ["control+shift+j"], "command": "repl_transfer_current", "args": {"scope": "selection"}},
@@ -61,7 +66,8 @@ p, ol, ul {
    
  // Executes line(s) of text in REPL terminal
  { "keys": ["control+enter"], "command": "repl_transfer_current", "args": {"scope": "lines"}}
-]</code></pre>
+]</code></pre></li>
+        </ul>
 
       </div>
     </div>
