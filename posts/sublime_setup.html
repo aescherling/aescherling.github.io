@@ -1,0 +1,68 @@
+<!Doctype html>
+
+<style>
+p, ol, ul {
+  font-size: 18px;
+}
+</style>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Setting up Sublime Text as an IDE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+  	<div style="height:50px"></div>
+
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-10">
+        <h1>Setting up Sublime Text as an IDE</h1>
+        <p>Sublime Text is a very powerful tool for writing code. It allows you to write and execute code for a variety of languages all in one place. It also provides a number of useful packages, keyboard shortcuts, and additional functionality that will make life a lot easier for you.</p>
+        <p>What follows is a brief guide to setting up Sublime Text to work as an IDE (integrated development environment).</p>
+        <h3>Installation and basic setup</h3>
+        <ol>
+          <li><p>Download + install: <a href="https://www.sublimetext.com">https://www.sublimetext.com</a></p></li>
+          <li><p>Install package control: <a href="https://packagecontrol.io/installation">https://packagecontrol.io/installation</a></p></li>
+          <li><p>Install sublimeREPL: <a href="https://sublimerepl.readthedocs.io/en/latest/">https://sublimerepl.readthedocs.io/en/latest/</a></p></li>
+          <li><p>To open up a REPL for running code, open the command palette and type "sublimerepl" (or even just "repl" will work) and find the language you want to use.</p> <p>If you get an error message you might have to specify the path, e.g. <a href="https://github.com/wuub/SublimeREPL/issues/96">https://github.com/wuub/SublimeREPL/issues/96</a></p></li>
+        </ol>
+        <h3>Keyboard shortcuts</h3>
+        <p>Open the command palette:</p>
+        <ul>
+          <li>Windows: ctrl+shift+p</li>
+          <li>Mac: cmd+shift+p</li>
+        </ul>
+        <p>Split the screen:</p>
+        <ul>
+          <li>Windows: alt+shift+n gives n screens</li>
+          <li>Mac: option+cmd+n gives n screens</li>
+        </ul>
+        <p>Multiple cursors: see <a href="https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html">https://www.sublimetext.com/docs/3/multiple_selection_with_the_keyboard.html</a></p>
+        <p>Custom shortcuts: go to Preferences -> Key Bindings. Enter the desired key bindings in the User window.</p>
+        <p>Example:</p>
+        <pre><code>[
+  // Executes a selection of text in REPL
+{ "keys": ["control+shift+j"], "command": "repl_transfer_current", "args": {"scope": "selection"}},
+
+// Executes the entire file (build) in REPL
+{ "keys": ["control+shift+k"], "command": "repl_transfer_current", "args": {"scope": "file"}},
+   
+ // Executes line(s) of text in REPL terminal
+ { "keys": ["control+enter"], "command": "repl_transfer_current", "args": {"scope": "lines"}}
+]</code></pre>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
