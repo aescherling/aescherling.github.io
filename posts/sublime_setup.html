@@ -4,6 +4,10 @@
 p, ol, ul {
   font-size: 18px;
 }
+
+p.small {
+  font-size: 14px;
+}
 </style>
 
 <html>
@@ -25,7 +29,7 @@ p, ol, ul {
     <div class="row">
       <div class="col-md-1"></div>
       <div class="col-md-10">
-        <h1>Setting up Sublime Text as an IDE for data science</h1>
+        <h1>Setting up Sublime Text for data science</h1>
         <h4>Adam Scherling</h4>
         <h4>February 28, 2018</h4>
         <div style="height:20px"></div>
@@ -34,9 +38,9 @@ p, ol, ul {
         <h3>Installation and basic setup</h3>
         <ol>
           <li><p>Download + install: <a href="https://www.sublimetext.com">https://www.sublimetext.com</a></p></li>
-          <li><p>Install package control: <a href="https://packagecontrol.io/installation">https://packagecontrol.io/installation</a></p></li>
-          <li><p>Install sublimeREPL: <a href="https://sublimerepl.readthedocs.io/en/latest/">https://sublimerepl.readthedocs.io/en/latest/</a></p></li>
-          <li><p>To open up a REPL for running code, open the command palette and type "sublimerepl" (or even just "repl" will work) and find the language you want to use.</p> <p>If you get an error message you might have to specify the path, e.g. <a href="https://github.com/wuub/SublimeREPL/issues/96">https://github.com/wuub/SublimeREPL/issues/96</a></p></li>
+          <li><p>Install package control: <a href="https://packagecontrol.io/installation">https://packagecontrol.io/installation</a></p><p class="small">This allows you to easily install packages for Sublime Text.</p></li>
+          <li><p>Install sublimeREPL: <a href="https://sublimerepl.readthedocs.io/en/latest/">https://sublimerepl.readthedocs.io/en/latest/</a></p><p class="small">A REPL (read-evaluate-print loop) is a command-line interface allowing you to execute code and view the results. The sublimeREPL package allows you to open up command lines within Sublime Text for a large number of languages (provided that you have the language installed on your machine).</p></li>
+          <li><p>To open up a REPL for running code, open the command palette and type "sublimerepl" (or even just "repl" will work) and find the language you want to use.</p> <p class="small">If you get an error message you might have to specify the path, e.g. <a href="https://github.com/wuub/SublimeREPL/issues/96">https://github.com/wuub/SublimeREPL/issues/96</a></p></li>
         </ol>
         <h3>Keyboard shortcuts</h3>
         <p>Open the command palette:</p>
